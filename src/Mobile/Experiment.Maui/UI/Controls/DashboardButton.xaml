@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui" 
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Experiment.Maui.UI.Controls.DashboardButton">
+  <ContentView.Content>
+
+		<Frame x:Name="FrmRoot"
+			   Margin="0"
+			   Padding="0"
+			   BackgroundColor="Transparent"
+			   BorderColor="{StaticResource Background5}"
+			   HasShadow="False">
+
+			<Grid Margin="0"
+				  Padding="4">
+
+				<Grid.GestureRecognizers>
+					<TapGestureRecognizer Tapped="TapGestureRecognizer_Tapped" />
+				</Grid.GestureRecognizers>
+
+				<StackLayout x:Name="NormalLayout"
+							 Orientation="Horizontal"
+							 VerticalOptions="Center"
+							 Margin="0"
+							 Padding="0"
+							 Spacing="5">
+					<Image x:Name="ImgIcon"
+						   WidthRequest="15"
+						   HeightRequest="15"
+						   Aspect="AspectFit"
+						   IsVisible="False" />
+
+					<Label x:Name="LblName"
+						   FontSize="Small"
+						   LineBreakMode="TailTruncation"
+						   BackgroundColor="Transparent"
+						   Padding="0" />
+				</StackLayout>
+
+				<Grid x:Name="IconOnlyLayout"
+					  IsVisible="False">
+					<Image x:Name="ImgIconOnly"
+						   WidthRequest="18"
+						   HeightRequest="18"
+						   Aspect="AspectFit"
+						   HorizontalOptions="Center"
+						   VerticalOptions="Center"
+						   IsVisible="False" />
+				</Grid>
+
+			</Grid>
+
+		</Frame>
+  </ContentView.Content>
+</ContentView>

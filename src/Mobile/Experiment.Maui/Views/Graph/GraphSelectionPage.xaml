@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+			 xmlns:UIC="clr-namespace:Experiment.Maui.UI.Controls"
+			 xmlns:vm="clr-namespace:Experiment.Maui.ViewModels.Graph"
+			 x:Class="Experiment.Maui.Views.Graph.GraphSelectionPage"
+			 Title="{Binding Title}">
+<!-- 
+	<ContentPage.BindingContext>
+		<vm:GraphSelectionViewModel />
+	</ContentPage.BindingContext>
+-->
+	<ContentPage.Content>
+		<ScrollView>
+			<StackLayout Padding="10" Spacing="8">
+				
+				<!-- Row 0-->
+				<!--<Label Grid.Row="0" Grid.ColumnSpan="2"
+						x:Name="LblDate" 
+						Text="{Binding LabelDate}" />-->
+
+				<Grid>
+					<Grid.ColumnDefinitions>
+						<ColumnDefinition Width="Auto" />
+						<ColumnDefinition Width="*" />
+					</Grid.ColumnDefinitions>
+					<Label Grid.Column="0"
+						x:Name="LblDateRange" 
+						Text="{Binding LabelDateRange}" />
+					
+					<Picker Grid.Column="1"
+						x:Name="CmbDateRange" 
+						Title="{Binding LabelDateRange}"
+						ItemsSource="{Binding DateRanges.List}" 
+						ItemDisplayBinding="{Binding Name}"
+						SelectedItem="{Binding DateRanges.Selected, Mode=TwoWay}"/>
+				</Grid>
+
+				<Grid>
+					<Grid.ColumnDefinitions>
+						<ColumnDefinition Width="Auto" />
+						<ColumnDefinition Width="*" />
+					</Grid.ColumnDefinitions>
+					<Label Grid.Column="0"
+						x:Name="LblFrom" 
+						Text="{Binding LabelFrom}" />
+					
+					<DatePicker Grid.Column="1"
+						x:Name="DtpDateFrom"
+						Date="{Binding ChartParameters.DateFrom}" />
+				</Grid>
+
+				<Grid>
+					<Grid.ColumnDefinitions>
+						<ColumnDefinition Width="Auto" />
+						<ColumnDefinition Width="*" />
+					</Grid.ColumnDefinitions>
+					<Label Grid.Column="0"
+						x:Name="LblTo" 
+						Text="{Binding LabelTo}" />
+					
+					<DatePicker Grid.Column="1"
+						x:Name="DtpDateTo"
+						Date="{Binding ChartParameters.DateTo}" />
+				</Grid>
+
+				<Grid>
+					<Grid.ColumnDefinitions>
+						<ColumnDefinition Width="Auto" />
+						<ColumnDefinition Width="*" />
+					</Grid.ColumnDefinitions>
+					
+					<Label Grid.Column="0"
+						x:Name="LblMeasureUnit" 
+						Text="{Binding LabelMeasureUnit}" />
+
+					<Picker Grid.Column="1"
+						x:Name="CmbMeasureUnit" 
+						Title="{Binding LabelMeasureUnit}"
+						ItemsSource="{Binding MeasureUnits.List}"
+						ItemDisplayBinding="{Binding Name}"
+						SelectedItem="{Binding MeasureUnits.Selected, Mode=TwoWay}"/>
+				</Grid>
+
+				<Grid>
+					<Grid.ColumnDefinitions>
+						<ColumnDefinition Width="Auto" />
+						<ColumnDefinition Width="*" />
+					</Grid.ColumnDefinitions>
+
+					<Label Grid.Column="0"
+						x:Name="LblAggregation" 
+						Text="{Binding LabelAggregation}" />
+
+					<Picker Grid.Column="1"
+						x:Name="CmbAggregation" 
+						Title="{Binding LabelAggregation}" 
+						ItemsSource="{Binding AggregationTypes.List}"
+						ItemDisplayBinding="{Binding Name}"
+						SelectedItem="{Binding AggregationTypes.Selected, Mode=TwoWay}"/>
+				</Grid>
+
+				<Grid>
+					<Grid.ColumnDefinitions>
+						<ColumnDefinition Width="Auto" />
+						<ColumnDefinition Width="*" />
+					</Grid.ColumnDefinitions>
+
+					<Label Grid.Column="0"
+						x:Name="LblValueType"
+						Text="{Binding LabelValue}" />
+
+					<Picker Grid.Column="1"
+						x:Name="CmbValueTypes"
+						Title="{Binding LabelValue}"
+						ItemsSource="{Binding ValueTypes.List}"
+						ItemDisplayBinding="{Binding Name}"
+						SelectedItem="{Binding ValueTypes.Selected, Mode=TwoWay}" />
+
+				</Grid>
+
+				<Grid>
+					<Grid.ColumnDefinitions>
+						<ColumnDefinition Width="Auto" />
+						<ColumnDefinition Width="*" />
+					</Grid.ColumnDefinitions>
+
+					<Label Grid.Column="0"
+						x:Name="LblChartType" 
+						Text="{Binding LabelChartType}" />
+
+					<Picker Grid.Column="1"
+						x:Name="CmbChartTypes"
+						Title="{Binding LabelChartType}"
+						ItemsSource="{Binding ChartTypes.List}"
+						ItemDisplayBinding="{Binding Name}"
+						SelectedItem="{Binding ChartTypes.Selected, Mode=TwoWay}"/>
+
+				</Grid>
+
+				<!-- Comparison -->
+				<Label Text="{Binding LabelComparison}" />
+
+				<ListView x:Name="LvwComparison"
+						  ItemsSource="{Binding ComparisonYears}"
+						  HeightRequest="150">
+					<ListView.ItemTemplate>
+						<DataTemplate>
+							<ViewCell>
+								<UIC:ECheckBox Text="{Binding Name}"
+											   IsChecked="{Binding Checked}" />
+								<!--
+								<Grid>
+									<CheckBox Grid.Column="0"
+										IsChecked="{Binding Checked}" />
+
+									<Label Grid.Column="1"
+										Text="{Binding Name}"
+										FontSize="Subtitle"
+										FontAttributes="Bold" />
+								</Grid>
+								-->
+							</ViewCell>
+						</DataTemplate>
+					</ListView.ItemTemplate>
+				</ListView>
+				<!-- End of Comparison -->
+
+				<ActivityIndicator IsVisible="{Binding IsBusy}"
+								   IsRunning="{Binding IsBusy}" />
+
+				<Button x:Name="CmdChart"
+					Text="{Binding LabelChart}"
+					Command="{Binding ChartCommand}"/>
+				
+				<Button x:Name="CmdDownload"
+					Text="{Binding LabelDownload}"
+					Command="{Binding DownloadCommand}"
+					Style="{StaticResource actionButton}"/>
+
+			</StackLayout>
+		</ScrollView>
+	</ContentPage.Content>
+</ContentPage>

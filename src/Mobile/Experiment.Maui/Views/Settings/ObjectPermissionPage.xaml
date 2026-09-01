@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+			 xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+			 xmlns:VM="clr-namespace:Experiment.Maui.ViewModels.Settings"
+			 x:Class="Experiment.Maui.Views.Settings.ObjectPermissionPage"
+			 Title="{Binding Title}">
+
+	<ContentPage.Content>
+		<StackLayout Orientation="Vertical">
+			<Grid>
+				<Grid.ColumnDefinitions>
+					<ColumnDefinition Width="Auto" />
+					<ColumnDefinition Width="*" />
+				</Grid.ColumnDefinitions>
+				<Grid.RowDefinitions>
+					<RowDefinition Height="Auto" />
+					<RowDefinition Height="Auto" />
+					<RowDefinition Height="Auto" />
+					<RowDefinition Height="Auto" />
+					<RowDefinition Height="Auto" />
+				</Grid.RowDefinitions>
+
+				<!-- Selected -->
+				<CheckBox Grid.Row="0"
+						  Grid.Column="0"
+						  IsChecked="{Binding Item.Selected}" />
+				<Label Grid.Row="0"
+					   Grid.Column="1"
+					   Text="{Binding LabelSelected}" />
+
+				<!-- PermWrite -->
+				<CheckBox Grid.Row="1"
+						  Grid.Column="0"
+						  IsChecked="{Binding Item.PermWrite}" />
+				<Label Grid.Row="1"
+					   Grid.Column="1"
+					   Text="{Binding LabelPermWrite}" />
+
+				<!-- PermDevice -->
+				<CheckBox Grid.Row="2"
+						  Grid.Column="0"
+						  IsChecked="{Binding Item.PermDevice}" />
+				<Label Grid.Row="2"
+					   Grid.Column="1"
+					   Text="{Binding LabelDevices}" />
+
+				<!-- PermAlgorithm -->
+				<CheckBox Grid.Row="3"
+						  Grid.Column="0"
+						  IsChecked="{Binding Item.PermAlgorithm}" />
+				<Label Grid.Row="3"
+					   Grid.Column="1"
+					   Text="{Binding LabelAlgorithms}" />
+
+				<!-- PermGroup -->
+				<CheckBox Grid.Row="4"
+						  Grid.Column="0"
+						  IsChecked="{Binding Item.PermGroup}" />
+				<Label Grid.Row="4"
+					   Grid.Column="1"
+					   Text="{Binding LabelGroups}" />
+
+			</Grid>
+		</StackLayout>
+
+
+	</ContentPage.Content>
+</ContentPage>

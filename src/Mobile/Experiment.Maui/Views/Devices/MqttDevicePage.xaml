@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+			 xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+			 x:Class="Experiment.Maui.Views.Devices.MqttDevicePage"
+			 xmlns:xct="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+			 xmlns:E="clr-namespace:Experiment.Maui"
+			 xmlns:vm="clr-namespace:Experiment.Maui.ViewModels.Devices"
+			 Title="{Binding Path=Title}">
+
+	<ContentPage.Content>
+
+		<StackLayout>
+
+			<Label x:Name="LblDescription"
+				   Text="Server IP address: XX.XX.XX.XX:XXXX"
+				   VerticalOptions="CenterAndExpand"
+				   HorizontalOptions="CenterAndExpand" />
+
+			<Grid ColumnSpacing="10">
+				<Grid.ColumnDefinitions>
+					<ColumnDefinition Width="*" />
+					<ColumnDefinition Width="*" />
+					<ColumnDefinition Width="*" />
+				</Grid.ColumnDefinitions>
+
+				<Button x:Name="CmdNext"
+						Grid.Column="0"
+						Text="{Binding LabelNext}"
+						HorizontalOptions="FillAndExpand"
+						Command="{Binding AddCommand}" />
+
+				<Button x:Name="CmdCancel"
+						Grid.Column="2"
+						Text="{Binding LabelCancel}"
+						HorizontalOptions="FillAndExpand"
+						Command="{Binding CancelCommand}"
+						Style="{StaticResource negativeButton}" />
+			</Grid>
+
+			<ActivityIndicator IsVisible="{Binding IsBusy}"
+							   IsRunning="{Binding IsBusy}" />
+
+		</StackLayout>
+	</ContentPage.Content>
+</ContentPage>

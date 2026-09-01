@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+			 xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+			 xmlns:xct="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+			 xmlns:M="clr-namespace:Experiment.Data.Models;assembly=Experiment.Data"
+			 xmlns:UIC="clr-namespace:Experiment.Maui.UI.Controls"
+			 xmlns:data="clr-namespace:Experiment.Maui.Data"
+			 xmlns:VM="clr-namespace:Experiment.Maui.ViewModels.Ecosystem"
+			 x:Class="Experiment.Maui.Views.Ecosystem.PostsPage"
+			 Title="{Binding Title}">
+
+	<ContentPage.Resources>
+
+		<Style TargetType="VisualElement" x:Key="postPart">
+			<Setter Property="BackgroundColor" Value="{StaticResource Background8}" />
+		</Style>
+	</ContentPage.Resources>
+
+	<ContentPage.BindingContext>
+		<VM:PostsViewModel />
+	</ContentPage.BindingContext>
+
+	<ContentPage.Content>
+
+		<!-- Container of all -->
+		<StackLayout Orientation="Vertical">
+
+			<!-- To realize designer's designed horizontal margin for elements of few floors-->
+			<StackLayout Orientation="Vertical"
+						 Margin="18, 6"
+						 Spacing="8">
+
+				<!-- Search bar: Image + Picker -->
+				<Grid ColumnDefinitions="Auto,*">
+					<Image Grid.Column="0"
+						   Source="{x:Static data:Images.UrlZoomImg}"
+						   HeightRequest="32"
+						   Margin="6,2"
+						   VerticalOptions="Center" />
+
+					<Picker Grid.Column="1"
+							x:Name="CmbFeedPrefs"
+							Title="{Binding LabelFeedPrefs}"
+							ItemsSource="{Binding PostFeedPrefs.List}"
+							ItemDisplayBinding="{Binding Name}"
+							SelectedItem="{Binding PostFeedPrefs.Selected, Mode=TwoWay}"
+							HorizontalOptions="FillAndExpand" />
+				</Grid>
+
+				<!-- Buttons: New + Chat on opposite sides -->
+				<Grid ColumnDefinitions="*,*" ColumnSpacing="10">
+					<UIC:PictureLeftButton Grid.Column="0"
+										   x:Name="CmdNewPost"
+										   Command="{Binding NewPostCommand}"
+										   Text="{Binding LabelNewPost}"
+										   ImageSource="{x:Static data:Images.UrlPlusImg}"
+										   HorizontalOptions="Start" />
+
+					<UIC:PictureLeftButton Grid.Column="1"
+										   x:Name="CmdChat"
+										   Command="{Binding ChatCommand}"
+										   Text="{Binding LabelChat}"
+										   ImageSource="{x:Static data:Images.UrlMultipointImg}"
+										   HorizontalOptions="End" />
+				</Grid>
+			</StackLayout>
+
+			<!--
+			<UIC:PostsWall x:Name="PwMain"
+				Posts="{Binding Posts}"
+				PostDescriptionMember="{x:Static M:Post.PostBody}"
+				PostImageUrlMember="{x:Static M:Post.PostImageUrl}"
+				PostAuthorMember="{x:Static M:Post.PostAuthor}"
+				PostDateMember="{x:Static M:Post.PostDate}" />
+			-->
+			<ListView x:Name="LvwItems"
+					  ItemsSource="{Binding Posts, Mode=OneWay}"
+					  SelectedItem="{Binding SelectedItem}"
+					  HasUnevenRows="True"
+					  SelectionMode="None"
+					  IsPullToRefreshEnabled="True"
+					  RefreshCommand="{Binding RefreshCommand}"
+					  IsRefreshing="{Binding IsRefreshing}"
+					  ItemAppearing="LvwItems_ItemAppearing">
+
+				<ListView.ItemTemplate>
+					<DataTemplate>
+						<ViewCell>
+							<StackLayout Orientation="Vertical"
+										 Margin="2"
+										 Style="{StaticResource postPart}">
+
+								<Label Text="{Binding Body}"
+									   Style="{StaticResource postPart}"
+									   Padding="5" />
+
+								<Image Source="{Binding ImageUrl}"
+									   HorizontalOptions="FillAndExpand"
+									   Aspect="Fill"
+									   Margin="5">
+
+									<Image.GestureRecognizers>
+										<TapGestureRecognizer Command="{Binding BindingContext.TapImageCommand, Source={x:Reference Name=LvwItems} }"
+															  CommandParameter="{Binding .}"
+															  NumberOfTapsRequired="2" />
+									</Image.GestureRecognizers>
+								</Image>
+
+								<Grid ColumnDefinitions="*,Auto,Auto">
+
+									<Label Grid.Column="0"
+										   Text="{Binding Date}"
+										   Style="{StaticResource postPart}"
+										   VerticalOptions="Center"
+										   Margin="2" />
+
+									<UIC:DashboardButton Grid.Column="1"
+														 Text="{Binding Reaction}"
+														 Command="{Binding BindingContext.LikeCommand, Source={x:Reference Name=LvwItems}}"
+														 CommandParameter="{Binding .}"
+														 ImageSource="{x:Static data:Images.UrlLikeImg}"
+														 Margin="2" />
+
+									<UIC:DashboardButton Grid.Column="2"
+														 Text="{Binding Author}"
+														 Command="{Binding BindingContext.UserProfileCommand, Source={x:Reference Name=LvwItems}, Mode=OneWay}"
+														 CommandParameter="{Binding .}"
+														 Margin="2"/>
+
+								</Grid>
+
+								<StackLayout Orientation="Horizontal"
+											 Style="{StaticResource postPart}"
+											 IsVisible="False">
+
+									<Button Text="{Binding BindingContext.LabelContact, Source={x:Reference Name=LvwItems}}"
+											Command="{Binding BindingContext.ContactCommand, Source={x:Reference Name=LvwItems}}"
+											CommandParameter="{Binding .}"
+											Style="{StaticResource postPart}" />
+
+								</StackLayout>
+
+							</StackLayout>
+						</ViewCell>
+					</DataTemplate>
+				</ListView.ItemTemplate>
+			</ListView>
+
+			<ActivityIndicator IsVisible="{Binding IsBusy}"
+							   IsRunning="{Binding IsBusy}" />
+
+		</StackLayout>
+	</ContentPage.Content>
+</ContentPage>
+

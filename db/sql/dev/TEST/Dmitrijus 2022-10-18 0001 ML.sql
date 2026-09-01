@@ -1,0 +1,2 @@
+﻿EXEC prcUiWordUpdate 'find-device', N'Find device', N'Surasti įrenginį', N'Найти устройство'
+EXEC prcUiWordUpdate 'find-device-description', N'Select a device type', N'Pasirinkite įrenginio tipą', N'Выберите тип устройства'

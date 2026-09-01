@@ -1,0 +1,1 @@
+﻿EXEC prcUiWordUpdate 'read-write', N'Read / Write', N'Skaityti / Rašyti', N'Читать / Писать'

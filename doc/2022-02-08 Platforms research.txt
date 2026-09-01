@@ -1,0 +1,11 @@
+"Reacto Native"	- lėtas ir nepatemps greičiausiai kažkokio sunkaus processingo.
+
+Native
+	Android	- Java (Eclipse/Android studio)
+	iOS 	- Objective C
+
+Kotlin	[android only]	(Dima dirbo)
+Flutter		https://docs.flutter.dev/
+Xamarin
+Haxe
+xcode	- ?? Dima sakė. Ai iOS kūrimo įrankis Appsams. Editorius plius emuliatorius lyg. IDE?

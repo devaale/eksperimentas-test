@@ -1,0 +1,26 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             x:Class="Mobility_Test.MainPage">
+
+    <StackLayout Orientation="Vertical" Margin="20">
+        <!-- Place new controls here -->
+        <Label Text="Welcome to Super Experiment of all Expermentical Experiments of Experiments ever! The Experiment!" 
+           HorizontalOptions="Center"
+           VerticalOptions="CenterAndExpand" FontSize="Large"/>
+		<Button Text="Pirmas mygtukas" />
+		<Button Text="Antras mygtukas" />
+		<Button Text="Trečias mygtukas" />
+		<Button Text="Ketvirtas mygtukas" />
+		<Button Text="Martynas labai mėgsta mygtukus ir stack layout greičiausiai!" />
+		<Button Text="Bet tai ne vienintelis galimas Layout!" />
+		<Button Text="Gal būtų įdomu TAB laoyout!" />
+		<Button Text="O gal sliding Layout?" />
+		
+
+	</StackLayout>
+
+</ContentPage>

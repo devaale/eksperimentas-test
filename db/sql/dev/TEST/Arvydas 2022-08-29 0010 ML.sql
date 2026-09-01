@@ -1,0 +1,1 @@
+﻿EXEC prcUiWordUpdate 'tree', N'Tree', N'Medis', N'Дерево'

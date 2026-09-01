@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+			 xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+			 xmlns:VM="clr-namespace:Experiment.Maui.ViewModels.Ecosystem"
+			 xmlns:Conv="clr-namespace:Experiment.Maui.Data.Converters"
+			 xmlns:DATA="clr-namespace:Experiment.Maui.Data"
+			 x:Class="Experiment.Maui.Views.Ecosystem.UserLicensePage"
+			 Title="{Binding LabelLicenses}">
+
+	<ContentPage.Resources>
+
+		<!-- For all labels -->
+		<Style TargetType="Label" ApplyToDerivedTypes="True">
+			<Setter Property="Padding" Value="8" />
+			<Setter Property="Margin" Value="0" />
+		</Style>
+
+	</ContentPage.Resources>
+	<ContentPage.Content>
+
+		<!-- ListView scrolls internally; do not nest inside ScrollView (breaks scrolling on Windows). -->
+		<Grid RowDefinitions="*,Auto"
+			  ColumnDefinitions="*"
+			  Margin="0"
+			  Padding="8"
+			  RowSpacing="10">
+
+			<ListView x:Name="LvwLicenses"
+					  Grid.Row="0"
+					  VerticalOptions="Fill"
+					  ItemsSource="{Binding VisualLicenses, Mode=OneWay}"
+					  HasUnevenRows="True"
+					  SeparatorVisibility="None">
+
+				<ListView.ItemTemplate>
+					<DataTemplate>
+						<ViewCell>
+
+							<StackLayout Orientation="Vertical"
+										 Spacing="0"
+										 BackgroundColor="{StaticResource Background2}">
+
+								<Frame Padding="1"
+									   BorderColor="{StaticResource Background2}"
+									   HasShadow="False">
+
+									<Label Text="{Binding VisualName}"
+										   FontSize="Medium"
+										   HorizontalTextAlignment="Center"
+										   Style="{Binding Style}"/>
+								</Frame>
+
+								<Label Text="{Binding VisualDescription}"
+									   Style="{StaticResource licenseDesc}" />
+
+								<Label Text="{Binding VisualValidFrom}"
+									   Style="{StaticResource licenseDesc}"
+									   IsVisible="{Binding HasValidFrom}" />
+
+								<Label Text="{Binding VisualValidUntil}"
+									   Style="{StaticResource licenseDesc}" />
+
+							</StackLayout>
+						</ViewCell>
+					</DataTemplate>
+				</ListView.ItemTemplate>
+			</ListView>
+
+			<ActivityIndicator Grid.Row="0"
+							   IsVisible="{Binding IsBusy}"
+							   IsRunning="{Binding IsBusy}"
+							   VerticalOptions="Center"
+							   HorizontalOptions="Center"
+							   InputTransparent="True"
+							   ZIndex="1" />
+
+			<Button x:Name="CmdPurchaseLicense"
+					Grid.Row="1"
+					Text="{Binding LabelAboutLicenses}"
+					Command="{Binding AboutLicensesCommand}" />
+
+		</Grid>
+	</ContentPage.Content>
+</ContentPage>

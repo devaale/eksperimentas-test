@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+			 xmlns:xct="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+			 x:Class="Experiment.Maui.Views.Devices.ApiDatapointPage"
+			 Title="{Binding Path=Title}">
+    <ContentPage.Content>
+		<StackLayout>
+
+			<ScrollView VerticalOptions="Start"
+						HorizontalScrollBarVisibility="Never"
+						VerticalScrollBarVisibility="Always">
+
+				<StackLayout>
+
+					<Label x:Name="LblName"
+						   Text="{Binding LabelName}" />
+					<Entry x:Name="TxtName"
+						   Placeholder="{Binding LabelName}"
+						   Text="{Binding Path=Name}"
+						   MaxLength="128" />
+
+					<Label x:Name="LblDescription"
+						   Text="{Binding LabelDescription}" />
+					<Entry x:Name="TxtDescription"
+						   Placeholder="{Binding LabelDescription}"
+						   Text="{Binding Path=Description}"
+						   MaxLength="4096" />
+
+					<Label x:Name="LblDeviceId"
+						   Text="{Binding LabelDeviceId}" />
+					<Entry x:Name="TxtDeviceId"
+						   Placeholder="{Binding LabelDeviceId}"
+						   Text="{Binding Path=DeviceId}"
+						   IsReadOnly="True"
+						   IsEnabled="False"
+						   MaxLength="128" />
+
+					<Label x:Name="LblMeasureUnit"
+						   Text="{Binding LabelMeasureUnit}" />
+					<Entry x:Name="TxtMeasureUnit"
+						   Placeholder="{Binding LabelMeasureUnit}"
+						   Text="{Binding Path=MeasureUnit}"
+						   MaxLength="128" />
+
+					<!-- AFTER 2023-10-26
+					<Label x:Name="LblRegisterAddress"
+						   Text="{Binding LabelRegisterAddress}" />
+					<Entry x:Name="TxtRegisterAddress"
+						   Placeholder="{Binding LabelRegisterAddress}"
+						   Text="{Binding Path=RegisterAddress}"
+						   MaxLength="5" />
+					-->
+					<!-- BEFORE 2023-10-26
+					<Label Text="{Binding LabelRegisterType}"/>
+            
+					<Entry x:Name="TxtRegisterType" 
+						Placeholder="{Binding LabelRegisterType}"
+						Text="{Binding Path=RegisterType}"
+						MaxLength="5" />
+
+					<Label Text="{Binding LabelFunctionCode}"/>
+            
+					<Entry x:Name="TxtFunctionCode" 
+						Placeholder="{Binding LabelFunctionCode}"
+						Text="{Binding Path=FunctionCode}"
+						MaxLength="1" />
+					-->
+					<!-- AFTER 2023-10-26
+					<Label x:Name="LblRegisterType"
+						   Text="{Binding LabelRegisterType}" />
+					<Picker x:Name="CmbRegisterType"
+							Title="{Binding LabelRegisterType}"
+							ItemsSource="{x:Static E:Hardcoded.RegisterTypeList }"
+							ItemDisplayBinding="{Binding Value}"
+							SelectedItem="{Binding Path=SelectedRegisterType, Mode=TwoWay}" />
+
+					<Label x:Name="LblFunctionCode"
+						   Text="{Binding LabelFunctionCode}" />
+					<Picker x:Name="CmbFunctionCode"
+							Title="{Binding LabelFunctionCode}"
+							ItemsSource="{x:Static E:Hardcoded.FunctionCodeList }"
+							ItemDisplayBinding="{Binding Value}"
+							SelectedItem="{Binding Path=SelectedFunctionCode, Mode=TwoWay}" />
+
+					<Label x:Name="LblMultiplier"
+						   Text="{Binding LabelMultiplier}" />
+					<Entry x:Name="TxtMultiplier"
+						   Placeholder="{Binding LabelMultiplier}"
+						   Text="{Binding Path=Multiplier}"
+						   MaxLength="128" />
+
+					<Label x:Name="LblOffset"
+						   Text="{Binding LabelOffset}" />
+					<Entry x:Name="TxtOffset"
+						   Placeholder="{Binding LabelOffset}"
+						   Text="{Binding Path=Offset}"
+						   MaxLength="128" />
+
+					<Label x:Name="LblReadWrite"
+						   Text="{Binding LabelReadWrite}" />
+					<Picker x:Name="CmbReadWrite"
+							Title="{Binding LabelReadWrite}"
+							ItemsSource="{x:Static E:Hardcoded.ReadWriteTypesList }"
+							ItemDisplayBinding="{Binding Value}"
+							SelectedItem="{Binding Path=SelectedReadWriteType, Mode=TwoWay}" />
+
+					<Label x:Name="LblReadValueNow"
+						   Text="{Binding LabelReadValue}"
+						   IsVisible="{Binding IsReadOptionVisible}" />
+					-->
+					<Label x:Name="LblAlias"
+						   Text="{Binding LabelAlias}" />
+					<Entry x:Name="TxtAlias"
+						   Placeholder="{Binding LabelAlias}"
+						   Text="{Binding Path=Alias}"
+						   IsEnabled="False"/>
+
+					<Button x:Name="CmdRead"
+							Text="{Binding LabelRead}"
+							Command="{Binding ReadValueNowCommand}"
+							HorizontalOptions="FillAndExpand"
+							IsVisible="{Binding IsReadOptionVisible}" />
+
+					<Label x:Name="LblWriteValueNow"
+						   Text="{Binding LabelSendValue}"
+						   HorizontalTextAlignment="Center"
+						   IsVisible="{Binding IsWriteOptionVisible}" />
+
+					<Grid ColumnSpacing="10">
+						<Grid.ColumnDefinitions>
+							<ColumnDefinition Width="*" />
+							<ColumnDefinition Width="*" />
+						</Grid.ColumnDefinitions>
+						<Entry x:Name="TxtWriteValueNow"
+							   Grid.Column="0"
+							   Placeholder="{Binding LabelValue}"
+							   Text="{Binding WriteValue, Mode=TwoWay}"
+							   MaxLength="128"
+							   IsVisible="{Binding IsWriteOptionVisible}" />
+
+						<Button x:Name="CmdWrite"
+								Grid.Column="1"
+								Text="{Binding LabelSend}"
+								Command="{Binding WriteValueNowCommand}"
+								HorizontalOptions="FillAndExpand"
+								IsVisible="{Binding IsWriteOptionVisible}"
+								Style="{StaticResource actionButton}" />
+					</Grid>
+
+					<ActivityIndicator IsVisible="{Binding IsBusy}"
+									   IsRunning="{Binding IsBusy}" />
+
+				</StackLayout>
+			</ScrollView>
+
+			<Grid ColumnSpacing="10" Margin="0,10,0,0">
+				<Grid.RowDefinitions>
+					<RowDefinition Height="Auto" />
+				</Grid.RowDefinitions>
+				<Grid.ColumnDefinitions>
+					<ColumnDefinition Width="*" />
+					<ColumnDefinition Width="*" />
+					<ColumnDefinition Width="*" />
+				</Grid.ColumnDefinitions>
+
+				<Button x:Name="CmdOk"
+						Grid.Column="0"
+						Text="{Binding LabelSave}"
+						Command="{Binding PostDatapointCommand}"
+						HorizontalOptions="FillAndExpand" />
+
+				<Button x:Name="CmdDelete"
+						Grid.Column="1"
+						Text="{Binding LabelDelete}"
+						HorizontalOptions="FillAndExpand"
+						Command="{Binding DeleteDatapointCommand}"
+						IsVisible="{Binding HasValidId}"
+						Style="{StaticResource negativeButton}" />
+
+				<Button x:Name="CmdCancel"
+						Grid.Column="2"
+						Text="{Binding LabelCancel}"
+						HorizontalOptions="FillAndExpand"
+						Command="{Binding CancelCommand}"
+						Style="{StaticResource actionButton}" />
+			</Grid>
+
+		</StackLayout>
+	</ContentPage.Content>
+</ContentPage>

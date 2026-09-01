@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+			 xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+			 x:Class="Experiment.Maui.Views.Ecosystem.LicensePurchaseListPage"
+			 xmlns:VM="clr-namespace:Experiment.Maui.ViewModels.Ecosystem"
+			 xmlns:DATA="clr-namespace:Experiment.Maui.Data"
+			 Title="{Binding LabelLicenses}">
+
+	<ContentPage.Resources>
+
+		<!-- For all labels -->
+		<Style TargetType="Label">
+			<Setter Property="Padding" Value="8" />
+			<Setter Property="Margin" Value="0" />
+		</Style>
+
+	</ContentPage.Resources>
+	
+	<ContentPage.BindingContext>
+		<VM:LicensePurchaseListViewModel />
+	</ContentPage.BindingContext>
+
+	<ContentPage.Content>
+		<StackLayout>
+			<ScrollView>
+
+				<ListView x:Name="LvwItems"
+						  ItemsSource="{Binding Items, Mode=OneWay}"
+						  SelectedItem="{Binding SelectedItem}"
+						  SelectionMode="Single"
+						  HasUnevenRows="True">
+
+					<ListView.ItemTemplate>
+						<DataTemplate>
+							<ViewCell>
+
+								<StackLayout Orientation="Vertical"
+											 Spacing="0"
+											 BackgroundColor="{StaticResource Background2}">
+
+									<Frame Padding="1"
+										   BorderColor="{StaticResource Background2}"
+										   HasShadow="False">
+
+										<Label Text="{Binding VisualName}"
+											   FontSize="Medium"
+											   HorizontalTextAlignment="Center"
+											   Style="{Binding Style}" />
+									</Frame>
+
+									<Label Text="{Binding VisualDescriptionShort}"
+										   Style="{StaticResource licenseDesc}" />
+
+									<StackLayout Orientation="Horizontal"
+												 Margin="0"
+												 Padding="0"
+												 BackgroundColor="{StaticResource Background4}">
+
+										<Label Text="{Binding BindingContext.LabelPrice, Source={x:Reference Name=LvwItems}}"
+											   Style="{StaticResource licensePrice}" />
+
+										<Label Text="{Binding VisualPrice}"
+											   Style="{StaticResource licensePrice}" />
+
+									</StackLayout>
+
+								</StackLayout>
+							</ViewCell>
+						</DataTemplate>
+					</ListView.ItemTemplate>
+				</ListView>
+
+			</ScrollView>
+			<StackLayout Orientation="Horizontal">
+
+				<Button x:Name="CmdBack"
+						Command="{Binding BackCommand}"
+						Text="{Binding LabelBack}"
+						Style="{StaticResource actionButton}"/>
+
+				<Button x:Name="CmdNext"
+						Command="{Binding NextCommand}"
+						Text="{Binding LabelNext}"
+						IsVisible="false" />
+			</StackLayout>
+		</StackLayout>
+	</ContentPage.Content>
+</ContentPage>

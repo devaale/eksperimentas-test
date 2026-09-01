@@ -1,0 +1,54 @@
+﻿@using Website.Data;
+@model Website.Models.UserSettingsViewModel
+
+@{
+	ViewBag.Title = E.T("settings");
+
+	// User account removal already requested?
+	if(Model.RemovalRequested.HasValue)
+	{
+		var dateNow = DateTime.Now;
+		var diff = Model.RemovalRequested.Value.Subtract(dateNow);
+		var requestDays = Convert.ToInt32(diff.TotalDays);
+		ViewBag.lblRemoval = string.Format(E.T("accountRemovalActive"), requestDays);
+	}
+	else
+	{
+		ViewBag.lblRemoval = E.T("accountRemovalRequest");
+	}
+}
+<h2>@ViewBag.Title</h2>
+
+@using (Html.BeginForm("Settings", "Account", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+{
+	@Html.AntiForgeryToken()
+	<style>
+		.norm, h5 {
+			font-weight:normal;
+			padding-bottom: 0.5em;
+		}
+
+	</style>
+	<h4>@E.T("user-settings").</h4>
+	<hr />
+	@Html.ValidationSummary("", new { @class = "text-danger" })
+	<div class="form-group">
+		<div class="col-md-10">
+			<h5>@E.T("language")</h5>
+			@Html.DropDownListFor(m => m.Language, new SelectList(E.Languages, "Code", "Name"), E.T("language"), new { id ="cLang" })
+		</div>
+		<br />
+		<div class="col-md-10" style="padding-top:1em;">
+			<h5>@E.T("accountRemoval")</h5>
+			@Html.CheckBoxFor(m => m.RemovalRequest, new {id = "cRemovalReq" })
+			<label for="cRemovalReq" class="norm">@ViewBag.lblRemoval</label>
+		</div>
+		<div class="col-md-10">
+			<input type="submit" value="@E.T("save")" class="btn btn-default" />
+		</div>
+	</div>
+}
+
+@section Scripts {
+	@Scripts.Render("~/bundles/jqueryval")
+}

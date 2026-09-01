@@ -1,0 +1,12 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <SignAssembly>True</SignAssembly>
+    <AssemblyOriginatorKeyFile>EVP.WebToPay.ClientAPI.snk</AssemblyOriginatorKeyFile>
+    <Company>EVP International, JSC</Company>
+    <Product>EVP.WebToPay.ClientAPI</Product>
+    <UserSecretsId>ddbc49fa-aa77-4b48-a775-32976b5aece6</UserSecretsId>
+  </PropertyGroup>
+
+</Project>

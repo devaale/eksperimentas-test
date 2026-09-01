@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+			 x:Class="Experiment.Maui.Views.Ecosystem.PostNewPage"
+			 xmlns:VM="clr-namespace:Experiment.Maui.ViewModels.Ecosystem"
+			 Title="{Binding Title}">
+	<ContentPage.BindingContext>
+		<VM:PostNewViewModel />
+	</ContentPage.BindingContext>
+	<ContentPage.Content>
+		<Grid 
+			
+			VerticalOptions="FillAndExpand">
+
+			<Grid.RowDefinitions>
+				<RowDefinition Height="*" />
+				<RowDefinition Height="*" />
+				<RowDefinition Height="Auto" />
+				<RowDefinition Height="Auto" />
+				<RowDefinition Height="Auto" />
+				<RowDefinition Height="Auto" />
+			</Grid.RowDefinitions>
+
+			<Grid.ColumnDefinitions>
+				<ColumnDefinition Width="*" />
+			</Grid.ColumnDefinitions>
+
+			<!--
+			<Label Grid.Row="0"
+				Text="{Binding LabelDescription}"
+				VerticalOptions="Start" />
+			-->
+			<ScrollView Grid.Row="0">
+				<Editor 
+						Placeholder="{Binding LabelDescription}"
+						Text="{Binding Item.Body}"
+						VerticalOptions="FillAndExpand"
+						IsTextPredictionEnabled="True" />
+
+			</ScrollView>
+
+			<Image Grid.Row="1"
+				Source="{Binding ImageSource}"
+				VerticalOptions="Center"/>
+
+			<Button Grid.Row="2"
+				x:Name="CmdAddImages"
+				Text="{Binding LabelAddImages}"
+				Command="{Binding AddPictureCommand}"
+				IsVisible="{Binding IsNew}"
+				VerticalOptions="End" />
+
+			<!-- Audience -->
+			<Picker Grid.Row="3"
+				x:Name="CmbAudience"
+				Title="{Binding LabelAudience}"
+				ItemsSource="{Binding Audiences.List}"
+				ItemDisplayBinding="{Binding Name}"
+				SelectedItem="{Binding Audiences.Selected, Mode=TwoWay}"
+				VerticalOptions="End"/>
+
+			<!-- Post or Cancel buttons-->
+			<StackLayout Grid.Row="4"
+				Orientation="Horizontal" 
+				VerticalOptions="End">
+
+				<Button x:Name="CmdPublish"
+						Text="{Binding LabelPublish}"
+						HorizontalOptions="FillAndExpand"
+						Command="{Binding PublishCommand}"
+						IsEnabled="{Binding Item.CanBePosted}" />
+
+				<Button x:Name="CmdCancel"
+						Text="{Binding LabelCancel}"
+						HorizontalOptions="FillAndExpand"
+						Command="{Binding CancelCommand} " />
+
+			</StackLayout>
+		</Grid>
+    </ContentPage.Content>
+</ContentPage>

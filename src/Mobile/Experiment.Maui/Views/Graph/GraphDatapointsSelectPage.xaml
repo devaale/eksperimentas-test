@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+			 xmlns:UIC="clr-namespace:Experiment.Maui.UI.Controls"
+			 xmlns:vw="clr-namespace:Experiment.Maui.ViewModels.Graph"
+			 x:Class="Experiment.Maui.Views.Graph.GraphDatapointsSelectPage"
+			 Title="{Binding Title}">
+	<ContentPage.BindingContext>
+		<vw:GraphDatapointsSelectViewModel />
+	</ContentPage.BindingContext>
+    <ContentPage.Content>
+		<StackLayout Orientation="Vertical">
+			<ListView x:Name ="LvwList"
+				IsGroupingEnabled="False"
+				ItemsSource="{Binding Datapoints}" >
+				<ListView.GroupHeaderTemplate>
+					<DataTemplate>
+						<ViewCell>
+							<ViewCell.View>
+								<Label Text="{Binding GroupKey}"
+									   FontAttributes="Bold"
+									   TextColor="{StaticResource Foreground3}"
+									   Padding="5" />
+							</ViewCell.View>
+						</ViewCell>
+					</DataTemplate>
+				</ListView.GroupHeaderTemplate>
+				<ListView.ItemTemplate>
+					<DataTemplate>
+						<ViewCell>
+							<ViewCell.View>
+								<!--
+								<Grid ColumnSpacing="0" RowSpacing="0">
+									<CheckBox Grid.Column="0" IsChecked="{Binding Selected}" />
+									<Label Grid.Column="1" Grid.Row="0" Text="{Binding Name}" FontAttributes="Bold" />
+									<Label Grid.Column="1" Grid.Row="1" Text="{Binding Description}" />
+								</Grid>
+								-->
+								<UIC:ECheckBox Text="{Binding Name}"
+											   IsChecked="{Binding Selected}" />
+							</ViewCell.View>
+						</ViewCell>
+					</DataTemplate>
+				</ListView.ItemTemplate>
+			</ListView>
+
+			<ActivityIndicator 
+				IsVisible="{Binding IsBusy}"
+				IsRunning="{Binding IsBusy}" />
+
+			<Button x:Name="CmdNext"
+				Text="{Binding LabelNext}" 
+				Command="{Binding NextCommand}"/>
+
+		</StackLayout>
+	</ContentPage.Content>
+</ContentPage>

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Experiment.Maui.Views.Devices.DatapointNewMenuPage"
+			 xmlns:en="clr-namespace:Experiment.Data.Enums;assembly=Experiment.Data">
+    <ContentPage.Content>
+        <StackLayout>
+
+			<Button x:Name="CmdNewDatapoint"
+				Command="{Binding AddDatapointCommand}"
+				CommandParameter="{x:Static en:DatapointType.Normal}"
+				Text="{Binding LabelDatapoint}"
+				Margin="0,0,0,10"/>
+
+			<Button x:Name="CmdNewVirtualDatapoint"
+				Command="{Binding AddDatapointCommand}"
+				CommandParameter="{x:Static en:DatapointType.Virtual}"
+				Text="{Binding LabelVirtualDatapoint}"
+				Margin="0,0,0,10"/>
+
+			<Button x:Name="CmdCancel"
+				Command="{Binding CancelCommand}"
+				Text="{Binding LabelCancel}"
+				Style="{StaticResource negativeButton}" />
+
+		</StackLayout>
+    </ContentPage.Content>
+</ContentPage>

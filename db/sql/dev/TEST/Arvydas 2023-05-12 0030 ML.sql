@@ -1,0 +1,1 @@
+﻿EXEC prcUiWordUpdate 'blockchainAccount', N'Blockchain account', N'Blockchain paskyra', N'Блокчейн-аккаунт'

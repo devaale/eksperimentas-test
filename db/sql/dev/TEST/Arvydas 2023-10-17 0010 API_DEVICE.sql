@@ -1,0 +1,62 @@
+﻿PRINT '.. Declare API Device ID'
+DECLARE @API_DEVICE_ID int
+
+-- Device Name
+DECLARE @DEFAULT_DEVICE_NAME nvarchar(256)
+SELECT @DEFAULT_DEVICE_NAME = 'DI namo valdiklis'	--'API DEVICE'
+
+-- URL
+DECLARE @DEFAULT_DEVICE_URL en_name
+SELECT @DEFAULT_DEVICE_URL = '52.236.171.103:10000'
+
+-- ObjectId
+DECLARE @DEFAULT_DEVICE_OBJECT_ID int
+SELECT @DEFAULT_DEVICE_OBJECT_ID = 2 -- Kavalkas (Pakeisti TEST)
+
+-- Protocol
+DECLARE @DEFAULT_DEVICE_PROTOCOL int
+SELECT @DEFAULT_DEVICE_PROTOCOL = 100 -- API
+
+PRINT '.. SCAN for existing API Device Id...'
+SELECT @API_DEVICE_ID = Id FROM tblDevice WHERE Protocol = 100
+
+-- IF not
+IF @API_DEVICE_ID IS NULL BEGIN
+
+	PRINT '.. Create new device...'
+	INSERT INTO tblDevice (
+		[Name]
+		,[Description]
+		,[Url]
+		,[ObjectId]
+		,[Protocol]
+		,[Interval]
+	) VALUES (
+		@DEFAULT_DEVICE_NAME
+		,@DEFAULT_DEVICE_NAME
+		,@DEFAULT_DEVICE_URL
+		,@DEFAULT_DEVICE_OBJECT_ID
+		,@DEFAULT_DEVICE_PROTOCOL
+		,600
+	)
+
+	SET @API_DEVICE_ID = @@IDENTITY
+
+END ELSE BEGIN
+
+	PRINT '.. Update existing device...'
+	UPDATE
+		tblDevice
+	SET 
+		[Name] =		@DEFAULT_DEVICE_NAME
+		,[Url] =		@DEFAULT_DEVICE_URL
+		,[ObjectId] =	@DEFAULT_DEVICE_OBJECT_ID
+		,[Protocol] =	@DEFAULT_DEVICE_PROTOCOL
+	WHERE
+		Id = @API_DEVICE_ID
+
+END
+
+	PRINT '.. Device Id = '+ CAST(@API_DEVICE_ID as NVARCHAR)
+
+GO

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+			 xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+			 xmlns:xct="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+			 x:Class="Experiment.Maui.UI.Controls.ECheckBox">
+	<ContentView.Content>
+		<xct:DockLayout ShouldExpandLastChild="True"
+						BackgroundColor="{StaticResource Background1}"
+						Margin="1"
+						VerticalOptions="Start">
+
+			<CheckBox x:Name="ChkMain"
+					  xct:DockLayout.DockPosition="Left"
+					  HorizontalOptions="Start"
+					  BackgroundColor="{StaticResource Background1}"
+					  CheckedChanged="ChkMain_CheckedChanged" />
+
+			<!-- Make Padding=1 for border -->
+			<Frame Padding="0"
+				   Margin="0">
+				<Label x:Name="LblName"
+					   xct:DockLayout.DockPosition="Left"
+					   HorizontalOptions="FillAndExpand"
+					   BackgroundColor="{StaticResource Background4}">
+
+					<Label.GestureRecognizers>
+						<TapGestureRecognizer Tapped="TapGestureRecognizer_Tapped" />
+					</Label.GestureRecognizers>
+
+				</Label>
+			</Frame>
+		</xct:DockLayout>
+	</ContentView.Content>
+</ContentView>
+

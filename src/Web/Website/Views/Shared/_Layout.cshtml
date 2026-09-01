@@ -1,0 +1,104 @@
+﻿@using Experiment.Core;
+@using Website.Data;
+@using Microsoft.AspNet.Identity;
+@using Website.Models;
+@using Website.Controllers;
+@{
+	var userId = User.Identity.GetUserId();
+	bool isUserLogged = !string.IsNullOrEmpty(userId);
+	bool isAdmin = false;
+	ApplicationUser currentUser = null;
+
+	if (isUserLogged)
+	{
+		var db = new ApplicationDbContext();
+		currentUser = db.Users.FirstOrDefault(u => u.Id == userId);
+		if (currentUser != null)
+		{
+			isAdmin = currentUser.IsAdmin;
+		}
+	}
+
+
+	if (string.IsNullOrEmpty(ViewBag.Title))
+	{
+		ViewBag.PageTitle = E.T(Defaults.MA_APP_NAME);
+	} else
+	{
+		ViewBag.PageTitle = ViewBag.Title + " - " + E.T(Defaults.MA_APP_NAME);
+	}
+
+	ViewBag.CopyrightString =
+		(DateTime.Now.Year == 2022 ? DateTime.Now.Year.ToString() : "2022-" + DateTime.Now.Year.ToString()) +
+		" " + E.T(Defaults.MA_APP_NAME) + ".";
+
+	// For stuff like API, which shouldn't be visible for regular user
+	// @TODO: Improve security
+#if DEBUG
+	ViewBag.IsDebug = true;
+#else
+	ViewBag.IsDebug = false;
+#endif
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8" />
+	<title>@ViewBag.PageTitle</title>
+	<link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	@Styles.Render("~/Content/css")
+	@Scripts.Render("~/bundles/modernizr")
+</head>
+<body>
+	<div class="navbar navbar-inverse navbar-fixed-top">
+		<div class="container">
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+				</button>
+				@{
+// @Martynas ordered to remove Home tab, but we left its code
+//@Html.ActionLink(E.T("home"), "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+				}
+			</div>
+			<div class="navbar-collapse collapse">
+				<ul class="nav navbar-nav">
+					@if (isUserLogged)
+					{
+						<li>@Html.ActionLink(E.T("tree"), "Tree", "Experiment", new { area = "" }, new { @class = "navbar-brand" })</li>
+						<li>@Html.ActionLink(E.T("reports"), "Reports", "Experiment", new { area = "" }, null)</li>
+						<li>@Html.ActionLink(E.T("settings"), "Settings", "Account", new { area = "" }, null)</li>
+						if (isAdmin)
+						{
+							<li>@Html.ActionLink(E.T("users"), "Users", "Experiment", new { area = "" }, null)</li>
+							if (ViewBag.IsDebug)
+							{
+								<li>@Html.ActionLink("API", "Index", "Help", new { area = "HelpPage" }, null)</li>
+							}
+						}
+					}
+				</ul>
+				@Html.Partial("_LoginPartial")
+			</div>
+		</div>
+	</div>
+	<div class="container body-content">
+		@RenderBody()
+		@RenderSection("SPAViews", required: false)
+		<hr />
+		<footer>
+			<p>&copy; @ViewBag.CopyrightString</p>
+		</footer>
+	</div>
+
+	@Scripts.Render("~/bundles/jquery")
+	@Scripts.Render("~/bundles/bootstrap")
+	@Scripts.Render("~/bundles/experiment-req")
+	@Scripts.Render("~/bundles/experiment")
+	@RenderSection("Scripts", required: false)
+</body>
+</html>

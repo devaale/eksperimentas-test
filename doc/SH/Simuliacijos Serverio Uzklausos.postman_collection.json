@@ -1,0 +1,528 @@
+{
+	"info": {
+		"_postman_id": "21cb7986-0b67-4df7-aea4-6d29d69fc531",
+		"name": "Simuliacijos Serverio Uzklausos",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "15229090"
+	},
+	"item": [
+		{
+			"name": "Užklausos simuliacijos serveriui",
+			"item": [
+				{
+					"name": "Gauti laiką",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://52.236.171.103:10000/get_time",
+							"protocol": "http",
+							"host": [
+								"52",
+								"236",
+								"171",
+								"103"
+							],
+							"port": "10000",
+							"path": [
+								"get_time"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Gauti namo temperatūrą",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://52.236.171.103:10000/get_inside_temp",
+							"protocol": "http",
+							"host": [
+								"52",
+								"236",
+								"171",
+								"103"
+							],
+							"port": "10000",
+							"path": [
+								"get_inside_temp"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Gauti oro temperatūrą",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://52.236.171.103:10000/get_outside_temp",
+							"protocol": "http",
+							"host": [
+								"52",
+								"236",
+								"171",
+								"103"
+							],
+							"port": "10000",
+							"path": [
+								"get_outside_temp"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Gauti oro sąlygas",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://52.236.171.103:10000/get_weather",
+							"protocol": "http",
+							"host": [
+								"52",
+								"236",
+								"171",
+								"103"
+							],
+							"port": "10000",
+							"path": [
+								"get_weather"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Gauti įrenginių būsenas",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://52.236.171.103:10000/get_device_status",
+							"protocol": "http",
+							"host": [
+								"52",
+								"236",
+								"171",
+								"103"
+							],
+							"port": "10000",
+							"path": [
+								"get_device_status"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Gauti baterijos būseną",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://52.236.171.103:10000/get_battery_power",
+							"protocol": "http",
+							"host": [
+								"52",
+								"236",
+								"171",
+								"103"
+							],
+							"port": "10000",
+							"path": [
+								"get_battery_power"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Gauti energijos suvartojimą",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://52.236.171.103:10000/get_power_consumption",
+							"protocol": "http",
+							"host": [
+								"52",
+								"236",
+								"171",
+								"103"
+							],
+							"port": "10000",
+							"path": [
+								"get_power_consumption"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Pakeisti radiatoriaus būseną",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://52.236.171.103:10000/toggle_heater",
+							"protocol": "http",
+							"host": [
+								"52",
+								"236",
+								"171",
+								"103"
+							],
+							"port": "10000",
+							"path": [
+								"toggle_heater"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Pakeisti vėsinimo būseną",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://52.236.171.103:10000/toggle_cooler",
+							"protocol": "http",
+							"host": [
+								"52",
+								"236",
+								"171",
+								"103"
+							],
+							"port": "10000",
+							"path": [
+								"toggle_cooler"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Pakeisti mažiausią simuliacijos laiko vienetą",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://52.236.171.103:10000/toggle_step",
+							"protocol": "http",
+							"host": [
+								"52",
+								"236",
+								"171",
+								"103"
+							],
+							"port": "10000",
+							"path": [
+								"toggle_step"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Pakeisti simuliacijos greitį",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://52.236.171.103:10000/toggle_speed",
+							"protocol": "http",
+							"host": [
+								"52",
+								"236",
+								"171",
+								"103"
+							],
+							"port": "10000",
+							"path": [
+								"toggle_speed"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Gauti visą informaciją",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://52.236.171.103:10000/get_all_info",
+							"protocol": "http",
+							"host": [
+								"52",
+								"236",
+								"171",
+								"103"
+							],
+							"port": "10000",
+							"path": [
+								"get_all_info"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Gauti dirbtiniam intelektui skirta informaciją",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://52.236.171.103:10000/get_obs",
+							"protocol": "http",
+							"host": [
+								"52",
+								"236",
+								"171",
+								"103"
+							],
+							"port": "10000",
+							"path": [
+								"get_obs"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Įjungti/išjungti dirbtinio intelekto režimą",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"target_temperature_away\": 14,\r\n    \"target_temperature_home\": 19,\r\n    \"target_hour_lower\": 17,\r\n    \"target_hour_upper\": 23\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://52.236.171.103:10000/set_ai_mode/1",
+							"protocol": "http",
+							"host": [
+								"52",
+								"236",
+								"171",
+								"103"
+							],
+							"port": "10000",
+							"path": [
+								"set_ai_mode",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Įjungti/išjungti automatinį režimą",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"target_temperature_away\": 14,\r\n    \"target_temperature_home\": 19,\r\n    \"target_hour_lower\": 17,\r\n    \"target_hour_upper\": 23\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://52.236.171.103:10000/set_manual_mode/1",
+							"protocol": "http",
+							"host": [
+								"52",
+								"236",
+								"171",
+								"103"
+							],
+							"port": "10000",
+							"path": [
+								"set_manual_mode",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Perkrauti simuliacija",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"second\": 0,\r\n    \"minute\": 0,\r\n    \"hour\": 0,\r\n    \"temperature_when_away\": 10,\r\n    \"temperature_when_home\": 18,\r\n    \"min_temperature\": 5,\r\n    \"max_temperature\": 10,\r\n    \"current_temperature\": 7,\r\n    \"schedule_start\": 17,\r\n    \"schedule_end\": 23\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://52.236.171.103:10000/restart",
+							"protocol": "http",
+							"host": [
+								"52",
+								"236",
+								"171",
+								"103"
+							],
+							"port": "10000",
+							"path": [
+								"restart"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Pakeisti temperatūrą",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"temperature_when_away\": 10,\r\n    \"temperature_when_home\": 18,\r\n    \"min_temperature\": 5,\r\n    \"max_temperature\": 10,\r\n    \"current_temperature\": 7\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://52.236.171.103:10000/set_temperature",
+							"protocol": "http",
+							"host": [
+								"52",
+								"236",
+								"171",
+								"103"
+							],
+							"port": "10000",
+							"path": [
+								"set_temperature"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Įjungti/išjungti rašymą į failą",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"frequency\": 0\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://52.236.171.103:10000/toggle_logging",
+							"protocol": "http",
+							"host": [
+								"52",
+								"236",
+								"171",
+								"103"
+							],
+							"port": "10000",
+							"path": [
+								"toggle_logging"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Pakeisti AI agento versiją",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"version\": 1.0\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://52.236.171.103:10000/ai_version_change",
+							"protocol": "http",
+							"host": [
+								"52",
+								"236",
+								"171",
+								"103"
+							],
+							"port": "10000",
+							"path": [
+								"ai_version_change"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Užklausos dirbtinio intelekto serveriui",
+			"item": [
+				{
+					"name": "Gauti dirbtinio intelekto sprendimą",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"temperatures\": [7.149515151977539, 5.0, 10.0, 10.0, 7.433413982391357, 10.0, 19.0, 2.850484848022461], \r\n    \"hours\": [9.0, 17.0, 23.0], \r\n    \"energy\": [500.0, 500.0], \r\n    \"energy_production_consumption\": [0.11999999731779099, 1.0, 2.0, 1.0],\r\n    \"temp_influence\": [0.15000000596046448, -0.15000000596046448],\r\n    \"flags\": [false, false, false], \r\n    \"random_chances\": [50.0, 70.0, 30.0], \r\n    \"minutes_seconds_days\": [24.0, 10.0, 0.0]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://51.145.156.30:10001/ai_control",
+							"protocol": "http",
+							"host": [
+								"51",
+								"145",
+								"156",
+								"30"
+							],
+							"port": "10001",
+							"path": [
+								"ai_control"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}

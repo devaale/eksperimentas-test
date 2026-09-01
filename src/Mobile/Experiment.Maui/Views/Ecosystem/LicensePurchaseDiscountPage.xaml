@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+			 xmlns:UIC="clr-namespace:Experiment.Maui.UI.Controls"
+			 xmlns:data="clr-namespace:Experiment.Maui.Data"
+			 x:Class="Experiment.Maui.Views.Ecosystem.LicensePurchaseDiscountPage">
+	<ContentPage.Resources>
+
+		<Style TargetType="Label">
+			<Setter Property="Margin" Value="5" />
+			<Setter Property="Padding" Value="1" />
+			<Setter Property="FontSize" Value="Default" />
+		</Style>
+
+		<Style TargetType="Grid">
+			<Setter Property="Margin" Value="5" />
+			<Setter Property="Padding" Value="1" />
+		</Style>
+
+	</ContentPage.Resources>
+    <ContentPage.Content>
+
+		<Grid RowDefinitions="*,Auto">
+			<ScrollView Grid.Row="0"
+					HorizontalScrollBarVisibility="Never"
+					VerticalScrollBarVisibility="Always">
+
+				<StackLayout VerticalOptions="Start" Spacing="0">
+					<Label Text="{Binding LabelDiscountDesc}"
+						FontSize="Medium"
+						VerticalOptions="CenterAndExpand"/>
+
+					<StackLayout Orientation="Horizontal" Spacing="8" Margin="5,0">
+						<Label Text="{Binding LabelFullPrice}" />
+						<Label Text="{Binding FullPrice, StringFormat='{0:F2}€', FallbackValue='0.00€'}"
+							HorizontalOptions="EndAndExpand" />
+					</StackLayout>
+
+					<StackLayout Orientation="Horizontal" Spacing="8" Margin="5,0">
+						<Label Text="{Binding LabelDiscount}" />
+						<Label Text="{Binding Discount, StringFormat='{0:F2}€', FallbackValue='0.00€'}"
+							HorizontalOptions="EndAndExpand" />
+					</StackLayout>
+
+					<StackLayout Orientation="Horizontal" Spacing="8" Margin="5,0">
+						<Label Text="{Binding LabelFinalPrice}" />
+						<Label Text="{Binding FinalPrice, StringFormat='{0:F2}€', FallbackValue='0.00€'}"
+							TextColor="{StaticResource Foreground4}"
+							FontAttributes="Bold"
+							HorizontalOptions="EndAndExpand" />
+					</StackLayout>
+
+					<Label Text="{Binding LabelUseTokens}"
+						Margin="10,8,10,0"
+						FontSize="Medium" />
+
+					<Grid Margin="5,0">
+						<Grid.ColumnDefinitions>
+							<ColumnDefinition Width="Auto" />
+							<ColumnDefinition Width="*" />
+							<ColumnDefinition Width="Auto" />
+						</Grid.ColumnDefinitions>
+
+						<UIC:PictureLeftButton Grid.Column="0"
+											   Command="{Binding DecreaseUsedInDiscountTokensCommand}"
+											   ImageSource="{x:Static data:Images.UrlMinusImg}"/>
+
+						<Entry Grid.Column="1"
+							Text="{Binding UsedTokens, FallbackValue='0'}"
+							IsReadOnly="True"
+							HorizontalOptions="FillAndExpand" />
+
+						<UIC:PictureLeftButton Grid.Column="2"
+											   Command="{Binding IncreaseUsedInDiscountTokensCommand}"
+											   ImageSource="{x:Static data:Images.UrlPlusImg}"/>
+					</Grid>
+
+					<StackLayout Orientation="Horizontal" Spacing="8" Margin="5,0">
+						<Label Text="{Binding LabelTokensYouOwn}" />
+						<Label Text="{Binding TokensLeft}"
+							HorizontalOptions="EndAndExpand" />
+					</StackLayout>
+
+				</StackLayout>
+			</ScrollView>
+
+			<StackLayout Grid.Row="1"
+				Orientation="Horizontal"
+				VerticalOptions="End"
+				Margin="0,10,0,8">
+
+				<Button x:Name="CmdBack"
+					Command="{Binding BackCommand}"
+					Text="{Binding LabelBack}"
+					Style="{StaticResource actionButton}"
+					HorizontalOptions="FillAndExpand" />
+
+				<Button x:Name="CmdNext"
+					Command="{Binding ProceedToConfirmPurchaseCommand}"
+					Text="{Binding LabelConfirmPurchase}"
+					HorizontalOptions="FillAndExpand" />
+
+			</StackLayout>
+		</Grid>
+	</ContentPage.Content>
+</ContentPage>

@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+			 xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+			 xmlns:xct="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+			 xmlns:VM="clr-namespace:Experiment.Maui.ViewModels.Ecosystem"
+			 xmlns:Conv="clr-namespace:Experiment.Maui.Data.Converters"
+			 xmlns:data="clr-namespace:Experiment.Maui.Data"
+			 xmlns:UIC="clr-namespace:Experiment.Maui.UI.Controls"
+			 x:Class="Experiment.Maui.Views.Ecosystem.UserProfilePage"
+			 Title="{Binding Title}" Padding="8">
+
+	<ContentPage.BindingContext>
+		<VM:UserProfileViewModel />
+	</ContentPage.BindingContext>
+
+	<ContentPage.Resources>
+		<Conv:LicenseTypeToNameConverter x:Key="LicenseTypeToNameConverter" />
+	</ContentPage.Resources>
+
+	<ContentPage.Content>
+
+		<Grid RowDefinitions="*,Auto">
+
+			<!-- Main content area -->
+			<StackLayout Grid.Row="0"
+						 Orientation="Vertical"
+						 Spacing="10">
+
+				<UIC:PictureLeftButton x:Name="CmdLicenses"
+									   Text="{Binding LabelLicenses}"
+									   Command="{Binding LicensesCommand}"
+									   ImageSource="{x:Static data:Images.UrlLicensesImg}"
+									   ImageSize="16"
+									   HorizontalOptions="End"
+									   IsVisible="{Binding Item.IsMe, FallbackValue=False}"/>
+
+				<StackLayout Padding="5, 50"
+							 Orientation="Vertical"
+							 HorizontalOptions="Center">
+
+					<Label x:Name="LblUsername"
+						   Text="{Binding Item.Name}"
+						   FontSize="Large"
+						   HorizontalOptions="Center" />
+
+					<Label x:Name="LblTokenBallance"
+						   Text="{Binding Item.BallanceInfo}"
+						   FontSize="Small"
+						   HorizontalOptions="Center"
+						   IsVisible="{Binding Item.IsMe, FallbackValue=false}" />
+
+				</StackLayout>
+
+				<!-- Contact / Add Friend buttons -->
+				<Grid ColumnDefinitions="*,*" ColumnSpacing="10">
+					<Button Grid.Column="0"
+							x:Name="CmdContact"
+							Command="{Binding ContactCommand}"
+							Text="{Binding LabelContact}"
+							IsEnabled="{Binding IsNotMe}"
+							HorizontalOptions="Start" />
+
+					<Button Grid.Column="1"
+							x:Name="CmdAddFriend"
+							Command="{Binding AddFriendCommand}"
+							Text="{Binding LabelAddFriend}"
+							IsEnabled="{Binding IsNotMe}"
+							Style="{Binding FriendshipButtonStyle}"
+							HorizontalOptions="End" />
+				</Grid>
+
+				<UIC:PictureUpButton x:Name="CmdGiveTokens"
+						Text="{Binding LabelGiveTokens}"
+						Command="{Binding GiveTokenCommand}"
+						IsEnabled="{Binding CanGiveToken}"
+						ButtonBgColor="{StaticResource Background1}"
+						ImageSource="{x:Static data:Images.UrlWallet}"
+						WidthRequest="100"
+						HorizontalOptions="Center"/>
+
+				<ActivityIndicator IsVisible="{Binding IsBusy}"
+								   IsRunning="{Binding IsBusy}" />
+
+			</StackLayout>
+
+			<!-- Bottom buttons -->
+			<Grid Grid.Row="1"
+				  ColumnDefinitions="*,*"
+				  ColumnSpacing="10"
+				  Padding="0,10">
+
+				<UIC:PictureLeftButton Grid.Column="0"
+									   x:Name="CmdBlock"
+									   Command="{Binding BlockCommand}"
+									   Text="{Binding LabelBlock}"
+									   IsEnabled="{Binding IsNotMe}"
+									   ImageSource="{x:Static data:Images.UrlCrossImg}"
+									   ImageSize="16"
+									   HorizontalOptions="Start" />
+
+				<Button Grid.Column="1"
+						x:Name="CmdBlockchainAccount"
+						Text="{Binding LabelBlockchainAccount}"
+						Command="{Binding BlockchainAccountCommand}"
+						IsVisible="{Binding HasAddress}"
+						HorizontalOptions="End" />
+
+			</Grid>
+
+		</Grid>
+	</ContentPage.Content>
+</ContentPage>
+

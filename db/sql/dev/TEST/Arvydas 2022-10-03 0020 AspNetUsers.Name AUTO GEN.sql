@@ -1,0 +1,1 @@
+UPDATE AspNetUsers SET Name = 'User '+ CAST(Id as nvarchar)

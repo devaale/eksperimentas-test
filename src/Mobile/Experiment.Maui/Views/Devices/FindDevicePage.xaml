@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+			 xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+			 x:Class="Experiment.Maui.Views.Devices.FindDevicePage"
+			 xmlns:xct="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+			 xmlns:vm="clr-namespace:Experiment.Maui.ViewModels.Devices"
+			 xmlns:en="clr-namespace:Experiment.Data.Enums;assembly=Experiment.Data"
+			 Title="{Binding Path=LabelDevice}">
+
+	<ContentPage.BindingContext>
+		<vm:FindDeviceViewModel />
+	</ContentPage.BindingContext>
+
+	<ContentPage.Content>
+		<StackLayout>
+
+			<Label x:Name="LblDescription"
+				   Text="{Binding LabelDeviceDesc}"
+				   VerticalOptions="CenterAndExpand"
+				   HorizontalOptions="CenterAndExpand" />
+
+			<Button x:Name="CmdDeviceModbus"
+					Text="Modbus"
+					Command="{Binding NewDeviceCommand}"
+					CommandParameter="{x:Static en:DeviceProtocol.Modbus}"
+					Margin="0,0,0,10" />
+
+			<Button x:Name="CmdDeviceBACnet"
+					Text="BACnet"
+					Command="{Binding NewDeviceCommand}"
+					CommandParameter="{x:Static en:DeviceProtocol.BACnet}"
+					Margin="0,0,0,10" />
+
+			<Button x:Name="CmdDeviceMQTT"
+					Text="MQTT"
+					Command="{Binding NewDeviceCommand}"
+					CommandParameter="{x:Static en:DeviceProtocol.MQTT}"
+					Margin="0,0,0,10" />
+
+			<Button x:Name="CmdDeviceCoAP"
+					Text="CoAP"
+					Command="{Binding NewDeviceCommand}"
+					CommandParameter="{x:Static en:DeviceProtocol.CoAP}"
+					Margin="0,0,0,10" />
+
+			<Button x:Name="CmdDeviceOpenThread"
+					Text="Openthread"
+					Command="{Binding NewDeviceCommand}"
+					CommandParameter="{x:Static en:DeviceProtocol.OpenThread}" />
+
+			<ActivityIndicator IsVisible="{Binding IsBusy}"
+							   IsRunning="{Binding IsBusy}" />
+
+		</StackLayout>
+	</ContentPage.Content>
+</ContentPage>
+

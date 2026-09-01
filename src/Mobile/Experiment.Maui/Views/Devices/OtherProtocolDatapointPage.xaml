@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+			 xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+			 x:Class="Experiment.Maui.Views.Devices.OtherProtocolDatapointPage"
+			 xmlns:E="clr-namespace:Experiment.Maui"
+			 xmlns:vm="clr-namespace:Experiment.Maui.ViewModels"
+			 Title="{Binding Path=Title}">
+	<ContentPage.Content>
+
+		<ScrollView x:Name="CvwMqttDatapointPage"
+					HorizontalScrollBarVisibility="Never"
+					VerticalScrollBarVisibility="Always"
+					Margin="0"
+					Padding="0">
+
+			<StackLayout>
+
+				<Label x:Name="LblName"
+					   Text="{Binding LabelName}" />
+				<Entry x:Name="TxtName"
+					   Placeholder="{Binding LabelName}"
+					   Text="{Binding Path=Name}"
+					   MaxLength="128" />
+
+				<Label x:Name="LblDescription"
+					   Text="{Binding LabelDescription}" />
+				<Entry x:Name="TxtDescription"
+					   Placeholder="{Binding LabelDescription}"
+					   Text="{Binding Path=Description}"
+					   MaxLength="4096" />
+
+				<Label x:Name="LblDeviceId"
+					   Text="{Binding LabelDeviceId}" />
+				<Entry x:Name="TxtDeviceId"
+					   Placeholder="{Binding LabelDeviceId}"
+					   Text="{Binding Path=DeviceId}"
+					   IsReadOnly="True"
+					   MaxLength="128" />
+
+				<Label x:Name="LblMeasureUnit"
+					   Text="{Binding LabelMeasureUnit}" />
+				<Entry x:Name="TxtMeasureUnit"
+					   Placeholder="{Binding LabelMeasureUnit}"
+					   Text="{Binding Path=MeasureUnit}"
+					   MaxLength="128" />
+
+				<!-- 2023-12-15 Martynas task, diversifying different datapoints
+                <Label x:Name="LblAlias"
+					Text="{Binding LabelAlias}"/>
+                <Entry x:Name="TxtAlias"
+					Placeholder="{Binding LabelAlias}"/>
+				-->
+
+				<Label x:Name="LblMultiplier"
+					   Text="{Binding LabelMultiplier}" />
+				<Entry x:Name="TxtMultiplier"
+					   Placeholder="{Binding LabelMultiplier}"
+					   Text="{Binding Path=Multiplier}"
+					   MaxLength="128" />
+
+				<!-- 2023-12-15 Martynas task, diversifying different datapoints
+                <Label x:Name="LblOffset"
+					Text="{Binding LabelOffset}"/>
+                <Entry x:Name="TxtOffset"
+					Placeholder="{Binding LabelOffset}"
+				    Text="{Binding Path=Offset}"
+				    MaxLength="128" />
+
+                <Picker x:Name="CmbReadWrite"
+					Title="{Binding LabelReadWrite}"
+					ItemsSource="{x:Static E:Hardcoded.ReadWriteTypesList }"
+					ItemDisplayBinding="{Binding Value}"
+					SelectedItem="{Binding Path=SelectedReadWriteType, Mode=TwoWay}" />
+				-->
+
+				<!-- New fields since 2023-12-14 -->
+
+				<Label x:Name="LblInstance"
+					   Text="{Binding LabelInstance}"
+					   IsVisible="{Binding IsBacnet}" />
+				<Entry x:Name="TxtInstance"
+					   Placeholder="{Binding LabelInstance}"
+					   Text="{Binding Path=Instance}"
+					   MaxLength="128"
+					   IsVisible="{Binding IsBacnet}" />
+
+				<Picker x:Name="CmbBACnetObjectType"
+						Title="{Binding LabelObjectType}"
+						ItemsSource="{Binding BACnetObjectTypes.List}"
+						ItemDisplayBinding="{Binding Name}"
+						SelectedItem="{Binding BACnetObjectTypes.Selected, Mode=TwoWay}"
+						IsVisible="{Binding IsBacnet}"/>
+
+				<Picker x:Name="CmbBACnetPropertyId"
+						Title="{Binding LabelPropertyId}"
+						ItemsSource="{Binding BACnetPropertyIds.List}"
+						ItemDisplayBinding="{Binding Name}"
+						SelectedItem="{Binding BACnetPropertyIds.Selected, Mode=TwoWay}"
+						IsVisible="{Binding IsBacnet}" />
+
+				<Picker x:Name="CmbBACnetFunctionCode"
+						Title="{Binding LabelFunctionCode}"
+						ItemsSource="{Binding BACnetFunctionCodes.List}"
+						ItemDisplayBinding="{Binding Name}"
+						SelectedItem="{Binding BACnetFunctionCodes.Selected, Mode=TwoWay}"
+						IsVisible="{Binding IsBacnet}" />
+
+				<Picker x:Name="CmbBACnetDataType"
+						Title="{Binding LabelDataType}"
+						ItemsSource="{Binding BACnetDataTypes.List}"
+						ItemDisplayBinding="{Binding Name}"
+						SelectedItem="{Binding BACnetDataTypes.Selected, Mode=TwoWay}"
+						IsVisible="{Binding IsBacnet}" />
+
+				<Label x:Name="LblTopic"
+					   Text="{Binding LabelTopic}"
+					   IsVisible="{Binding IsMqtt}" />
+				<Entry x:Name="TxtTopic"
+					   Placeholder="{Binding LabelTopic}"
+					   Text="{Binding Path=Topic}"
+					   MaxLength="128"
+					   IsVisible="{Binding IsMqtt}" />
+
+				<Label x:Name="LblResourceUri"
+					   Text="{Binding LabelResourceUri}"
+					   IsVisible="{Binding IsOpenthread}" />
+				<Entry x:Name="TxtResourceUri"
+					   Placeholder="{Binding LabelResourceUri}"
+					   Text="{Binding Path=ResourceUri}"
+					   MaxLength="128"
+					   IsVisible="{Binding IsOpenthread}" />
+
+				<Label x:Name="LblPayload"
+					   Text="{Binding LabelPayload}"
+					   IsVisible="{Binding IsOpenthread}" />
+				<Entry x:Name="TxtPayload"
+					   Placeholder="{Binding LabelPayload}"
+					   Text="{Binding Path=Payload}"
+					   MaxLength="128"
+					   IsVisible="{Binding IsOpenthread}" />
+
+
+				<ActivityIndicator IsVisible="{Binding IsBusy}"
+								   IsRunning="{Binding IsBusy}" />
+
+				<Grid ColumnSpacing="10">
+					<Grid.ColumnDefinitions>
+						<ColumnDefinition Width="*" />
+						<ColumnDefinition Width="*" />
+						<ColumnDefinition Width="*" />
+					</Grid.ColumnDefinitions>
+					<Button x:Name="CmdOk"
+							Grid.Column="0"
+							Text="{Binding LabelSave}"
+							Command="{Binding PostDatapointCommand}"
+							HorizontalOptions="FillAndExpand"
+							IsEnabled="{Binding IsValid}"/>
+
+					<Button x:Name="CmdDelete"
+							Grid.Column="1"
+							Text="{Binding LabelDelete}"
+							HorizontalOptions="FillAndExpand"
+							Command="{Binding DeleteDatapointCommand}"
+							IsVisible="{Binding HasValidId}"
+							Style="{StaticResource negativeButton}" />
+
+					<Button x:Name="CmdCancel"
+							Grid.Column="2"
+							Text="{Binding LabelCancel}"
+							HorizontalOptions="FillAndExpand"
+							Command="{Binding CancelCommand}"
+							Style="{StaticResource actionButton}" />
+				</Grid>
+
+			</StackLayout>
+
+		</ScrollView>
+
+	</ContentPage.Content>
+</ContentPage>

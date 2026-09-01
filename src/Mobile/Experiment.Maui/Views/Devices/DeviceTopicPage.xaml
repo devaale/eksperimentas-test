@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+			 xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+			 xmlns:vm="clr-namespace:Experiment.Maui.ViewModels.Devices"
+			 xmlns:data="clr-namespace:Experiment.Maui.Data"
+			 xmlns:UIC="clr-namespace:Experiment.Maui.UI.Controls"
+			 xmlns:xct="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+			 x:Class="Experiment.Maui.Views.Devices.DeviceTopicPage"
+			 Title="{Binding Title}">
+
+	<!--
+	<ContentPage.BindingContext>
+		<vm:DeviceTopicViewModel />
+	</ContentPage.BindingContext>
+    -->
+
+	<ContentPage.Content>
+		<StackLayout Margin="10">
+
+			<Entry Text="{Binding Path=Item.Topic}"
+				   Placeholder="{Binding LabelTopic}"
+				   VerticalOptions="StartAndExpand"
+				   FontSize="Header" />
+
+			<xct:DockLayout VerticalOptions="End">
+
+				<UIC:PictureLeftButton x:Name="CmdAdd"
+									   xct:DockLayout.DockPosition="Left"
+									   Command="{Binding SaveCommand}"
+									   Text="{Binding LabelSave}"
+									   ImageSource="{x:Static data:Images.UrlPlusImg}" />
+
+				<UIC:PictureLeftButton x:Name="CmdCancel"
+									   xct:DockLayout.DockPosition="Right"
+									   HorizontalOptions="End"
+									   Text="{Binding LabelCancel}"
+									   Command="{Binding CancelCommand}"
+									   ImageSource="{x:Static data:Images.UrlCrossImg}" />
+
+			</xct:DockLayout>
+
+		</StackLayout>
+	</ContentPage.Content>
+</ContentPage>
+

@@ -1,0 +1,34 @@
+﻿@using Microsoft.AspNet.Identity
+@using Website.Models
+@using Website.Controllers
+
+@{ 
+	// Previously for email retrieval was used: User.Identity.GetUserName()
+	var db = new ApplicationDbContext();
+    var userId = User.Identity.GetUserId();
+	var user = db.Users.FirstOrDefault(u => u.Id == userId);
+}
+
+@using Website.Data;
+
+@if (Request.IsAuthenticated)
+{
+    using (Html.BeginForm("LogOff", "Account", new { area = "" }, FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
+    {
+    @Html.AntiForgeryToken()
+
+    <ul class="nav navbar-nav navbar-right">
+        <li>
+            @Html.ActionLink(E.T("hello") +" "+ user.Name + "!", "Index", "Manage", routeValues: new { area = "" }, htmlAttributes: new { title = "Manage" })
+        </li>
+        <li><a href="javascript:sessionStorage.removeItem('accessToken');$('#logoutForm').submit();">@E.T("logoff")</a></li>
+    </ul>
+    }
+}
+else
+{
+    <ul class="nav navbar-nav navbar-right">
+        <li>@Html.ActionLink(E.T("register"), "Register", "Account", routeValues: new { area = "" }, htmlAttributes: new { id = "registerLink" })</li>
+        <li>@Html.ActionLink(E.T("login"), "Login", "Account", routeValues: new { area = "" }, htmlAttributes: new { id = "loginLink" })</li>
+    </ul>
+}

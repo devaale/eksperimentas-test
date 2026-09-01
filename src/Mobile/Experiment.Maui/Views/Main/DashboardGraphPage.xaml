@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+			 xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+			 x:Class="Experiment.Maui.Views.Main.DashboardGraphPage"
+			 xmlns:VM="clr-namespace:Experiment.Maui.ViewModels.Graph"
+			 Title="{Binding Title}">
+
+	<ContentPage.Content>
+		<StackLayout Padding="10" Spacing="8" Margin="0">
+
+			<Picker x:Name="CmbGraphType"
+					Title="{Binding LabelGraphType}"
+					ItemsSource="{Binding GraphTypes.List}"
+					ItemDisplayBinding="{Binding Name}"
+					SelectedItem="{Binding GraphTypes.Selected, Mode=TwoWay}" />
+
+			<Picker x:Name="CmbInterval"
+					Title="{Binding LabelInterval}"
+					ItemsSource="{Binding Intervals.List}"
+					ItemDisplayBinding="{Binding Name}"
+					SelectedItem="{Binding Intervals.Selected, Mode=TwoWay}" />
+
+			<Picker x:Name="CmbAggregation"
+					Title="{Binding LabelAggregation}"
+					ItemsSource="{Binding Aggregations.List}"
+					ItemDisplayBinding="{Binding Name}"
+					SelectedItem="{Binding Aggregations.Selected, Mode=TwoWay}" />
+
+			<HorizontalStackLayout>
+				<CheckBox IsChecked="{Binding Difference}" />
+				<Label Text="{Binding LabelDifference}" VerticalOptions="Center" />
+			</HorizontalStackLayout>
+
+			<Grid ColumnDefinitions="*" HorizontalOptions="Fill">
+				<Entry Grid.Column="0"
+					   HorizontalOptions="Fill"
+					   Text="{Binding DatapointFilterText, Mode=TwoWay}"
+					   Placeholder="Search"
+					   ClearButtonVisibility="WhileEditing"
+					   BackgroundColor="{StaticResource Background4}"
+					   TextColor="{StaticResource Foreground1}"
+					   PlaceholderColor="{StaticResource Foreground3}"
+					   Margin="0" />
+			</Grid>
+
+			<ListView x:Name="LvwItems"
+					  IsGroupingEnabled="True"
+					  GroupDisplayBinding="{Binding GroupKey}"
+					  GroupShortNameBinding="{Binding GroupKey}"
+					  ItemsSource="{Binding Items, Mode=OneWay}"
+					  SelectedItem="{Binding SelectedItem}"
+					  VerticalOptions="FillAndExpand"
+					  RowHeight="45">
+
+				<ListView.GroupHeaderTemplate>
+					<DataTemplate>
+						<TextCell Text="{Binding GroupKey}"
+							TextColor="{StaticResource Foreground2}"
+							DetailColor="{StaticResource Foreground1}" />
+					</DataTemplate>
+				</ListView.GroupHeaderTemplate>
+
+				<ListView.ItemTemplate>
+					<DataTemplate>
+						<ViewCell>
+							<HorizontalStackLayout Padding="5,0">
+								<CheckBox IsChecked="{Binding Checked}" />
+								<Label Text="{Binding Name}" VerticalOptions="Center" />
+							</HorizontalStackLayout>
+						</ViewCell>
+					</DataTemplate>
+				</ListView.ItemTemplate>
+			</ListView>
+
+			<Button x:Name="CmdSave"
+					Text="{Binding LabelSave}"
+					Command="{Binding SaveCommand}" />
+
+		</StackLayout>
+	</ContentPage.Content>
+
+</ContentPage>

@@ -1,0 +1,38 @@
+/* JSTree CSS file */
+
+.tree-container {
+	margin: 0px;
+	padding: 0px;
+	min-width: var(--ese-min-panels-width);
+	height: calc(var(--ese-content-height) - var(--ese-top-panel-height) - 5px);	/* main tree height*/
+	/*overflow: scroll;*/ 
+	/*float: left;
+	background-color: #fafafa; @quickfix */
+	margin-top:2px;
+}
+
+.tree-panel {
+	padding: 2px;
+}
+
+.tree-panel img {
+	padding: 3px 1px;
+}
+
+.ese-tree {
+	margin: 0px;
+	min-width: 300px;
+	width: 100%;
+	/*float: left;*/
+	vertical-align: top;
+
+	overflow:scroll;
+	height: 80%; /* fallback for emergencies */
+	height: var(--ese-main-tree-height);
+}
+
+/* 
+	jsTree context menu z-index altering as elsewhere it has issues with jQuery popup dialogues.
+	@see	https://github.com/vakata/jstree/issues/593#issuecomment-37105913 
+*/
+.vakata-context { z-index: 1001; }

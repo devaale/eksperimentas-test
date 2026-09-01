@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+			 xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+			 xmlns:dxc="http://schemas.devexpress.com/maui"
+			 xmlns:VM="clr-namespace:Experiment.Maui.ViewModels.Test"
+			 x:Class="Experiment.Maui.Views.Test.ChartSeriesFromDataPage"
+			 Title="{Binding Title}">
+	<ContentPage.BindingContext>
+		<VM:ChartSeriesFromDataViewModel />
+	</ContentPage.BindingContext>
+	<!--
+	<dxc:ChartView>
+		<dxc:ChartView.SeriesDataTemplate>
+			<dxc:SeriesTemplateAdapter DataSource="{Binding SeriesData}"
+									   SeriesDataMember="Country"
+									   ArgumentDataMember="Year">
+				<dxc:SeriesTemplateAdapter.ValueDataMembers>
+					<dxc:ValueDataMember Type="Value"
+										 Member="Gdp" />
+				</dxc:SeriesTemplateAdapter.ValueDataMembers>
+				<dxc:SeriesTemplateAdapter.SeriesTemplate>
+					<DataTemplate>
+						<dxc:BarSeries DisplayName="{Binding Path=SeriesDataMemberValue}" />
+					</DataTemplate>
+				</dxc:SeriesTemplateAdapter.SeriesTemplate>
+			</dxc:SeriesTemplateAdapter>
+		</dxc:ChartView.SeriesDataTemplate>
+		<dxc:ChartView.AxisY>
+			<dxc:NumericAxisY AlwaysShowZeroLevel="False">
+				<dxc:NumericAxisY.Style>
+					<dxc:AxisStyle MajorTickmarksVisible="True"
+								   MinorTickmarksVisible="True" />
+				</dxc:NumericAxisY.Style>
+				<dxc:NumericAxisY.Title>
+					<dxc:AxisTitle Text="Total GDP per capita, USD" />
+				</dxc:NumericAxisY.Title>
+			</dxc:NumericAxisY>
+		</dxc:ChartView.AxisY>
+		<dxc:ChartView.AxisX>
+			<dxc:NumericAxisX GridAlignment="1" />
+		</dxc:ChartView.AxisX>
+		<dxc:ChartView.Legend>
+			<dxc:Legend />
+		</dxc:ChartView.Legend>
+	</dxc:ChartView>
+	-->
+	<dxc:ChartView>
+		<dxc:ChartView.SeriesDataTemplate>
+			<dxc:SeriesTemplateAdapter DataSource="{Binding SeriesData}"
+									   SeriesDataMember="DatapointName"
+									   ArgumentDataMember="Date">
+				<dxc:SeriesTemplateAdapter.ValueDataMembers>
+					<dxc:ValueDataMember Type="Value"
+										 Member="Value" />
+				</dxc:SeriesTemplateAdapter.ValueDataMembers>
+				<dxc:SeriesTemplateAdapter.SeriesTemplate>
+					<DataTemplate>
+						<dxc:AreaSeries DisplayName="{Binding Path=SeriesDataMemberValue}" />
+					</DataTemplate>
+				</dxc:SeriesTemplateAdapter.SeriesTemplate>
+			</dxc:SeriesTemplateAdapter>
+		</dxc:ChartView.SeriesDataTemplate>
+		<!--
+		<dxc:ChartView.AxisY>
+			<dxc:NumericAxisY AlwaysShowZeroLevel="False">
+				<dxc:NumericAxisY.Style>
+					<dxc:AxisStyle MajorTickmarksVisible="True"
+								   MinorTickmarksVisible="True" />
+				</dxc:NumericAxisY.Style>
+				<dxc:NumericAxisY.Title>
+					<dxc:AxisTitle Text="Total GDP per capita, USD" />
+				</dxc:NumericAxisY.Title>
+			</dxc:NumericAxisY>
+		</dxc:ChartView.AxisY>
+		-->
+		<dxc:ChartView.AxisX>
+			<dxc:DateTimeAxisX MeasureUnit="Day"
+							   GridAlignment="Day"
+							   GridSpacing="1" />
+		</dxc:ChartView.AxisX>
+		<dxc:ChartView.Legend>
+			<dxc:Legend />
+		</dxc:ChartView.Legend>
+	</dxc:ChartView>
+</ContentPage>

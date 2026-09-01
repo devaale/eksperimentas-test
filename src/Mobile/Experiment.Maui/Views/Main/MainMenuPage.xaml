@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+			 xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+			 x:Class="Experiment.Maui.Views.Main.MainMenuPage"
+			 xmlns:V="clr-namespace:Experiment.Maui.Views.Main"
+			 xmlns:VM="clr-namespace:Experiment.Maui.ViewModels.Main"
+			 xmlns:UIC="clr-namespace:Experiment.Maui.UI.Controls"
+			 xmlns:data="clr-namespace:Experiment.Maui.Data"
+			 Title="{Binding Title}">
+
+	<ContentPage.BindingContext>
+		<VM:MainMenuViewModel />
+	</ContentPage.BindingContext>
+
+	<ContentPage.Resources>
+		<Style TargetType="StackLayout">
+			<Setter Property="Margin" Value="32" />
+		</Style>
+	</ContentPage.Resources>
+
+	<ContentPage.Content>
+		<StackLayout>
+			<ScrollView>
+
+				<FlexLayout Direction="Row"
+							AlignItems="Center"
+							JustifyContent="SpaceEvenly"
+							Wrap="Wrap">
+
+				<UIC:PictureUpButton x:Name="CmdDevices"
+						Text="{Binding LabelDevices}"
+						Command="{Binding DevicesCommand}"
+						ImageSize="40"
+						ImageSource="{x:Static data:Images.UrlDevices }"/>
+
+				<UIC:PictureUpButton x:Name="CmdEcosystem"
+						Text="{Binding LabelEcosystem}"
+						Command="{Binding EcosystemCommand}"
+						ImageSize="40"
+						ImageSource="{x:Static data:Images.UrlEcosystem}" />
+
+				<UIC:PictureUpButton x:Name="CmdChat"
+						Text="{Binding LabelChat}"
+						Command="{Binding ChatCommand}"
+						ImageSize="40"
+						ImageSource="{x:Static data:Images.UrlChat}" />
+				<!-- TextColor="{Binding ColorChat}"-->
+
+				<UIC:PictureUpButton x:Name="CmdAlarms"
+						Text="{Binding LabelAlarms}"
+						Command="{Binding AlarmsCommand}"
+						ImageSize="40"
+						ImageSource="{x:Static data:Images.UrlAlarms}" />
+				<!-- TextColor="{Binding ColorChat}"-->
+
+				<UIC:PictureUpButton x:Name="CmdGraphs"
+						Text="{Binding LabelGraphs}"
+						Command="{Binding GraphsCommand}"
+						ImageSize="40"
+						ImageSource="{x:Static data:Images.UrlGraphs}" />
+
+				<UIC:PictureUpButton x:Name="CmdControl"
+						Text="{Binding LabelControl}"
+						Command="{Binding ControlCommand}"
+						ImageSize="40"
+						ImageSource="{x:Static data:Images.UrlControl}" />
+
+				<UIC:PictureUpButton x:Name="CmdDeterioration"
+						Text="{Binding LabelDeterioration}"
+						Command="{Binding DeteriorationCommand}"
+						IsVisible="{Binding ShowNotImplemented}"
+						ImageSize="40"
+						ImageSource="{x:Static data:Images.UrlDeterioration}" />
+
+				<UIC:PictureUpButton x:Name="CmdEngineering"
+						Text="{Binding LabelEngineering}"
+						Command="{Binding EngineeringCommand}"
+						IsVisible="{Binding ShowNotImplemented}"
+						ImageSize="40"
+						ImageSource="{x:Static data:Images.UrlEngineering}" />
+
+				<UIC:PictureUpButton x:Name="CmdWallet"
+						Text="{Binding LabelWallet}"
+						Command="{Binding WalletCommand}"
+						IsVisible="{Binding ShowNotImplemented}"
+						ImageSize="40"
+						ImageSource="{x:Static data:Images.UrlWallet}" />
+
+				<!--
+					Test button, which is visible only in DEBUG
+					Used for developers purposes, various testing, if needed.
+				-->
+				<UIC:PictureUpButton x:Name="CmdTest"
+						Text="{Binding LabelTest}"
+						Command="{Binding TestCommand}"
+						IsVisible="{x:Static VM:MainMenuViewModel.DEBUG}"
+						ImageSize="40"
+						ImageSource="{x:Static data:Images.UrlTest}" />
+
+				<UIC:PictureUpButton x:Name="CmdSettings"
+						Text="{Binding LabelSettings}"
+						Command="{Binding SettingsCommand}"
+						ImageSize="40"
+						ImageSource="{x:Static data:Images.UrlSettings}" />
+
+				<UIC:PictureUpButton x:Name="CmdLogoff"
+						Text="{Binding LabelLogoff}"
+						Command="{Binding LogoffCommand}"
+						ImageSize="40"
+						ImageSource="{x:Static data:Images.UrlLogoff}" />
+
+				</FlexLayout>
+			</ScrollView>
+
+			<ActivityIndicator IsVisible="{Binding IsBusy}"
+							   IsRunning="{Binding IsBusy}" />
+
+		</StackLayout>
+	</ContentPage.Content>
+</ContentPage>

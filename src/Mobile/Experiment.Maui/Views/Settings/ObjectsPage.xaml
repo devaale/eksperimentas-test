@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Experiment.Maui.Views.Settings.ObjectsPage"
+			 xmlns:VM="clr-namespace:Experiment.Maui.ViewModels.Settings"
+			 Title="{Binding Title}">
+	<ContentPage.BindingContext>
+		<VM:ObjectsViewModel />
+	</ContentPage.BindingContext>
+	<ContentPage.Content>
+		<StackLayout Orientation="Vertical" Padding="10" Spacing="8">
+			<StackLayout Orientation="Horizontal" Spacing="10">
+				
+				<Button x:Name="CmdNew" 
+					Text="{Binding LabelAdd}"
+					Command="{Binding NewRecordCommand}"/>
+				
+				<Button x:Name="CmdEdit" 
+					Text="{Binding LabelEdit}"
+					Command="{Binding EditRecordCommand}"
+					IsEnabled="{Binding IsObjectSelected}"
+					Style="{StaticResource actionButton}"/>
+
+				<Button x:Name="CmdContinue" 
+					Text="{Binding LabelContinue}"
+					Command="{Binding ContinueCommand}"
+					IsVisible="{Binding IsSelectionMode}"
+					IsEnabled="{Binding IsObjectSelected}" />
+
+			</StackLayout>
+
+			<Label Text="{Binding SelectedItemDesc}"
+				   Padding="5"
+				   FontSize="Medium"
+				   FontAttributes="Bold" />
+
+			<ListView x:Name="LvwItems"
+				SelectionMode="Single"
+				ItemsSource="{Binding Items, Mode=OneWay}"
+				SelectedItem="{Binding SelectedItem, Mode=TwoWay}" >
+
+				<ListView.ItemTemplate>
+
+					<DataTemplate>
+						<TextCell Text="{Binding Name}"
+								  TextColor="{StaticResource Foreground1}" />
+					<!--
+					<ViewCell>
+						<Grid>
+							<RadioButton Content="{Binding Name}" IsChecked="{Binding Selected}" />
+						</Grid>
+					</ViewCell>
+					-->
+					</DataTemplate>
+				</ListView.ItemTemplate>
+
+			</ListView>
+		</StackLayout>
+	</ContentPage.Content>
+</ContentPage>

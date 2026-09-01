@@ -1,0 +1,202 @@
+# =============================================================================
+# .cursorignore for C# / .NET / Xamarin / MAUI / iOS / WinUI Project
+# =============================================================================
+
+# -----------------------------------------------------------------------------
+# Build Output Directories
+# -----------------------------------------------------------------------------
+[Bb]in/
+[Oo]bj/
+[Dd]ebug/
+[Rr]elease/
+x64/
+x86/
+build/
+bld/
+out/
+artifacts/
+
+# -----------------------------------------------------------------------------
+# NuGet Packages (third-party dependencies)
+# -----------------------------------------------------------------------------
+packages/
+*.nupkg
+
+# -----------------------------------------------------------------------------
+# Visual Studio & IDE Files
+# -----------------------------------------------------------------------------
+.vs/
+.vscode/
+*.suo
+*.user
+*.sln.docstates
+*.userprefs
+*.DotSettings.user
+_ReSharper*/
+*.[Rr]e[Ss]harper
+.JustCode
+*.cachefile
+*.cache
+*.aps
+*.ncb
+*.opensdf
+*.sdf
+ipch/
+
+# -----------------------------------------------------------------------------
+# Xamarin / MAUI Generated Files
+# -----------------------------------------------------------------------------
+# Auto-generated Android resource files
+**/Resource.Designer.cs
+**/[Rr]esource.[Dd]esigner.cs
+
+# Xamarin Components
+Components/
+
+# MAUI Generated
+**/MauiComponents/
+**/Generated/
+
+# iOS generated
+**/obj/iPhone/
+**/obj/iPhoneSimulator/
+
+# -----------------------------------------------------------------------------
+# iOS / macOS Build Artifacts
+# -----------------------------------------------------------------------------
+*.xcuserstate
+*.xcworkspace
+xcuserdata/
+*.dSYM.zip
+*.dSYM/
+*.ipa
+*.app
+DerivedData/
+*.hmap
+*.aps
+
+# Provisioning profiles
+*.mobileprovision
+*.provisionprofile
+
+# -----------------------------------------------------------------------------
+# Android Build Artifacts
+# -----------------------------------------------------------------------------
+*.apk
+*.aab
+*.ap_
+*.dex
+
+# -----------------------------------------------------------------------------
+# UWP / WinUI Build Artifacts
+# -----------------------------------------------------------------------------
+AppPackages/
+BundleArtifacts/
+*.appx
+*.appxbundle
+*.msix
+*.msixbundle
+*.appxupload
+*.msixupload
+
+# -----------------------------------------------------------------------------
+# Test Results & Coverage
+# -----------------------------------------------------------------------------
+[Tt]est[Rr]esult*/
+[Bb]uild[Ll]og.*
+TestResult.xml
+*.VisualState.xml
+*.coverage
+*.coveragexml
+coverage/
+*.trx
+*.dotCover
+*.ncrunch*
+_NCrunch_*
+.*crunch*.local.xml
+
+# -----------------------------------------------------------------------------
+# Project-Specific Exclusions (based on folder structure)
+# -----------------------------------------------------------------------------
+
+# Migration backups - old project migrations
+MigrationBackup/
+
+# Old/deprecated source code
+src/old/
+
+# Database test SQL scripts (296+ files)
+db/sql/dev/TEST/
+
+# Research test binaries
+research/Tests/Mobility Test/Debug.zip
+
+# Uploaded user files
+src/Web/Files/Original/
+src/Web/Files/Thumb/
+src/Web/Files/Normal/
+
+# Documentation files (keep markdown accessible)
+*.odt
+*.ods
+*.docx
+doc/SH/
+
+# -----------------------------------------------------------------------------
+# Binary & Media Files
+# -----------------------------------------------------------------------------
+*.zip
+*.dll
+*.exe
+*.pdb
+*.mdb
+*.ldf
+*.mdf
+*.nupkg
+*.snk
+
+# Images in build output (keep source images)
+**/[Bb]in/**/*.png
+**/[Oo]bj/**/*.png
+
+# -----------------------------------------------------------------------------
+# Logs & Temporary Files
+# -----------------------------------------------------------------------------
+*.log
+*.tmp
+*.temp
+~$*
+*~
+*.bak
+restore.log
+UpgradeLog*.htm
+UpgradeLog*.XML
+_UpgradeReport_Files/
+
+# -----------------------------------------------------------------------------
+# Publish & Deployment
+# -----------------------------------------------------------------------------
+publish/
+*.[Pp]ublish.xml
+*.azurePubxml
+*.pubxml
+*.publishsettings
+
+# -----------------------------------------------------------------------------
+# Web Dependencies (if present)
+# -----------------------------------------------------------------------------
+node_modules/
+bower_components/
+
+# -----------------------------------------------------------------------------
+# macOS System Files
+# -----------------------------------------------------------------------------
+.DS_Store
+.AppleDouble
+.LSOverride
+._*
+
+# Windows System Files
+Thumbs.db
+ehthumbs.db
+Desktop.ini

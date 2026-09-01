@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+			 xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+			 xmlns:VM="clr-namespace:Experiment.Maui.ViewModels.Test"
+			 xmlns:dxc="http://schemas.devexpress.com/maui"
+			 x:Class="Experiment.Maui.Views.Test.CartesianChartPage"
+			 Title="{Binding Title}">
+	<ContentPage.BindingContext>
+		<VM:CartesianChartViewModel />
+	</ContentPage.BindingContext>
+
+	<!--
+	<dxc:ChartView>
+		<dxc:ChartView.AxisX>
+			<dxc:DateTimeAxisX MeasureUnit="Year"
+							   GridAlignment="Year"
+							   GridSpacing="1" />
+		</dxc:ChartView.AxisX>
+		<dxc:ChartView.Legend>
+			<dxc:Legend VerticalPosition="TopOutside"
+						HorizontalPosition="Center"
+						Orientation="LeftToRight" />
+		</dxc:ChartView.Legend>
+		<dxc:ChartView.Series>
+			<dxc:BarSeries DisplayName="{Binding GdpValueForUSA.CountryName}">
+				<dxc:BarSeries.Data>
+					<dxc:SeriesDataAdapter DataSource="{Binding GdpValueForUSA.Values}"
+										   ArgumentDataMember="Year">
+						<dxc:ValueDataMember Type="Value"
+											 Member="Value" />
+					</dxc:SeriesDataAdapter>
+				</dxc:BarSeries.Data>
+			</dxc:BarSeries>
+
+			<dxc:LineSeries DisplayName="{Binding GdpValueForChina.CountryName}">
+				<dxc:LineSeries.Data>
+					<dxc:SeriesDataAdapter DataSource="{Binding GdpValueForChina.Values}"
+										   ArgumentDataMember="Year">
+						<dxc:ValueDataMember Type="Value"
+											 Member="Value" />
+					</dxc:SeriesDataAdapter>
+				</dxc:LineSeries.Data>
+			</dxc:LineSeries>
+
+			<dxc:AreaSeries DisplayName="{Binding GdpValueForJapan.CountryName}">
+				<dxc:AreaSeries.Data>
+					<dxc:SeriesDataAdapter DataSource="{Binding GdpValueForJapan.Values}"
+										   ArgumentDataMember="Year">
+						<dxc:ValueDataMember Type="Value"
+											 Member="Value" />
+					</dxc:SeriesDataAdapter>
+				</dxc:AreaSeries.Data>
+			</dxc:AreaSeries>
+		</dxc:ChartView.Series>
+	</dxc:ChartView>
+	-->
+
+	<dxc:ChartView>
+		<dxc:ChartView.AxisX>
+			<dxc:DateTimeAxisX MeasureUnit="Day"
+							   GridAlignment="Day"
+							   GridSpacing="1" />
+		</dxc:ChartView.AxisX>
+		<dxc:ChartView.Legend>
+			<dxc:Legend VerticalPosition="TopOutside"
+						HorizontalPosition="Center"
+						Orientation="LeftToRight" />
+		</dxc:ChartView.Legend>
+		<dxc:ChartView.Series>
+			<dxc:BarSeries DisplayName="{Binding GdpValueForUSA.Name}">
+				<dxc:BarSeries.Data>
+					<dxc:SeriesDataAdapter DataSource="{Binding GdpValueForUSA.Values}"
+										   ArgumentDataMember="Date">
+						<dxc:ValueDataMember Type="Value"
+											 Member="Value" />
+					</dxc:SeriesDataAdapter>
+				</dxc:BarSeries.Data>
+			</dxc:BarSeries>
+
+			<dxc:LineSeries DisplayName="{Binding GdpValueForChina.Name}">
+				<dxc:LineSeries.Data>
+					<dxc:SeriesDataAdapter DataSource="{Binding GdpValueForChina.Values}"
+										   ArgumentDataMember="Date">
+						<dxc:ValueDataMember Type="Value"
+											 Member="Value" />
+					</dxc:SeriesDataAdapter>
+				</dxc:LineSeries.Data>
+			</dxc:LineSeries>
+
+			<dxc:AreaSeries DisplayName="{Binding GdpValueForJapan.Name}">
+				<dxc:AreaSeries.Data>
+					<dxc:SeriesDataAdapter DataSource="{Binding GdpValueForJapan.Values}"
+										   ArgumentDataMember="Date">
+						<dxc:ValueDataMember Type="Value"
+											 Member="Value" />
+					</dxc:SeriesDataAdapter>
+				</dxc:AreaSeries.Data>
+			</dxc:AreaSeries>
+		</dxc:ChartView.Series>
+	</dxc:ChartView>
+</ContentPage>

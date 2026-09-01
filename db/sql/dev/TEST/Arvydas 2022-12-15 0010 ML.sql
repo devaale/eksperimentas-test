@@ -1,0 +1,2 @@
+﻿EXEC prcUiWordUpdate 'changeServer', N'Change server', N'Pakeisti serverį', N'Сменить сервер'
+EXEC prcUiWordUpdate 'confirmServerChange', N'Are you sure you want to change the {0} server to {1}? After changing the server, you will have to log in again.', N'Ar tikrai norite pakeisti {0} serverį į {1}? Pakeitus serverį teks iš naujo prisijungti.', N'Вы уверены, что хотите изменить сервер {0} на {1}? После смены сервера вам придется авторизоваться снова.'

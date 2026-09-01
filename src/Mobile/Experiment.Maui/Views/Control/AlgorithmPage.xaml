@@ -1,0 +1,337 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+			 x:Class="Experiment.Maui.Views.Control.AlgorithmPage"
+             xmlns:E="clr-namespace:Experiment.Maui"
+			 xmlns:VM="clr-namespace:Experiment.Maui.ViewModels.Control"
+			Title="{Binding Title}">
+    <ContentPage.BindingContext>
+        <VM:AlgorithmViewModel />
+    </ContentPage.BindingContext>
+    <ContentPage.Content>
+
+        <ScrollView x:Name="CvwModbusDatapointPage"
+			HorizontalScrollBarVisibility="Never"
+			VerticalScrollBarVisibility="Always"
+			Margin="0"
+			Padding="0">
+
+            <StackLayout Orientation="Vertical" Padding="10" Spacing="8">
+
+				<Label x:Name="LlbAlgorithmType"
+                    Text="{Binding LabelAlgorithmType}"/>
+				<Picker x:Name="CmbAlgorithmType"
+				    Title="{Binding LabelAlgorithmType}"
+				    ItemsSource="{Binding AlgorithmTypes.List}"
+				    ItemDisplayBinding="{Binding Name}"
+				    SelectedItem="{Binding AlgorithmTypes.Selected, Mode=TwoWay}"/>
+
+                <Label x:Name="LblName"
+                    Text="{Binding LabelName}"/>
+                <Entry x:Name="TxtName"
+				    Placeholder="{Binding LabelName}"
+				    Text="{Binding Path=Item.Name}"
+				    MaxLength="128"/>
+
+                <Label x:Name="LblDescription"
+                    Text="{Binding LabelDescription}"/>
+                <Entry x:Name="TxtDescription" 
+				    Placeholder="{Binding LabelDescription}"
+                    Text="{Binding Path=Item.Description}"
+				    MaxLength="4096"/>
+
+				<Label x:Name="LblAlarm"
+                    Text="{Binding LabelAlarm}"
+					IsVisible="{Binding Item.IsVisibleAlarmList}"/>
+				<Picker x:Name="CmbAlarm"
+				    Title="{Binding LabelAlarm}"
+                    ItemsSource="{Binding Alarms.List}"
+				    ItemDisplayBinding="{Binding Name}"
+				    SelectedItem="{Binding Alarms.Selected, Mode=TwoWay}"
+                    IsVisible="{Binding Item.IsVisibleAlarmList}"/>
+
+				<Label x:Name="LblGroup"
+                    Text="{Binding LabelGroup}"
+					IsVisible="{Binding Item.IsVisibleGroupList}"/>
+				<Picker x:Name="CmbGroup"
+				    Title="{Binding LabelGroup}"
+                    ItemsSource="{Binding Groups.List}"
+				    ItemDisplayBinding="{Binding Name}"
+				    SelectedItem="{Binding Path=Groups.Selected, Mode=TwoWay}"
+					IsVisible="{Binding Item.IsVisibleGroupList}"/>
+
+				<Label x:Name="LblDatapoint"
+                    Text="{Binding LabelDatapoint}"/>
+				<Picker x:Name="CmbDatapoint"
+				    Title="{Binding LabelDatapoint}"
+                    ItemsSource="{Binding Datapoints.List}"
+				    ItemDisplayBinding="{Binding Name}"
+				    SelectedItem="{Binding Path=Datapoints.Selected, Mode=TwoWay}"/>
+               
+                <Label x:Name="LblValueRange"
+                    Text="{Binding LabelValueRange}"
+                    IsVisible="{Binding Item.IsVisibleValueRange, FallbackValue=false}"/>
+
+				<Grid>
+					<Grid.ColumnDefinitions>
+						<ColumnDefinition Width="*" />
+						<ColumnDefinition Width="*" />
+					</Grid.ColumnDefinitions>
+					<Label x:Name="LblValueRangeFrom"
+						Grid.Column="0"
+                        Text="{Binding LabelFrom}"
+                        IsVisible="{Binding Item.IsVisibleValueRange, FallbackValue=false}"/>
+				
+				    <Label x:Name="LblValueRangeTo"
+						Grid.Column="1"
+                        Text="{Binding LabelTo}"
+                        IsVisible="{Binding Item.IsVisibleValueRange, FallbackValue=false}"/>
+				</Grid>
+				
+				<Grid>
+					<Grid.ColumnDefinitions>
+						<ColumnDefinition Width="*" />
+						<ColumnDefinition Width="*" />
+					</Grid.ColumnDefinitions>
+					<Entry x:Name="TxtValueFrom"
+                        Grid.Column="0"
+                        Placeholder="{Binding LabelFrom}"
+                        Text="{Binding Path=Item.ValueFrom}"
+				        MaxLength="128" 
+                        IsVisible="{Binding Item.IsVisibleValueRange, FallbackValue=false}"/>
+
+					<Entry x:Name="TxtValueTo"
+                        Grid.Column="1"
+                        Placeholder="{Binding LabelTo}"
+                        Text="{Binding Path=Item.ValueTo}"                           
+				        MaxLength="128"
+                        IsVisible="{Binding Item.IsVisibleValueRange, FallbackValue=false}"/>
+                </Grid>
+
+				<!-- Date and Time picker -->
+				<!--
+                <Label x:Name="LblDateTimePicker"
+                    Text="{Binding LabelDateRange}"
+                    HorizontalTextAlignment="Center"
+                    FontAttributes="Bold"
+                    IsVisible="{Binding Item.IsVisibleDateTimePickerLable, FallbackValue=false}"/>
+                -->
+				<Grid ColumnSpacing="10">
+					<Grid.ColumnDefinitions>
+						<ColumnDefinition Width="50" />
+						<ColumnDefinition Width="*" />
+						<ColumnDefinition Width="*" />
+					</Grid.ColumnDefinitions>
+					<Label Grid.Column="0"
+						x:Name="LblFrom" 
+						Text="{Binding LabelFrom}"
+						VerticalOptions="Center"
+                        IsVisible="{Binding Item.IsVisibleDateTimePickerLabel, FallbackValue=false}"/>
+
+					<DatePicker Grid.Column="1"
+						x:Name="DateStart"
+						Date="{Binding Item.DateStart}"
+                        IsVisible="{Binding Item.IsVisibleDatePicker, FallbackValue=false}"/>
+
+					<TimePicker Grid.Column="2"
+						x:Name="TimeStart"
+						Time="{Binding TimeStart}"
+                        IsVisible="{Binding Item.IsVisibleTimePicker, FallbackValue=false}"/>
+				</Grid>
+
+				<Grid ColumnSpacing="10">
+					<Grid.ColumnDefinitions>
+						<ColumnDefinition Width="50" />
+						<ColumnDefinition Width="*" />
+						<ColumnDefinition Width="*" />
+					</Grid.ColumnDefinitions>
+					<Label Grid.Column="0"
+						x:Name="LblTo" 
+						Text="{Binding LabelTo}"
+						VerticalOptions="Center"
+                        IsVisible="{Binding Item.IsVisibleDateTimePickerLabel, FallbackValue=false}"/>
+
+					<DatePicker Grid.Column="1"
+						x:Name="DateEnd"
+						Date="{Binding Item.DateEnd}"
+                        IsVisible="{Binding Item.IsVisibleDatePicker, FallbackValue=false}"/>
+
+					<TimePicker Grid.Column="2"
+						x:Name="TimeEnd"
+						Time="{Binding TimeEnd}"
+                        IsVisible="{Binding Item.IsVisibleTimePicker, FallbackValue=false}"/>
+				</Grid>
+
+				<!-- Week Day picker -->
+				<Grid>
+					<Grid.ColumnDefinitions>
+						<ColumnDefinition Width="*" />
+						<ColumnDefinition Width="*" />
+						<ColumnDefinition Width="*" />
+						<ColumnDefinition Width="*" />
+						<ColumnDefinition Width="*" />
+						<ColumnDefinition Width="*" />
+						<ColumnDefinition Width="*" />
+					</Grid.ColumnDefinitions>
+					<Grid.RowDefinitions>
+						<RowDefinition Height="Auto" />
+						<RowDefinition Height="Auto" />
+					</Grid.RowDefinitions>
+                    <Label Grid.Column="0"
+                       Grid.Row="0"
+						x:Name="LblMo" 
+						Text="{Binding LabelMo}"
+                        IsVisible="{Binding Item.IsVisibleWeekDayPicker, FallbackValue=false}"/>
+                    <CheckBox Grid.Column="0"
+                        Grid.Row="1"
+						x:Name="Mo"
+                        IsChecked="{Binding Item.OnMonday}"
+                        IsVisible="{Binding Item.IsVisibleWeekDayPicker, FallbackValue=false}"/>
+
+                    <Label Grid.Column="1"
+                       Grid.Row="0"
+						x:Name="LblTu" 
+						Text="{Binding LabelTu}"
+                        IsVisible="{Binding Item.IsVisibleWeekDayPicker, FallbackValue=false}"/>
+                    <CheckBox Grid.Column="1"
+                        Grid.Row="1"
+						x:Name="Tu"
+                        IsChecked="{Binding Item.OnTuesday}"
+                        IsVisible="{Binding Item.IsVisibleWeekDayPicker, FallbackValue=false}"/>
+
+                    <Label Grid.Column="2"
+                       Grid.Row="0"
+						x:Name="LblWe" 
+						Text="{Binding LabelWe}"
+                        IsVisible="{Binding Item.IsVisibleWeekDayPicker, FallbackValue=false}"/>
+                    <CheckBox Grid.Column="2"
+                        Grid.Row="1"
+						x:Name="We"
+                        IsChecked="{Binding Item.OnWednesday}"                              
+                        IsVisible="{Binding Item.IsVisibleWeekDayPicker, FallbackValue=false}"/>
+
+                    <Label Grid.Column="3"
+                       Grid.Row="0"
+						x:Name="LblTh" 
+						Text="{Binding LabelTh}"
+                        IsVisible="{Binding Item.IsVisibleWeekDayPicker, FallbackValue=false}"/>
+                    <CheckBox Grid.Column="3"
+                        Grid.Row="1"
+						x:Name="Th"
+                        IsChecked="{Binding Item.OnThursday}"
+                        IsVisible="{Binding Item.IsVisibleWeekDayPicker, FallbackValue=false}"/>
+
+                    <Label Grid.Column="4"
+                       Grid.Row="0"
+						x:Name="LblFr" 
+						Text="{Binding LabelFr}"
+                        IsVisible="{Binding Item.IsVisibleWeekDayPicker, FallbackValue=false}"/>
+                    <CheckBox Grid.Column="4"
+                        Grid.Row="1"
+						x:Name="Fr"
+                        IsChecked="{Binding Item.OnFriday}"
+                        IsVisible="{Binding Item.IsVisibleWeekDayPicker, FallbackValue=false}"/>
+
+                    <Label Grid.Column="5"
+                       Grid.Row="0"
+						x:Name="LblSa" 
+						Text="{Binding LabelSa}"
+                        IsVisible="{Binding Item.IsVisibleWeekDayPicker, FallbackValue=false}"/>
+                    <CheckBox Grid.Column="5"
+                        Grid.Row="1"
+						x:Name="Sa"
+                        IsChecked="{Binding Item.OnSaturday}"
+                        IsVisible="{Binding Item.IsVisibleWeekDayPicker, FallbackValue=false}"/>
+
+                    <Label Grid.Column="6"
+                       Grid.Row="0"
+						x:Name="LblSu" 
+						Text="{Binding LabelSu}"
+                        IsVisible="{Binding Item.IsVisibleWeekDayPicker, FallbackValue=false}"/>
+                    <CheckBox Grid.Column="6"
+                        Grid.Row="1"
+						x:Name="Su"
+                        IsChecked="{Binding Item.OnSunday}"
+                        IsVisible="{Binding Item.IsVisibleWeekDayPicker, FallbackValue=false}"/>
+                </Grid>
+
+            <Label x:Name="LblSendValue"
+                Text="{Binding LabelSendValue}"
+				IsVisible="{Binding Item.IsVisibleSendValue, FallbackValue=false}"/>
+
+				<Grid>
+					<Grid.ColumnDefinitions>
+						<ColumnDefinition Width="*" />
+						<ColumnDefinition Width="*" />
+					</Grid.ColumnDefinitions>
+					<Label x:Name="LblSendValueFrom"
+						Grid.Column="0"
+                        Text="{Binding LabelValueOn}"
+                        IsVisible="{Binding Item.IsVisibleSendValue, FallbackValue=false}"/>
+
+					<Label x:Name="LblSendValueTo"
+						Grid.Column="1"
+                        Text="{Binding LabelValueOff}"
+                        IsVisible="{Binding Item.IsVisibleSendValue, FallbackValue=false}"/>
+				</Grid>
+				
+				<Grid>
+					<Grid.ColumnDefinitions>
+						<ColumnDefinition Width="*" />
+						<ColumnDefinition Width="*" />
+					</Grid.ColumnDefinitions>
+                    <Entry x:Name="TxtOn"
+                        Grid.Column="0"
+                        Placeholder="{Binding LabelValueOn}"
+                        Text="{Binding Path=Item.ValueOn}" 
+				        MaxLength="128"
+					    IsVisible="{Binding Item.IsVisibleSendValue, FallbackValue=false}"/>
+
+                    <Entry x:Name="TxtOff"
+                        Grid.Column="1"
+                        Placeholder="{Binding LabelValueOff}"
+                        Text="{Binding Path=Item.ValueOff}"
+				        MaxLength="128"
+					    IsVisible="{Binding Item.IsVisibleSendValue, FallbackValue=false}"/>
+                </Grid>
+
+				<Label x:Name="LblReminderAfterHours"
+					    Grid.Column="0"
+                        Text="{Binding LabelReminderAfterHours}"
+                        IsVisible="{Binding Item.IsVisibleReminderAfterHours, FallbackValue=false}"/>
+
+				<Entry x:Name="TxtReminderAfterHours"
+                        Placeholder="{Binding LabelReminderAfterHours}"
+                        Text="{Binding Path=Item.ReminderAfterHours}" 
+				        MaxLength="128"
+					    IsVisible="{Binding Item.IsVisibleReminderAfterHours, FallbackValue=false}"/>
+
+				<ActivityIndicator 
+				    IsVisible="{Binding IsBusy}"
+				    IsRunning="{Binding IsBusy}"/>
+
+                <StackLayout Orientation="Horizontal" Spacing="10">
+
+                    <Button x:Name="CmdSave"
+					Text="{Binding LabelSave}"
+					HorizontalOptions="FillAndExpand"
+					Command="{Binding SaveCommand}"
+					IsEnabled="{Binding CanBeEdited}"/>
+
+                    <Button x:Name="CmdDelete"
+					Text="{Binding LabelDelete}"
+					HorizontalOptions="FillAndExpand"
+					Command="{Binding DeleteCommand}"
+					IsEnabled="{Binding CanDelete}"/>
+
+                    <Button x:Name="CmdCancel"
+					Text="{Binding LabelCancel}"
+					HorizontalOptions="FillAndExpand"
+					Command="{Binding CancelCommand}"/>
+
+                </StackLayout>
+            </StackLayout>
+            
+        </ScrollView>
+    </ContentPage.Content>
+</ContentPage>

@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+			 x:Class="Experiment.Maui.Views.Devices.DevicesPage"
+			 xmlns:vm="clr-namespace:Experiment.Maui.ViewModels.Devices"
+			 Title="{Binding Path=Title}">
+
+	<ContentPage.BindingContext>
+		<vm:DevicesViewModel />
+	</ContentPage.BindingContext>
+
+	<ContentPage.Content>
+		<StackLayout Orientation="Vertical" Margin="0">
+			
+			<Label Text="{Binding CurrentObjectDesc}"
+				BackgroundColor="{StaticResource Background3}"
+				Padding="5"
+				FontSize="Medium"
+				FontAttributes="Bold"/>
+
+			<StackLayout Orientation="Horizontal" Spacing="10" Padding="5,0">
+                
+				<Button x:Name="CmdAddDevice" 
+					Text="+"
+					Command="{Binding NewDeviceCommand}"
+					IsEnabled="{Binding CanBeEdited}"/>
+
+                <Button x:Name="CmdEnableAiSupport" 
+					Text="AI"
+					Command="{Binding EnableAiSupportCommand}"
+					IsEnabled="{Binding CanBeEdited}" />
+            
+            </StackLayout>
+
+			<Grid ColumnDefinitions="*" Padding="5,0" Margin="0,0,0,10" HorizontalOptions="Fill">
+				<Entry Grid.Column="0"
+					   HorizontalOptions="Fill"
+					   Text="{Binding DeviceFilterText, Mode=TwoWay}"
+					   Placeholder="Search"
+					   ClearButtonVisibility="WhileEditing"
+					   BackgroundColor="{StaticResource Background4}"
+					   TextColor="{StaticResource Foreground1}"
+					   PlaceholderColor="{StaticResource Foreground3}"
+					   Margin="0" />
+			</Grid>
+
+			<ListView x:Name ="LvwDevices"
+				IsGroupingEnabled="True"
+				GroupDisplayBinding="{Binding GroupKey}"
+				GroupShortNameBinding="{Binding GroupKey}"
+				ItemsSource="{Binding Devices, Mode=OneWay}"
+				SelectedItem="{Binding SelectedItem}"
+				HasUnevenRows="True"
+				VerticalOptions="FillAndExpand">
+
+				<ListView.GroupHeaderTemplate>
+					<DataTemplate>
+						<ViewCell>
+							<ViewCell.View>
+								<Label Text="{Binding GroupKey}"
+									   FontAttributes="Bold"
+									   TextColor="{StaticResource Foreground3}"
+									   BackgroundColor="{StaticResource Background3}"
+									   Padding="5" />
+							</ViewCell.View>
+						</ViewCell>
+					</DataTemplate>
+				</ListView.GroupHeaderTemplate>
+
+				<ListView.ItemTemplate>
+
+					<DataTemplate>
+						<TextCell Text="{Binding Name}" 
+							Detail = "{Binding Description}"
+							TextColor="{StaticResource Foreground1}"
+							DetailColor="{StaticResource Foreground3}" />
+					</DataTemplate>
+				</ListView.ItemTemplate>
+			</ListView>
+
+			<ActivityIndicator 
+				IsVisible="{Binding IsBusy}"
+				IsRunning="{Binding IsBusy}" />
+
+		</StackLayout>
+	</ContentPage.Content>
+</ContentPage>

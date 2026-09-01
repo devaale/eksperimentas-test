@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Experiment.Maui.Views.RegisterPage"
+			 xmlns:vm="clr-namespace:Experiment.Maui.ViewModels"
+			 Title="{Binding Title}">
+	
+	<ContentPage.Resources>
+	</ContentPage.Resources>
+	<ContentPage.BindingContext>
+		<vm:RegisterViewModel />
+	</ContentPage.BindingContext>
+    <ContentPage.Content>
+        <StackLayout Orientation="Vertical">
+
+			<Entry x:Name="TxtName"
+				Text="{Binding Item.Name}"
+				Placeholder="{Binding LabelName}"/>
+
+			<Entry x:Name="TxtEmail"
+				Text="{Binding Item.Email}"
+				Placeholder="{Binding LabelEmail}"/>
+
+			<Entry x:Name="TxtPassword"
+				Text="{Binding Item.Password}"
+				Placeholder="{Binding LabelPassword}"
+				IsPassword="True"/>
+			
+			<Entry x:Name="TxtConfirmPassword"
+				Text="{Binding Item.ConfirmPassword}"
+				Placeholder="{Binding LabelConfirmPassword}"
+				IsPassword="True"/>
+
+			<Picker x:Name="CmbLanguage"
+				Title="{Binding LabelCmbLanguageTitle}"
+				ItemsSource="{Binding Languages.List}"
+				ItemDisplayBinding="{Binding Name}"
+				SelectedItem="{Binding Languages.Selected, Mode=TwoWay}"/>
+
+			<Button x:Name="CmdRegister"
+				Command="{Binding RegisterCommand}"
+				Text="{Binding LabelRegister}"
+				IsEnabled="{Binding IsValid}" />
+
+			<Label x:Name="LblMessage"
+				HorizontalTextAlignment="Center"
+				Text="{Binding Message}" />
+
+			<ActivityIndicator 
+				IsVisible="{Binding IsBusy}"
+				IsRunning="{Binding IsBusy}" />
+
+		</StackLayout>
+    </ContentPage.Content>
+</ContentPage>

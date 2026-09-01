@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+			 x:Class="Experiment.Maui.Views.Settings.FriendsOrBlockedPage"
+			 xmlns:VM="clr-namespace:Experiment.Maui.ViewModels.Settings"
+			 Title="{Binding Title}">
+	<ContentPage.BindingContext>
+		<VM:FriendsOrBlockedViewModel />
+	</ContentPage.BindingContext>
+    <ContentPage.Content>
+        <StackLayout Orientation="Vertical" Padding="10" Spacing="8">
+
+			<Picker x:Name="CmbType"
+				Title="{Binding LabelType}"
+				ItemsSource="{Binding ActivityTypes.List}"
+				ItemDisplayBinding="{Binding Name}"
+				SelectedItem="{Binding ActivityTypes.Selected, Mode=TwoWay}"
+				HorizontalOptions="FillAndExpand"
+				HorizontalTextAlignment="Center"
+				BackgroundColor="{StaticResource Background6}" />
+
+			<StackLayout Orientation="Horizontal" Spacing="10">
+
+				<Button x:Name="CmdNew" 
+					Text="{Binding LabelAdd}"
+					Command="{Binding NewCommand}"/>
+				
+				<Button x:Name="CmdDelete" 
+					Text="{Binding LabelDelete}"
+					Command="{Binding DeleteCommand}"
+					IsEnabled="{Binding IsAnythingSelected}"
+					Style="{StaticResource actionButton}"/>
+				
+			</StackLayout>
+
+			<ListView x:Name="LvwItems"
+				ItemsSource="{Binding Items, Mode=OneWay}"
+				SelectedItem="{Binding SelectedItem, Mode=TwoWay}"
+				HasUnevenRows="True"
+				VerticalOptions="FillAndExpand">
+				
+				<ListView.ItemTemplate>
+					<DataTemplate>
+						<ViewCell>
+							<ViewCell.View>
+								<Grid ColumnSpacing="0"
+									  RowSpacing="0"
+									  Margin="5">
+									<Grid.ColumnDefinitions>
+										<ColumnDefinition Width="*" />
+										<ColumnDefinition Width="Auto" />
+									</Grid.ColumnDefinitions>
+									<Grid.RowDefinitions>
+										<RowDefinition Height="Auto" />
+									</Grid.RowDefinitions>
+
+									<Label Grid.Column="0"
+										   Grid.Row="0"
+										   Text="{Binding Name}"
+										   Padding="5"
+										   FontSize="Medium"
+										   LineBreakMode="TailTruncation" />
+
+									<Button Grid.Column="1"
+										Text="{Binding BindingContext.LabelProfile, Source={x:Reference Name=LvwItems}}"
+										Command="{Binding BindingContext.UserProfileCommand, Source={x:Reference Name=LvwItems}}"
+										CommandParameter="{Binding .}" />
+								</Grid>
+							</ViewCell.View>
+						</ViewCell>
+					</DataTemplate>
+				</ListView.ItemTemplate>
+
+			</ListView>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

@@ -1,0 +1,831 @@
+Vaizdo įrašai, kaip kurti visą sistemą:
+
+NENAUDOJAU, bet gal pravers: ASP.NET Web.Api Duomenų bazė ir Entity Framework
+https://www.youtube.com/watch?v=nMGlaiNBbNU
+
+* * *
+
+Viskas daroma pagal šitą video:
+
+ASP.NET .NET Framework (ne CORE) Web.API projektas su Individual User Accounts autorizacija:
+https://www.youtube.com/watch?v=UToBKlnig4M
+
+
+Problemos su priėjimu iš ASP.net prie duombazės kuri nurodyta Website/web.config
+Tada bus problema kad su konkrečiu APP pool ASP.net useriu neina prisijungt prie duomazės, ką dariau taip:
+https://stackoverflow.com/a/7698316
+
+Pridėt reikia ne db userį bet SQL server login per security, ir priskirt roles dar ExperimentDB duonbazei.
+
+Tada gavau errora: CREATE TABLE permission denied in database 'ExperimentDB'
+Useriui reikia duoti db_creator teises, bet čia asp.net app pool bet gal teks arba jį konfigūruot kitaip...
+Security nežinau ar nuo to netaps pažeidžiamas. Nes tai reikš kad asp.net useris yra DB adminas per trusted db connection.
+
+Userio registravimo URL per Account controller:
+http://localhost/exp/api/Account/Register
+
+POST, BODY:	JSON:
+
+{
+	"Email": "mailas",
+	"Password": "P_8sswordas",
+	"ConfirmPassword": "P_8sswordas"
+}
+
+Passworde butinai turi būti ir didžiųjų ir mažųjų raidžių bei simbolių, kaip nurodyta:
+Experiment\Web\Website\App_Start\IdentityConfig.cs
+
+           manager.PasswordValidator = new PasswordValidator
+            {
+                RequiredLength = 6,
+                RequireNonLetterOrDigit = true,
+                RequireDigit = true,
+                RequireLowercase = true,
+                RequireUppercase = true,
+            };
+
+visa tai standartiniai MIcrosoft dalykai neišradinėjant dviračio
+
+Autorizacijos Token deklaracija
+Experiment\Experiment\Web\Website\App_Start\Startup.Auth.cs
+
+
+
+Tooken ar logino url kad gauti security token:
+http://localhost/exp/Token
+
+Apie topiką: https://youtu.be/UToBKlnig4M?t=789
+
+POST, BODY: x-www-form-urlencoded
+parametrai:
+
+username	email
+password	registracijos metu nurodytas password
+grant_type	password
+
+grąžinama kažkas tokio:
+{
+    "access_token": "qN8KbCaqIARqDbx0BYL1RRvFM1......EPR",
+    "token_type": "bearer",
+    "expires_in": 1209599,
+    "userName": "arvydas@energus.eu",
+    ".issued": "Sun, 20 Mar 2022 23:56:58 GMT",
+    ".expires": "Sun, 03 Apr 2022 23:56:58 GMT"
+}
+access_token ne pilnas čia, ką man grąžino, jis daug ilgesnis ir jį reikės po to siuntinėti su kiekvienu request.
+
+P.S. Visiems controlleriams viršuje reikia dadėti [Authorize] direktyvą, kad prie jų be šios autorizacijos neitų prieiti.
+
+
+
+Faile; Experiment\Experiment\Web\Website\App_Start\Startup.Auth.cs
+
+Yra eilutė:
+
+AccessTokenExpireTimeSpan = TimeSpan.FromDays(14),
+
+Nuri nustato kiek dienų galios prisiloginimo tokenas. YB: https://youtu.be/UToBKlnig4M?t=915
+
+
+Kreipimasis į Values controllerį, kad patikrinti ar gerai veikia autorizacija:
+
+http://localhost/exp/api/Values
+
+GET requestas, su header:
+
+Authorization: [token_type] [access_token]
+
+Trumpiau tariant headeryje turi būti parametras Authorization, su tekstu kuris buvo grąžintas [token_type][tarpas][access_token],
+kur realus pavyzdys, pagal aukščiau gautus duomenis būtų:
+
+Authorization: "bearer qN8KbCaqIARqDbx0BYL1RRvFM1......EPR"
+
+
+Testuoti lengviausia su Google Chrome pluginu Postman, pažiūrėti kaip tai daroma vaizdo įraše kuris buvo nurodytas ankščiau.
+
+
+Kaip priskirti autorizuoto user id kažkur https://youtu.be/UToBKlnig4M?t=1705
+
+string userId = User.Identity.GetUserId();
+
+Įrašų filtravimas pagal user id: https://youtu.be/UToBKlnig4M?t=1965
+
+**** Iki čia viskas su šiuo vaizdo įrašu: https://youtu.be/UToBKlnig4M
+
+
+
+
+
+Toliau registracijos implementacija eina pagal šį vaizdo įrašą:
+https://youtu.be/t0v4srA4NhA
+
+
+Esant klaidai:
+
+Severity	Code	Description	Project	File	Line	Suppression State
+Error		DEP0700: Registration of the app failed. [0x80073CFB] Another user has already installed an unpackaged version of this app. The current user cannot replace this with a packaged version. The conflicting package is 6012ce15-f482-4a9f-9039-23012ac540bc and it was published by CN=5807e81f-e827-458e-97ce-2c85755df7ff.	Experiment.UWP
+
+
+
+Gali būti problmeų jeigu tą patį Experiment.UWP paleisti keliais useriais, teks po šutintis su šituo:
+https://developercommunity.visualstudio.com/t/another-user-has-already-installed-an-unpackaged-v/198610
+
+
+guid gali būti kitas, iš erorr pranešimo reikia paimti:
+
+get-appxpackage -name 6012ce15-f482-4a9f-9039-23012ac540bc -AllUsers
+
+
+Išveda kažką tokio:
+
+Name                   : 6012ce15-f482-4a9f-9039-23012ac540bc
+Publisher              : CN=5807e81f-e827-458e-97ce-2c85755df7ff
+Architecture           : X86
+ResourceId             :
+Version                : 1.0.0.0
+PackageFullName        : 6012ce15-f482-4a9f-9039-23012ac540bc_1.0.0.0_x86__d8kngw2ar4y50
+InstallLocation        : C:\w\dev\github\energus\Eksperimentas\src\.net\Experiment\Experiment\Mobile\Experiment.UWP\bin\x86\Debug\AppX
+IsFramework            : False
+PackageFamilyName      : 6012ce15-f482-4a9f-9039-23012ac540bc_d8kngw2ar4y50
+PublisherId            : d8kngw2ar4y50
+PackageUserInformation : {....}
+IsResourcePackage      : False
+IsBundle               : False
+IsDevelopmentMode      : True
+NonRemovable           : False
+Dependencies           : {Microsoft.UI.Xaml.2.4_2.42007.9001.0_x86__8wekyb3d8bbwe, Microsoft.NET.CoreRuntime.2.2_2.2.30527.2_x86__8wekyb3d8bbwe, Microsoft.NET.CoreFramework.Debug.2.2_2.2.30316.1_x86__8
+                         wekyb3d8bbwe, Microsoft.VCLibs.140.00.Debug_14.0.30035.0_x86__8wekyb3d8bbwe}
+IsPartiallyStaged      : False
+SignatureKind          : None
+Status                 : Ok
+
+Po to bandome:
+
+remove-appxpackage -package PackageFullName -AllUsers
+
+ar:
+
+remove-appxpackage -package 6012ce15-f482-4a9f-9039-23012ac540bc_1.0.0.0_x86__d8kngw2ar4y50 -AllUsers
+
+
+6012ce15-f482-4a9f-9039-23012ac540bc_1.0.0.0_x86__d8kngw2ar4y50
+
+
+get-appxpackage -name 6012ce15-f482-4a9f-9039-23012ac540bc -AllUsers
+remove-appxpackage -package 6012ce15-f482-4a9f-9039-23012ac540bc_1.0.0.0_x86__d8kngw2ar4y50 -AllUsers
+
+
+Ši problema greičiausiai bus tik dirbant su dvejais Windows Useriais, kaip aš (Arvydas), kur pradėjau ne admin useriu kurti Xamarin projektą,
+bet kai prireikė debuginti backendą tą ėjo daryti tik iš admin vartotojo ir dėl to man teko persijungti ant admin vartotojo
+ir tada UWP aplikacija metė šią deployment klaidą.
+
+O šios eilutės, leidžia tiesiog ištrinti deployntą app ir tiek, kad po to jį per naują sudėti galbūt be problemų.
+Ant galo man dabar Xamarin UWP aplikacija veikia tik su ne admin vartotoju, su kuriuo ir pradėjau dirbti kas sukuria šiokių tokių sunkumų.
+
+Iš esmės, rodos app full name nesikeičia ir galbūt pakanka tik remove komandinės eilutės norint pašalinti deployintą Windows Store App...
+Nežinau ar tokį pat full name šis app gaus kituose kompiuteriuose. Bet tame pačiame lyg jis nesikeičia.
+
+
+
+
+Toliau LOgin ar Token funkcionalumas, pagal:	https://youtu.be/Nkccb9ODr_A
+
+Toliau, pačio ASP.net identity naudojimas:	https://youtu.be/UToBKlnig4M
+
+
+Pavyzdinis GitHubas:	https://github.com/HoussemDellai/CheapIdeas
+
+Listview grouping sample: https://devdreamz.com/question/846811-xamarin-listview-grouping
+
+
+Xamarin ar WPF ar XAML binding tutorial
+https://docs.microsoft.com/en-us/xamarin/xamarin-forms/xaml/xaml-basics/data-binding-basics
+
+Apie X:Static bindingus
+https://docs.microsoft.com/en-us/dotnet/desktop/xaml-services/xstatic-markup-extension
+
+
+
+Apie Entity Framework ir kaip kurti reliacines duomenų bazes per jį.
+https://docs.microsoft.com/en-us/aspnet/core/data/ef-mvc/complex-data-model?view=aspnetcore-6.0
+
+
+.NET CLI
+
+Pirmiau reikia įsitikinti kad esate reikiamam folderyje, nes gali būti solution folderis
+cd .\Experiment\Web\Website
+
+## Instaliavimas
+dotnet tool install --global dotnet-ef
+
+## DB droppinimas
+dotnet ef database drop
+
+dotnet ef migrations add InitialCreate
+
+dotnet ef migrations add MaxLengthOnNames
+dotnet ef database update
+
+
+
+EF migracijos, čia kažkas tokio kai reikia keist struktūrą. Dar gerai neišsiaiškinau
+https://docs.microsoft.com/en-us/aspnet/core/data/ef-mvc/migrations?view=aspnetcore-6.0
+
+
+Kaip teisingai Website projekte kurti Controller klasę (video žiūrėti nuo čia jeigu reikia: https://youtu.be/UToBKlnig4M?t=1215  arba skaityti žemiau, kas gal patogiau)
+
+	1. Sukuriame Model folderyje konkrečios controller klasės Model klasę su properčiais. pavyzdžiai: Device ,Datapoint klasės
+	2. Padarome Build ir įsitikiname, kad nebuvo klaidų.
+	3. Kai jau sukurta modelio klasė atsistojame ant Controllers folderio ir spaudžiama pridėti naują Controler (ne šiaip beleką, specialus meniu punktas):
+	4. Renkamės Web APi 2 Controller with actions using entity framework (tai svarbu) Netinka rinktis penktą versiją ar kažką kito, kad ir norisi.
+	5. Jeigu viskas buvo teisingai padaryta, atsidarys dialogas, kuriame reikia nurodyti:
+		5.1	Teisingą Model klasę, kurią sukūrėte;
+		5.2 Data context klasę ar bent patikrinti ar ji tinkama.
+
+			Eksperimente yra du data contecxt naudojami,
+				5.2.1. Tai asp.net autorizacijos datacontext, kurio mes neliečiame, kuris naudojamas tik mūsų autorizacijai, dėl ko jo connection string irgi turi būti teisingas.
+				5.2.2. ExperimentContext kuris naudojamas normaliam darbui ir turi būti nurodytas*
+		5.3. Patikriname ar pavadinimo nepavertė į daugiskaitą ir pataisome jeigu pavertė.
+		5.4. Spaudžiame Add ir viskas bus sukurta.
+
+Jeigu viskas teisingai buvo padaryta, beveik visi metodai bus automatiškai sukurti.
+
+
+Rodos po to kai vieną kartą lentas sukūrė daugiau lentų nenori kurti Entity framework, o jeigu po to pakeiti kažką struktūroje ar dadedi naujų lentų jam kiek matau neįdomu ir jas reikia rankomis sukurti. Tai svarbu žinoti.
+
+Šioks toks Emuliatoriaus nepasileidimo su Xamarin troubleshooteris:
+https://docs.microsoft.com/en-us/xamarin/android/get-started/installation/android-emulator/troubleshooting?pivots=windows
+
+
+ActivityIndicator bet tik Droid
+https://stackoverflow.com/questions/58404158/show-a-activity-indicator-while-view-content-is-loading-in-xamarin-forms
+
+
+Šis ActivityIndicator pavyzdys atrodo paprastesnis ir geresnis. Bet dirbti teks per ViewModel jeigu yra komandų ir IsBusy turi būti VM viduje.
+https://gunnarpeipman.com/xamarin-forms-progress-indicator/
+
+Su asinchroniniais daiktais reikia naudoti Task metodo tipą o ne paprastą, jeigu nenorite problemų. Tai kažkas tokio kaip viena užduotis nes kitaip bardakas vyksta.
+
+https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task?view=net-6.0
+
+
+Naudojam (dėl visa ko) tenai yra kaip instaliuoti:
+https://github.com/xamarin/XamarinCommunityToolkit
+
+
+Bandau chart controlą xamarin MicroCharts, trūkumas gal tik toks, kad .NET framework 2.00
+GIT:	https://www.xamarinhelp.com/charting-xamarin-forms/
+WIKI:	https://github.com/microcharts-dotnet/Microcharts/wiki
+
+=== === ===
+Charto paieškos
+=== === ===
+
+Paaiškėjo, kad Microcharts palaiko tik vieną datapointą grafike vienu metu ir į jį neina pridėti jų keleto.
+Ši diskusija tai patvirtina:
+https://stackoverflow.com/questions/54132725/bar-linear-chart-with-multiple-entries-in-xamarin-forms
+
+
+Toliau pradedu bandyti OxyPlot chartus
+Home(Japaese)	https://www.oxyplot.org/
+Rodos jų GIT:	https://github.com/oxyplot
+
+
+
+Bandome dirbti su DevExpress controlais, kas liečia chartą
+Kablys prasidėjo nuo šio video: https://www.youtube.com/watch?v=zfKB1HFSNVI
+Tenai yra description ir visokių linkų
+
+Rodos dokumentacija (iš video urlų) https://docs.devexpress.com/MobileControls/400422/xamarin-forms/charts/index
+
+Anot to kas rašoma, kiekvienas developeris turi pats registruotis ir gauti savo feed URL iš DevExpress, kurį pridėti prie NuGet packages
+kaip maždaug parodyta čia:
+https://youtu.be/vemhsT2c4oc?t=176
+
+DevExpress ChartView
+
+Generate Series from a Data Source (pavyzdys)
+https://docs.devexpress.com/MobileControls/402973/xamarin-forms/charts/examples/generate-series-from-a-data-store
+
+
+Datetime X Axis (daugiau info)
+https://docs.devexpress.com/MobileControls/DevExpress.XamarinForms.Charts.DateTimeAxisX
+
+GAL DataTemplateSelector
+
+Gal padĖs https://supportcenter.devexpress.com/ticket/details/t500832/how-to-generate-series-of-different-view-types-using-the-mvvm-binding-style
+
+Googlinti chartview DataTemplateSelector devexpress
+
+MAno (Arvydas) rašyti support ticketai: https://supportcenter.devexpress.com/ticket/list
+
+https://docs.microsoft.com/en-us/xamarin/xamarin-forms/app-fundamentals/behaviors/
+https://docs.devexpress.com/MobileControls/402973/xamarin-forms/charts/examples/generate-series-from-a-data-store
+https://docs.microsoft.com/en-us/xamarin/xamarin-forms/app-fundamentals/templates/data-templates/selector
+https://docs.microsoft.com/en-us/xamarin/xamarin-forms/app-fundamentals/templates/data-templates/creating
+https://docs.microsoft.com/en-us/dotnet/desktop/wpf/data/data-templating-overview?view=netframeworkdesktop-4.8
+
+Apie bindingus: 
+https://docs.microsoft.com/en-us/dotnet/desktop/wpf/data/binding-declarations-overview?view=netdesktop-6.0
+
+DevExpress - Pie chart
+https://docs.devexpress.com/MobileControls/400410/xamarin-forms/charts/getting-started/pie-chart-lesson
+
+Create a Cartesian Chart
+https://docs.devexpress.com/MobileControls/400411/xamarin-forms/charts/getting-started/cartesian-chart-lesson
+
+Nusprendėm, kad pie ir donut chartai bus good to have, kadangi jų inicializavimui reikia PieChartView controlo.
+
+DevExpress Xamarin PieChartView dirba tik su agreguotais duomenimis, kada vieną datapointą pristato vienas įrašas.
+Tai liečia ir donut ir pie chartus. Šiuo metu mes neisisavinę Entity Framework algoritmo, kaip agreguoti duomenis.
+Tačiau, Martynas neliepė implementuoti šių chartų šiuo metu ir jie atidedami neribotam laikui.
+
+EF aggregacija
+
+https://docs.microsoft.com/en-us/ef/core/querying/complex-query-operators
+
+ET Raw SQL queries and procedures
+https://docs.microsoft.com/en-us/ef/core/querying/raw-sql
+
+Kad veiktų raw SQL užklausos per EF reikia EntityFramework Core
+NuGet pagal nutylėjimą siūlo labai aukštą versiją kuri neveiks su mūsų Website projekto .NET framework versija
+Dėl to teko rinktis daug žemesnę EF Core versiją, 3.x kaip ir rašoma čia:
+https://docs.microsoft.com/en-us/ef/core/miscellaneous/platforms
+
+By default versija skirta .NET Framework 6.00 O net sudėjus jos SDK su VS 2019 nesimato tokios versijos
+Kaip ir jeigu kažkaip sukišus greičiausiai sugadintų projektą. Dėl to šiuo keliu geriau neiti, bandant pakeisti Website framwork versija į 6
+O paprasščiausiai dėti EF Core 3.x versiją
+
+Apie DevExpress charto DateTimeXAxis
+https://docs.devexpress.com/MobileControls/DevExpress.XamarinForms.Charts.DateTimeAxisX
+
+Atradau būdą, kaip iš entity framework kviesti paprastas SQL užklausas. Per Entity Framework Core, kurį sudėjau į Website projektą per NuGet. Tačiau pavyko sudėti tik 3,x versiją. Jeigu taip susirasti per NuGet ir instaliuoti, neįdiegs, nes mūsų Website projekto .NET framework versija per žema naujausiai šio komponento versijai. Ten spėju reikia .NET Framework 6.00, jeigu ne aukštesnio tam, o mes naudojam 4.x, ir migracija į tokį aukštą FM pirmas dalykas kažin ar palaikoma Visual Studio 2019, kaip ir projektą gali sugriauti, tai kas yra. Dėl to, jeigu kada teks jį diegti, kad ir jis dabar į konkretų projektą jau mano branche įdiegtas, reikia prieš diegiant nužeminti versiją iki 3,x.
+ 
+Tuo pačiu kiek skiriasi darbo su SQL interfeisas nuo naujausios versijos, kur ten FromRawSql metodai, tokių EF Core 3.x nėra metodų. Už tai yra SqlQuery metodas.
+ 
+Tiesa,, dirbant su EF (entity framework, toliau EF visada), kai vyksta query, visada reikalauja unikalaus key tarp grąžinamo rezultato, nes kitaip sugadina duomenis EF kurie tampa blogi. Tai tenka su T-SQL ROW_NUMBER stulpelį vietoj ID generuoti, net jeigu tai aggreguota informacija ir panašiai. Vakar pusė dienos prasiknisau dėl to, kodėl charto duomenys buvo blogi. Pasirodo EF kiekvieno rezultato atveju reikalauja unikalaus Key, ale PK, net jeigu tai agregacija, net jeigu dirbama RAW SQL užklausomis. Kitaip pradeda grąžint n kartų kiek buvo įrašų tą patį pirmą įrašą, jeigu PK nėra. Tai tai reikia "zarubit na nosu" ir žinoti.
+
+Iš teams.
+
+Kaip grąžinti failą per ASP.net Web.Api REST controller metodą:
+https://www.c-sharpcorner.com/article/fileresult-in-asp-net-core-mvc2/
+
+Mums reikia ne iš tikro failo, bet duombazės, tai šis pavyzdys gal geriausias:
+ public FileContentResult DownloadContent()  
+        {  
+            var myfile = System.IO.File.ReadAllBytes("wwwroot/Files/FileContentResult.pdf");  
+            return new FileContentResult(myfile, "application/pdf");  
+        } 
+		
+		
+Gali prireikti, apie xamarin lokalizavimą
+https://docs.microsoft.com/en-us/xamarin/xamarin-forms/app-fundamentals/localization/text?pivots=windows
+
+Įdomus kas liečia redirecto problemą, kaip iš Request paimti URL informaciją, bet tik tiek:
+https://stackoverflow.com/questions/3609763/redirecting-default-aspx-to-root-virtual-directory
+
+Redirectų problemą padėjo išspręsti šis straipsnis
+https://stackoverflow.com/questions/23965089/login-to-the-mvc-5-asp-net-template-web-application-fails-when-moved-from-the-ro
+
+Kaip naudoti model razor pages
+https://docs.microsoft.com/en-us/aspnet/core/razor-pages/?view=aspnetcore-6.0&tabs=visual-studio
+https://www.learnrazorpages.com/razor-pages/model-binding
+
+Kas yra ViewBag
+https://www.tutorialsteacher.com/mvc/viewbag-in-asp.net-mvc
+
+Aiškinantis kaip inicializuoti modelį
+https://stackoverflow.com/questions/18413769/object-reference-not-set-to-an-object-calling-razor-model-from-view
+
+Kaip dirbti su Razor MVC, step by step
+https://www.c-sharpcorner.com/UploadFile/3d39b4/working-with-html-beginform-and-ajax-beginform-in-mvc-3/
+
+how razor pages know which controller method to use
+https://docs.microsoft.com/en-us/aspnet/core/razor-pages/?view=aspnetcore-6.0&tabs=visual-studio
+https://www.learnrazorpages.com/razor-pages/handler-methods
+
+Getting more familiar with Razor pages Area/Areas
+https://www.learnrazorpages.com/advanced/areas
+
+Sukūrus tik naują meniu punktą ar nuorodą ir nurodytame controller šiuo atveju Home naujas metodas Settings, išmetė štai tokią klaidą:
+
+Server Error in '/exp' Application.
+The view 'Settings' or its master was not found or no view engine supports the searched locations. The following locations were searched:
+~/Views/Home/Settings.aspx
+~/Views/Home/Settings.ascx
+~/Views/Shared/Settings.aspx
+~/Views/Shared/Settings.ascx
+~/Views/Home/Settings.cshtml
+~/Views/Home/Settings.vbhtml
+~/Views/Shared/Settings.cshtml
+~/Views/Shared/Settings.vbhtml
+Description: An unhandled exception occurred during the execution of the current web request. Please review the stack trace for more information about the error and where it originated in the code.
+
+Exception Details: System.InvalidOperationException: The view 'Settings' or its master was not found or no view engine supports the searched locations. The following locations were searched:
+~/Views/Home/Settings.aspx
+~/Views/Home/Settings.ascx
+~/Views/Shared/Settings.aspx
+~/Views/Shared/Settings.ascx
+~/Views/Home/Settings.cshtml
+~/Views/Home/Settings.vbhtml
+~/Views/Shared/Settings.cshtml
+~/Views/Shared/Settings.vbhtml
+
+
+Tai reiškia, kad reikia sukurti dar ir šiuos failus. Ne visus žinoma. Išsaugau kad žinoti kokius galima. Mūsų atveju pakaks cshtml.
+
+
+Code first migrations, kaip dirbti. 
+Keičiant DB struktūrą kartais raunasi su errorais
+ČIa kaip tvarkingia viską daryti
+https://docs.microsoft.com/en-us/ef/ef6/modeling/code-first/migrations/?redirectedfrom=MSDN
+
+KIek supratau kaip tai darosi. Viskas vyksta Visual Studio - Package Manager Console, sekančios komandos:
+
+Enable-Migrations
+
+-- įjungia migracijas, kur dar nebūtinai iš karto įjungs, reikia sakityti ir gali tekti rinktis kuriam context įjungti.
+
+Add-Migration
+
+-- Sukuria naują migraciją
+
+Update-Database
+
+-- Įvykdo migrciją.
+
+Prie to dar generuos kažkokį kodą kiek mačiau.
+
+
+
+LAMBDA Expressions
+https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/operators/lambda-expressions
+
+return _signInManager ?? HttpContext.GetOwinContext().Get<ApplicationSignInManager>();
+
+Mūsų C# versija per žema  navarotams, kaip ??=
+
+
+ASp.net MVC useriu praplėtimas. Mes bijau kad ne viską turime.
+Aš kai kūriau projektą nedėjau varnelės kur formas dar visas sudėtų.
+Bandžiau, bet kažin kol kokią valandą darė kol neužkniso ir nutraukiau. Po to be jų kūriau.
+https://codewithmukesh.com/blog/user-management-in-aspnet-core-mvc/
+
+Vargstu kaip paimti ASp.net vartotoją ne iš pačio AccountController, kas yra truputį pragaras. 
+Geriasuias gal atsakymas čia: https://stackoverflow.com/a/22835540
+
+Jo reikia daugiakalbystei nes prie jo išsaugojau kalbos nustatymą, o dabar negaliu jo pasiekti iš jos... 
+
+app.viewmodel.js yra priskiriamas accessToken i sesija, jeigu smalsu iš kur jis tenai atsiranda:
+dataModel.setAccessToken(fragment.access_token);
+
+Sesija savaime nesaugoja authTokeno, ir sesija šiuo atveju yra laikina, kol išjungsite naršyklę
+Bet tiesiog kai einama į kažkokį page, vyksta reloadas prieš pakraunant page 
+kada tikrinamas ar useris prisijungęs ir tada backendas grąžina authToken per URL.
+
+Štai kaip jis tenai atsiranda. 
+
+
+Problema Sammy routes nes velnias žino ką su tuo daryti...
+
+Jeigu nerandama jau išsaugoto authToken:
+
+if (!dataModel.getAccessToken()) {
+
+bandoma pirmoje eilėje parsinti URLą, kuriame jo ieškoma:
+var fragment = common.getFragment();
+
+				if (fragment.access_token) {
+					// returning with access token, restore old hash, or at least hide token
+					window.location.hash = fragment.state || '';
+					dataModel.setAccessToken(fragment.access_token);
+
+Vis gi jeigu urle nerado:
+} else {
+					// Original code, which causes redirect to ROOT / folder after entering APP root for authorization
+					//window.location = "Account/Authorize?client_id=web&response_type=token&state=" + encodeURIComponent(window.location.hash);
+
+					// WORKAROUND START
+					// no token - so bounce to Authorize endpoint in AccountController to sign in or register
+					var url = "Account/Authorize?client_id=web&response_type=token&state=" +
+						encodeURIComponent(window.location.hash) +
+						"&returnUrl=" + encodeURIComponent(window.location);
+					window.location = url;
+					// WORKAROUND END
+				}
+				
+tada vyksta redirectas į autorizavimą iš kur vėl pakliūnama į šį algoritmą ir jau tada su reikiamais parametrais URLe.
+Po to sesijoj ir išsaugojamas key. Sesija naudojasi tik kaip storage, tačiau ne tai kad backend į ją tai padeda bet ši dalis.
+
+
+Kaip pamatyti Android įrenginį iš visual studio ir t.t... 
+https://docs.microsoft.com/en-us/xamarin/android/get-started/installation/set-up-device-for-development
+
+Man prireikė:
+	1. įjungt Developer options per about phone/version, kuriuose reikėjo:
+	1.1 Įjungt USB debugging, kad eitų debugint iš VS android telefone paleistą app;
+	1.2 Įjungiau install from USB
+	
+	
+kaip nuimti screenshot android: VolumeDOWN + POWER button
+
+Publish to Google Play Store
+Xamarin 		https://docs.microsoft.com/en-us/xamarin/android/deploy-test/publishing/publishing-to-google-play/?tabs=windows
+(kiekvienas tab reikia, kad iš dokumentacijos nuorodoje aukščiau buvo nueita gilyn į kitą dokumentacijos nuorodą)
+
+*	First, sign into your Google Play Developer account. 
+	https://play.google.com/console/signup
+	
+*	If you do not already have a Google Play Developer account, see Get Started with Publishing. 
+	https://developers.google.com/android-publisher/getting_started
+	
+	Create a new project
+		*	Go to the API access page on the Google Play Console.
+			https://play.google.com/console/api-access
+		*	Click Create new project.
+	
+	
+Sumoje, yra:
+	1. Google Play Console kur sukuriama paskyra
+	2. Šioje paskyroje sukuriama Aplikacija ar appsas;
+	3. Tada appsas linkinamas su Google Cloud laikymui;
+	4. Toliau yra du autorizacijos būdai:
+	4.1	Service Account
+	4.2 OAuth, kurio mums reikia.
+	
+	
+Dar šia aprašyta kaip kurti Oauth ir kaip į visual studio paimti reikiamą info:
+	https://www.balbooa.com/gridbox-documentation/how-to-get-google-client-id-and-client-secret
+	
+You need to configure access to the Google Play Developer API with an OAuth client or a service account. In most cases, you should use a service account to access the API.
+
+Service accounts must be used in a secure environment, such as your server. The service account credentials need to be securely managed so they are not revealed to anyone that is not authorized to use the API.
+
+The OAuth Client ID should be used if you need to access the API on behalf of an individual user. For example, if your website needs to access the Google Play Developer API from the web client on behalf of the user, you can use the Client ID. The user will be authenticated with their Google account instead of the service account. This allows you to make API calls on behalf of a user without compromising service account credentials.	
+
+
+Nandau right click and Experiment.Android ir meniu pasirinkau Archive. Tam reikia būtinai kad būtų nustatyta prieš tai Release.
+
+Kuriant android keystore, yra klausiama 2 digits country code. Pagal šį aprašymą, tai ISO 3166 alpha-2 country code
+Tačiau tiko ir visai ne skaičiai, o tiesiog raidės LT
+https://developer.android.com/reference/java/util/Locale
+
+https://developers.google.com/android-publisher/getting_started
+
+Energus Google Account -> Play Console 
+Client Id:	8827592860338320143
+xnxrgusgroup!Xnxrgus123*:xGFA+
+
+Set Which Chrome Profile for Visual Studio to
+https://www.codeproject.com/Articles/1236613/Set-Which-Chrome-Profile-for-Visual-Studio-to-Use
+
+Aukčiau duota info nepadėjo sudėti visko. Pirmadienį bandysiu šį video žiūrėti.
+
+Vaizdo įrašas kaip ką daryti:
+https://www.youtube.com/watch?v=XNJmMYKr6XU
+
+INformacija apie tai kaip sukurti Xamarin android bundle, o ne APK.
+https://stackoverflow.com/questions/68804019/how-to-build-android-app-bundle-using-xamarin-visual-studio-2015
+
+Tačiau yra problema kad VS2019 nepalaiko normaliai API level 31 ar android 12 versijos. nors lyg kažkoks workaroundas yra aprašomas šiuose komentaruose, bet jis ne itin patikimas.
+https://docs.microsoft.com/en-us/answers/questions/779964/android-12-sdk-not-available-in-visual-studio-2019.html
+
+
+Android irenginio debuginimas per WIFI
+https://www.xamarinexpert.it/how-to-debug-your-android-app-over-wifi-and-say-goodbye-to-cables/
+
+
+Galvojau kviesti Xamarin listView eventą kai pasirenka useris kitą listo elementą, bet šis kelias duobėtas ir sudėtingas norint dirbti vien komandomis be eventų.
+Ir radau kitą būdą. Galima užbindinti viewModel ListView::SelectedItem property ir iš karto VM gavinėti kas pažymėta.
+
+Tokiu būdu galima išsiversti be komandų ar eventų, iš karto pasibindinus besikeičiančią reikšmę.
+
+Idėjos šaltinis: https://stackoverflow.com/a/26383726
+
+Problema kaip listviewe padaryti kažką panašaus į radiobox ir dar kad jis ir redaguotūsi, reaguotų į eventus.
+Šis linkas kažkiek į temą jeigu kam prireiks: 
+https://learn.microsoft.com/en-us/xamarin/android/user-interface/layouts/list-view/customizing-appearance
+
+EF ryšių kūrimas, kaip sukurti ID lauką ir reliacinio objekto property ir kaip deklaruoti viską:
+https://stackoverflow.com/a/13388489
+https://stackoverflow.com/a/41347166
+
+O čia kaip deklaruoti ryšį su AspNetUser lenta, bet man pradėjo rųėkti kad yra problemų su Asp.net lentelių struktūra pagal EF.
+https://stackoverflow.com/a/25885012
+Tikriausiai Asp.Net nenaudoja EF dirbant su jomis.
+
+Perėjimas ant vieno DB context, kodėl?
+https://stackoverflow.com/a/28532180
+
+SVARBU! Norint, kad Xamarine IsEnabled bindai pvz. su Button veiktų, reikia kad XAML IsEnabled atributas eitų po komandos:
+https://stackoverflow.com/a/46817216
+
+Kaip paimti return value iš asinchroninių taskų, pvz. Task<bool> paversti į tiesiog <bool>
+await prašoka tolyn ir nelaukia jeigu tai asinchroninis kažkas. Dėl to tenai yra: returnValue.Wait() metodas, kad palaukti ir po to returnValue.Result kur saugojama tokia reikšmė:
+https://stackoverflow.com/a/45138360
+
+Xamarin Listview nustatymas HasUnevenRows="true" leidžia turėti UI skirtingų įrašų skirtingo aukščio. Jeigu šitai neįjungta visi per prievartą bus suvienodinto aukščio:
+Tai veikia. Tikrinau su postais (main Menu->Ecosystem)
+https://stackoverflow.com/a/55785294
+
+Darbas su paveikslėliais
+
+UI Parinkti paveikslėlį - Xamarin.Essentials: Media Picker
+https://learn.microsoft.com/en-us/xamarin/essentials/media-picker?tabs=android
+
+Failų/medijos priėjimo permissions
+https://developer.android.com/training/data-storage/shared/media
+
+Kaip atkopijuoti failus į Android Emuliatorių
+https://youtu.be/-b5msmTYTjE
+
+Send image to Server from Xamarin Forms
+https://learn.microsoft.com/en-us/answers/questions/322038/send-image-to-server-from-xamarin-forms.html
+
+Tvarkingas ListView refresh scrollinant, tempiant į viršų listą
+https://www.xamarinhelp.com/pull-to-refresh-listview/
+
+Nested property binding problema, kai pats itemas yra null ir jo property nepasiekiamas:
+<StackPanel IsEnabled="{Binding ParentObject.EditAvailable, FallbackValue=False}">
+
+https://stackoverflow.com/a/58395638
+
+
+Kaip sustilizuot Xamarin Listview kaip chat pranešimus
+https://devblogs.microsoft.com/xamarin/customizing-list-view-cells-xamarin-forms-datatemplateselector/
+https://github.com/nishanil/Xamarin.Forms-Samples/tree/master/DataTemplateSelector/DataTemplateSelector
+
+Enum Color Spalvos (yra paveiksliukas)
+https://learn.microsoft.com/en-us/previous-versions/windows/desktop/windows-media-center-sdk/bb189018%28v=msdn.10%29
+
+Kaip ištraukti REST metodų descriptions iš komentarų prie metodo (nenaudojau bet suradau kaip maždaug)
+https://stackoverflow.com/a/24284962
+
+Kaip realizuoti notifications ant Xamarin:
+Learn:			https://learn.microsoft.com/en-us/xamarin/xamarin-forms/app-fundamentals/local-notifications
+GIT pavyzdys:	https://github.com/xamarin/xamarin-forms-samples/tree/main/LocalNotifications/LocalNotifications
+
+Paysera integracija
+https://developers.paysera.com/lt/checkout/basic
+https://developers.paysera.com/lt/checkout/integrations/integration-library
+
+Paysera - užsakymo siuntimas: https://github.com/evp/webtopay-lib-dotnet/blob/master/example/EVP.WebToPay.ClientAPIExample/Default.aspx.cs
+
+Paysera - įvykdyto užsakymo callback'as:
+
+
+
+Xamarin App startas
+
+* Startas prasideda nuo App.xaml.cs;
+* App.xaml.cs iškviečia StartupPage.xaml.cs
+
+Forgot password
+https://learn.microsoft.com/en-us/aspnet/identity/overview/features-api/account-confirmation-and-password-recovery-with-aspnet-identity
+
+http://terra/exp/Account/ForgotPassword
+
+Forgot password ar confirm password, reikalauja kad elektorninio pašto siuntimų sistema jau būtų sukonfigūruota.
+
+Asp.net email konfigūravimas Web.config (sort of)
+https://stackoverflow.com/a/31356582
+Po Web.config paredagavimo reikia RESTART IIS SERVER!
+
+Toliau, reikia kad čia kodas būtų geras irgi:
+Eksperimentas\src\.net\Experiment\Experiment\Web\Website\App_Start\IdentityConfig.cs
+Tenai yra ir SMS siuntimų konfigūravimo tarnybos vieta, ne vien e-mail.
+
+Maždaug kaip rašo čia:
+https://stackoverflow.com/a/35786070
+
+Tačiau jeigu eiti pagal geriausias praktikas, greičiausiai šis variantas:
+https://stackoverflow.com/a/45789677
+
+
+Mes naudojame du web projektus viename, tai:
+
+1. ASP.NET MVC tai Web dalis (viena technologija)
+2. Web API 2.00 REST webservisas su kuriuo komunikuoja Xamarin/Android App, kuris naudoja ApiController controllerius
+
+REST visada stateless ir nesaugoja sayje jokios info, kaip sesijų, skirtingai nei webas ir šias technologijas ne toliaregis microsoft nenumatęs leisti kartu.
+Dėl to kyla niuansai, kai mums reikia ir web ir appsui rest serviso, dabar sukurti URL jiems, kur čia keletas nuorodų kas gal gali padėti:
+
+https://stackoverflow.com/q/61738719
+https://stackoverflow.com/q/25245065
+
+Superherojai, blockchain inetgracija
+https://gw.energus.superhow.net/api-docs/
+http://energus.superhow.net/
+https://gw.energus.superhow.net/api/blockchain/getHeight
+
+Esminiai blockchain akcentai
+
+Unikali Blockhain vartotojui informacija:
+====
+	Address (kažkas tokio kaip vartotojo ID blockchain sistemoje)
+	Private Key
+	Public Key
+	
+Mosaic - tam tikra blockchain valiuta, kurių gali būti daug.
+
+energus.currency mosaic id: 4ED8D0D15576FD89
+
+Superherojai kontaktas dėl blockchain: monika.g@superhow.com
+
+
+Confirm email URL host/exp/Account/ConfirmEmail?userId={AspNetUsers.Id-su-guid-bruksniais}&code={code-velniai-zino-kaip-gauti}
+
+
+Windows UWP problema
+I followed Hong-Zhang's approach above and this worked as long as I included -AllUsers as an argument to the remove-appxpackage.
+
+So I used:
+
+get-appxpackage -name NameFromErrorMessage -AllUsers
+
+to get the PackageFullName and then
+
+remove-appxpackage -package PackageFullName -AllUsers
+
+https://developercommunity.visualstudio.com/t/another-user-has-already-installed-an-unpackaged-v/198610
+
+DexExpress Xamarin Chart AggregationType ir jo implementacija
+https://docs.devexpress.com/MobileControls/DevExpress.XamarinForms.Charts.DateTimeAxisX.AggregationType
+
+c.AxisX = new DXC.DateTimeAxisX()
+{
+	MeasureUnit = Utils.ToDxcDateTimeMeasureUnit(ChartMeasureUnit),
+	GridAlignment = Utils.ToDxcDateTimeMeasureUnit(ChartMeasureUnit),
+#warning @TODO: https://docs.devexpress.com/MobileControls/DevExpress.XamarinForms.Charts.DateTimeAxisX.AggregationType
+	//!AggregationType = DXC.AggregationType.Min,
+	GridSpacing = 1,
+}
+
+// Conversion of List<Datapoint> to Dictionary<Datapoint.Id, Datapoint>
+var list = new List<Datapoint>();
+var listDic = list.ToDictionary(dp => dp.Id, dp => dp);
+
+
+XAML
+<CheckBox.Margin>
+	<OnPlatform x:TypeArguments="Thickness">
+		<On Platform="iOS" Value="0,-10,0,0" />
+		<On Platform="Android, WinPhone, Windows" Value="0,-5,0,0" />
+	</OnPlatform>
+</CheckBox.Margin>
+
+xamarin Java.Lang.IllegalArgumentException: 'No configs match configSpec'
+Dont use latest android 13.0 api 33 emulator. Charts is working on android 12.0 api 31.
+https://supportcenter.devexpress.com/ticket/details/t1134827/error-simply-putting-chartview-in-program
+
+JSON padavimas į T-SQl procedūrą kaip parametro
+https://www.c-sharpcorner.com/article/how-to-pass-json-as-parameter-to-store-procedure/
+
+Naudojasi OPENJSON T-SQL funkcija 
+https://learn.microsoft.com/en-us/sql/t-sql/functions/openjson-transact-sql?view=sql-server-ver16
+
+DECLARE @json NVARCHAR(2048) = N'{
+	"ai_control_mode": false,
+	"automatic_control_mode": false,
+	"cooler_status": false,
+	"energy_current": 500.0,
+	"energy_generation": 0.0,
+	"energy_max": 500.0,
+	"energy_usage": 2.0,
+	"heater_status": false,
+	"simulation_speed": "real time",
+	"sunny_weather": false,
+	"target_hour_lower": 17.0,
+	"target_hour_upper": 23.0,
+	"temp_inside": 21.984041213989259,
+	"temp_outside": 20.44915199279785,
+	"temp_outside_max": 23.0,
+	"temp_outside_min": 16.0,
+	"temp_target_away": 20.0,
+	"temp_target_home": 17.0,
+	"time_day": 6.0,
+	"time_hour": 20.0,
+	"time_minute": 11.0,
+	"time_second": 30.0,
+	"time_step": "second"
+}';
+
+SELECT * FROM OpenJson(@json);
+
+
+MQTT
+
+https://www.emqx.com/en/blog/how-to-set-parameters-when-establishing-an-mqtt-connection
+
+2023-11-14	Susidurta su nauja Entity Framework problema, tarp EObject ir ObjectPermissions klasių. 
+			Pasirodo, tie tokie prie klasių ryšiai objektai gali užbugginti json serializaciją kaip self reference loop.
+			O jeigu nenurodai to ryšinio objekto, tai tada jis ieško EObject_Id o tokio aišku nėra. 
+			
+			
+			Konkrečiai čia problema buvo su EObject.Permissions array, nes Rišamasis tblObjectPermission.ObjectId o ne EObjectId
+			Dėl to teko va taip prie kolekcijos EObject klasėje nurodinėti, kad gerai sugautų ryšį tarp šios ir ObjectPermission lentos.
+			Prasišutinau visą vakarą su šia problema...
+			
+			[ForeignKey(nameof(ObjectPermission.ObjectId))]
+			public ICollection<ObjectPermission> Permissions { get; set; }
+

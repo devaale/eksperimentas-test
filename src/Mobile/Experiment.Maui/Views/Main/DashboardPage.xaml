@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+			 xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+			 x:Class="Experiment.Maui.Views.Main.DashboardPage"
+			 x:Name="DashboardPageRoot"
+			 xmlns:EDM="clr-namespace:Experiment.Data.Models;assembly=Experiment.Data"
+			 xmlns:UIC="clr-namespace:Experiment.Maui.UI.Controls"
+			 xmlns:vm="clr-namespace:Experiment.Maui.ViewModels.Main"
+			 xmlns:data="clr-namespace:Experiment.Maui.Data"
+			 Title="{Binding Title}">
+
+	<ContentPage.BindingContext>
+		<vm:DashboardViewModel />
+	</ContentPage.BindingContext>
+	<ContentPage.Resources>
+		<Style TargetType="UIC:ChartControl">
+			<Setter Property="Margin" Value="0" />
+			<Setter Property="Padding" Value="0" />
+		</Style>
+	</ContentPage.Resources>
+	<ContentPage.Content>
+		<Grid Margin="2"
+			  RowSpacing="4"
+			  RowDefinitions="Auto,Auto,*,Auto">
+
+			<!-- Row 0: Filters -->
+			<StackLayout Grid.Row="0"
+						Orientation="Horizontal"
+						Padding="0"
+						Margin="0">
+				<UIC:DashboardButton x:Name="BtnFilters"
+									 IsEnabled="{Binding CanControl}"
+									 Text="{Binding LabelGeneralSettings}"
+									 ImageSource="{x:Static data:Images.UrlSettingsImg}"
+									 Command="{Binding OpenFiltersCommand}"
+									 CommandParameter="{x:Reference DashboardPageRoot}"
+									 HorizontalOptions="FillAndExpand" />
+			</StackLayout>
+
+			<!-- Row 1: Chart settings (full width) -->
+			<UIC:DashboardButton x:Name="CmdCurrentGraphSettings"
+								 Grid.Row="1"
+								 IsEnabled="{Binding CanControl}"
+								 Text="{Binding LabelChartSettings}"
+								 ImageSource="{x:Static data:Images.UrlSettingsImg}"
+								 Command="{Binding ChartOptionsCommand}"
+								 CommandParameter="{Binding SelectedCarouselGraphId}"
+								 HorizontalOptions="Fill"
+								 Margin="0,0,0,4" />
+
+			<!-- Row 2: Page dots (spaced above chart) + carousel -->
+			<Grid Grid.Row="2"
+				  RowDefinitions="Auto,*"
+				  RowSpacing="14"
+				  HorizontalOptions="Fill"
+				  VerticalOptions="Fill">
+				<IndicatorView x:Name="GraphPageIndicators"
+							   Grid.Row="0"
+							   HorizontalOptions="Center"
+							   VerticalOptions="Center"
+							   IndicatorColor="{StaticResource Foreground3}"
+							   SelectedIndicatorColor="{StaticResource Foreground2}"
+							   IndicatorSize="11"
+							   MaximumVisible="4"
+							   Margin="0,4,0,0" />
+				<CarouselView x:Name="GraphCarousel"
+							  Grid.Row="1"
+							  ItemsSource="{Binding CarouselGraphs}"
+							  CurrentItem="{Binding SelectedCarouselGraph, Mode=TwoWay}"
+							  IndicatorView="{x:Reference GraphPageIndicators}"
+							  Loop="False"
+							  HorizontalOptions="Fill"
+							  VerticalOptions="Fill">
+					<CarouselView.ItemTemplate>
+						<DataTemplate x:DataType="vm:DashboardGraphViewModel">
+							<Frame BackgroundColor="White"
+								   Padding="0"
+								   Margin="0"
+								   HasShadow="False"
+								   HorizontalOptions="Fill"
+								   VerticalOptions="Fill">
+								<Grid HorizontalOptions="Fill" VerticalOptions="Fill">
+									<UIC:GenericChartControl ChartParameters="{Binding Params}"
+															 HorizontalOptions="Fill"
+															 VerticalOptions="Fill" />
+									<UIC:DashboardButton IconOnly="True"
+														   IsEnabled="{Binding Source={x:Reference DashboardPageRoot}, Path=BindingContext.CanControl}"
+														   IsTransparent="{Binding LegendVisible}"
+														   ImageSource="{Binding LegendVisibleIcon}"
+														   Command="{Binding ToggleLegendCommand}"
+														   HorizontalOptions="End"
+														   VerticalOptions="Start"
+														   Margin="4"
+														   Padding="0"
+														   ZIndex="10" />
+								</Grid>
+							</Frame>
+						</DataTemplate>
+					</CarouselView.ItemTemplate>
+				</CarouselView>
+			</Grid>
+
+			<!-- Row 3: Activity -->
+			<ActivityIndicator Grid.Row="3"
+							   IsVisible="{Binding IsBusy}"
+							   IsRunning="{Binding IsBusy}" />
+
+		</Grid>
+	</ContentPage.Content>
+</ContentPage>

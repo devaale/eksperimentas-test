@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+			 xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+			 x:Class="Experiment.Maui.Views.Ecosystem.LicensePurchaseTermPage"
+			 xmlns:DATA="clr-namespace:Experiment.Maui.Data">
+
+	<ContentPage.Resources>
+
+		<Style TargetType="Label" x:Key="licenseTermName">
+			<Setter Property="BackgroundColor" Value="{StaticResource Background4}" />
+			<Setter Property="FontSize" Value="Medium" />
+			<Setter Property="FontAttributes" Value="Bold" />
+			<Setter Property="HorizontalTextAlignment" Value="Center" />
+			<Setter Property="Padding" Value="2" />
+		</Style>
+
+		<Style TargetType="Label" x:Key="licenseTermPrice">
+			<Setter Property="BackgroundColor" Value="{StaticResource Background4}" />
+			<Setter Property="FontSize" Value="Subtitle" />
+			<Setter Property="TextColor" Value="{StaticResource Foreground4}" />
+			<Setter Property="FontAttributes" Value="Bold" />
+			<Setter Property="Padding" Value="2, 2" />
+		</Style>
+
+	</ContentPage.Resources>
+
+	<ContentPage.Content>
+
+		<StackLayout>
+
+			<ScrollView VerticalOptions="FillAndExpand">
+
+				<ListView x:Name="LvwItems"
+						  ItemsSource="{Binding AvailableLicenseTerms, Mode=OneWay}"
+						  SelectedItem="{Binding SelectedLicenseTerm}"
+						  SelectionMode="Single"
+						  HasUnevenRows="True">
+
+					<ListView.ItemTemplate>
+						<DataTemplate>
+							<ViewCell>
+								<StackLayout Orientation="Vertical"
+											 HorizontalOptions="Fill"
+											 BackgroundColor="{x:StaticResource Background4}"
+											 Spacing="0">
+
+									<Label Text="{Binding Name}"
+										   Style="{StaticResource licenseTermName}" />
+
+									<StackLayout Orientation="Horizontal"
+												 Margin="5"
+												 Padding="0"
+												 Spacing="0"
+												 BackgroundColor="{StaticResource Background4}">
+
+										<Label Text="{Binding BindingContext.LabelPrice, Source={x:Reference Name=LvwItems}}"
+											   Style="{StaticResource licenseTermPrice}" />
+
+										<Label Text="{Binding Price}"
+											   Style="{StaticResource licenseTermPrice}" />
+
+										<Label Text="€"
+											   Style="{StaticResource licenseTermPrice}" />
+
+									</StackLayout>
+								</StackLayout>
+							</ViewCell>
+						</DataTemplate>
+					</ListView.ItemTemplate>
+				</ListView>
+			</ScrollView>
+
+			<StackLayout Grid.Row="1"
+						 Orientation="Horizontal"
+						 VerticalOptions="End">
+
+				<Button x:Name="CmdBack"
+						Command="{Binding BackCommand}"
+						Text="{Binding LabelBack}"
+						Style="{StaticResource actionButton}"
+						HorizontalOptions="FillAndExpand" />
+
+				<Button x:Name="CmdNext"
+						Command="{Binding ProceedToApplyDiscountCommand}"
+						Text="{Binding LabelDiscountApply}"
+						HorizontalOptions="FillAndExpand"
+						IsEnabled="{Binding IsTermSelected, FallbackValue=false}" />
+
+			</StackLayout>
+
+		</StackLayout>
+	</ContentPage.Content>
+</ContentPage>

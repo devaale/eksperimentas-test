@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+			 xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+			 x:Class="Experiment.Maui.Views.Graph.GraphChartGenericPage"
+			 xmlns:UIC="clr-namespace:Experiment.Maui.UI.Controls"
+			 xmlns:EDM="clr-namespace:Experiment.Data.Models;assembly=Experiment.Data"
+			 xmlns:vm="clr-namespace:Experiment.Maui.ViewModels.Graph"
+			 Title="{Binding Title}">
+	<ContentPage.Content>
+
+		<ScrollView x:Name="CvwMain"
+					HorizontalScrollBarVisibility="Never"
+					VerticalScrollBarVisibility="Always"
+					Margin="0"
+					Padding="0">
+
+			<StackLayout Orientation="Vertical">
+
+				<UIC:GenericChartControl x:Name="ChtMain"
+										 HeightRequest="386"
+										 ChartParameters="{Binding GenericParams}" />
+				<!-- 
+				<UIC:ChartControl x:Name="ChtMain"
+								  HeightRequest="386"
+								  ChartSeriesName="{x:Static EDM:DatapointValue.SERIES_NAME_PROPERTY}"
+								  ChartSeriesDisplayMember="{x:Static EDM:DatapointValue.DISPLAY_MEMBER_PROPERTY}"
+								  ChartSeriesValueMember="{x:Static EDM:DatapointValue.VALUE_MEMBER_PROPERTY}"
+								  ChartTitle="{Binding Title}"
+								  ChartType="{Binding ChartParameters.ChartType}"
+								  ChartSeries="{Binding ChartParameters.DatapointValues}"
+								  ChartMeasureUnit="{Binding ChartParameters.MeasureUnit}" />
+				-->
+
+				<Grid HorizontalOptions="FillAndExpand">
+					<Grid.ColumnDefinitions>
+						<ColumnDefinition Width="*" />
+						<ColumnDefinition Width="*" />
+					</Grid.ColumnDefinitions>
+
+					<Button x:Name="CmdBack"
+							Grid.Column="0"
+							Command="{Binding GoBackwardCommand}"
+							Text="{Binding LabelBack}"
+							IsEnabled="{Binding CanGoBack}"
+							HorizontalOptions="FillAndExpand"
+							Style="{StaticResource actionButton}"/>
+
+					<Button x:Name="CmdForward"
+							Grid.Column="1"
+							Command="{Binding GoForwardCommand}"
+							Text="{Binding LabelForward}"
+							IsEnabled="{Binding CanGoForward}"
+							HorizontalOptions="FillAndExpand" />
+				</Grid>
+
+				<ListView x:Name="LvwDatapointValues"
+						  ItemsSource="{Binding CurrentDatapointValueNavigationEntity}"
+						  SelectedItem="{Binding SelectedItem}"
+						  SelectionMode="Single"
+						  Background="{StaticResource Background1}">
+
+					<ListView.ItemTemplate>
+						<DataTemplate>
+							<ViewCell>
+								<Grid>
+									<Grid.ColumnDefinitions>
+										<ColumnDefinition Width="*" />
+										<ColumnDefinition Width="Auto" />
+										<ColumnDefinition Width="Auto" />
+									</Grid.ColumnDefinitions>
+									<Label Grid.Column="0"
+										   Text="{Binding DatapointName}"
+										   FontAttributes="Bold" />
+
+									<Label Grid.Column="1"
+										   Text="{Binding Date}" />
+
+									<Label Grid.Column="2"
+										   Text="{Binding Value}"
+										   HorizontalTextAlignment="End" />
+								</Grid>
+							</ViewCell>
+						</DataTemplate>
+					</ListView.ItemTemplate>
+				</ListView>
+
+				<ActivityIndicator IsVisible="{Binding IsBusy}"
+								   IsRunning="{Binding IsBusy}" />
+
+			</StackLayout>
+
+		</ScrollView>
+
+	</ContentPage.Content>
+</ContentPage>

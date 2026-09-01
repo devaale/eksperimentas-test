@@ -1,0 +1,50 @@
+﻿/* Checklist UI control */
+.el-checklist {
+	/*
+	display: flex !important;
+	flex-direction: column;
+*/
+	display: inline-block;
+	border: dashed 1px gray;
+	padding: 2px;
+	margin: 2px;
+}
+
+.el-checklist-cmds {
+/*
+	display: flex !important;
+	flex-direction: row;
+*/
+	display: block;
+}
+
+.el-checklist-cmd {
+	display: inline-block;
+	margin: 2px;
+}
+
+.el-checklist-content {
+	border: dashed 1px gray;
+	margin: 2px;
+	padding: 0;
+	min-height: 16px;
+}
+
+.el-checklist-option {
+	margin: 4px;
+}
+
+	.el-checklist-option > label {
+		margin-left: 2px;
+	}
+
+.unseletable {
+	-moz-user-select: none;
+	-khtml-user-select: none;
+	-webkit-user-select: none;
+	user-select: none;
+}
+
+.el-dropdown {
+
+}

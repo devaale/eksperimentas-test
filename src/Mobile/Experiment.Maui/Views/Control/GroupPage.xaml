@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+			 x:Class="Experiment.Maui.Views.Control.GroupPage"
+			 xmlns:VM="clr-namespace:Experiment.Maui.ViewModels.Control"
+			Title="{Binding Title}">
+    <ContentPage.Content>
+        <StackLayout Orientation="Vertical" Padding="10" Spacing="8">
+
+            <Label Text="{Binding LabelGroupInfo}"
+				FontAttributes="Bold" />
+
+            <Entry x:Name="LblDescription"
+				Placeholder="{Binding LabelDescription}"
+				Text="{Binding Item.Name}"
+				IsEnabled="{Binding CanBeEdited}" />
+
+            <Label Text="{Binding LabelDatapoints}"
+				 FontAttributes="Bold" />
+
+            <ListView x:Name="LvwItems"
+				ItemsSource="{Binding Item.Datapoints, Mode=OneWay}"
+				IsVisible="{Binding CanBeEdited}" >
+
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+
+                        <ViewCell>
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+									<ColumnDefinition Width="Auto" />
+									<ColumnDefinition Width="*" />
+								</Grid.ColumnDefinitions>
+								<Grid.RowDefinitions>
+									<RowDefinition Height="Auto" />
+								</Grid.RowDefinitions>
+                                <CheckBox Grid.Column="0"
+									IsChecked="{Binding Selected}" />
+                                <Label Grid.Column="1"
+									Grid.Row="0"
+									Text="{Binding Name}"
+									FontAttributes="Bold" />
+                            </Grid>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+
+            </ListView>
+
+            <StackLayout Orientation="Horizontal" Spacing="10">
+
+                <Button x:Name="CmdSave"
+					Text="{Binding LabelSave}"
+					HorizontalOptions="FillAndExpand"
+					Command="{Binding SaveCommand}"
+					IsEnabled="{Binding CanBeEdited}"/>
+
+                <Button x:Name="CmdDelete"
+					Text="{Binding LabelDelete}"
+					HorizontalOptions="FillAndExpand"
+					Command="{Binding DeleteCommand}"
+					IsEnabled="{Binding CanDelete}"/>
+
+                <Button x:Name="CmdCancel"
+					Text="{Binding LabelCancel}"
+					HorizontalOptions="FillAndExpand"
+					Command="{Binding CancelCommand}"/>
+
+            </StackLayout>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

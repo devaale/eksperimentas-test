@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Experiment.Maui.Views.Settings.SettingsPage"
+			 xmlns:VM="clr-namespace:Experiment.Maui.ViewModels.Settings"
+			 xmlns:DT="clr-namespace:Experiment.Maui.Data"
+			 Title="{Binding Title}">
+	
+	<ContentPage.BindingContext>
+		<VM:SettingsViewModel />
+	</ContentPage.BindingContext>
+	
+	<ContentPage.Content>
+        <StackLayout Padding="10" Spacing="10">
+
+			<Picker x:Name="CmbServer"
+				Title="{Binding LabelServer}"
+				IsEnabled="{Binding IsDebug}" 
+				ItemsSource="{x:Static DT:Settings.Servers}"
+				ItemDisplayBinding="{Binding Value}" 
+				SelectedItem="{Binding CurrentServer, Mode=TwoWay}" />
+
+			<Picker x:Name="CmbLanguage"
+				Title="{Binding LabelLanguage}"
+				ItemsSource="{Binding Languages.List}"
+				ItemDisplayBinding="{Binding Name}"
+				SelectedItem="{Binding Languages.Selected, Mode=TwoWay}"/>
+
+			<Button x:Name="CmdFriendsOrFamily"
+				Text="{Binding LabelFriendsAndBLocked}"
+				Command="{Binding FriendsOrFamilyCommand}" />
+
+			<Button x:Name="CmdObjects"
+				Text="{Binding LabelObjects}"
+				Command="{Binding ObjectsCommand}" />
+
+			<Button x:Name="CmdMyProfile"
+					Text="{Binding LabelMyProfile}"
+					Command="{Binding MyProfileCommand}" />
+
+		</StackLayout>
+    </ContentPage.Content>
+</ContentPage>

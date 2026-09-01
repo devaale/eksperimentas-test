@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "Blockchain Sync": {
+      "commandName": "Project",
+      "commandLineArgs": "go"
+    }
+  }
+}

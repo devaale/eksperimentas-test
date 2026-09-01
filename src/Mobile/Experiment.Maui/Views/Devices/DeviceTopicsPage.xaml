@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:Experiment.Maui.ViewModels.Devices"
+             x:Class="Experiment.Maui.Views.Devices.DeviceTopicsPage"
+			 Title="{Binding Title}">
+
+    <!--
+	<ContentPage.BindingContext>
+		<vm:DeviceTopicsViewModel />
+	</ContentPage.BindingContext>
+    -->
+
+    <ContentPage.Content>
+		<StackLayout Orientation="Vertical">
+
+			<!--
+			<Label Text="{Binding CurrentObjectDesc}"
+				   BackgroundColor="{StaticResource Background3}"
+				   Padding="5"
+				   FontSize="Medium"
+				   FontAttributes="Bold" />
+
+			<StackLayout Orientation="Horizontal">
+				<Button x:Name="CmdAddDevice"
+						Text="+"
+						Command="{Binding NewDeviceCommand}"
+						IsEnabled="{Binding CanBeEdited}" />
+			</StackLayout>
+			-->
+
+			<StackLayout Orientation="Horizontal" Spacing="10">
+
+				<Button x:Name="CmdNew"
+						Text="{Binding LabelAdd}"
+						Command="{Binding NewCommand}" />
+
+				<Button x:Name="CmdEdit"
+						Text="{Binding LabelEdit}"
+						Command="{Binding EditCommand}"
+						IsEnabled="{Binding IsAnythingSelected}"
+						Style="{StaticResource actionButton}" />
+
+				<Button x:Name="CmdDelete"
+						Text="{Binding LabelDelete}"
+						Command="{Binding DeleteCommand}"
+						IsEnabled="{Binding IsAnythingSelected}"
+						Style="{StaticResource negativeButton}" />
+
+			</StackLayout>
+
+
+			<ListView x:Name="LvwItems"
+					  IsGroupingEnabled="False"
+					  ItemsSource="{Binding Items, Mode=OneWay}"
+					  SelectedItem="{Binding SelectedItem}">
+
+				<ListView.ItemTemplate>
+
+					<DataTemplate>
+						<!--
+						<TextCell Text="{Binding Name}"
+								  Detail="{Binding Description}"
+								  TextColor="{StaticResource Foreground1}"
+								  DetailColor="{StaticResource Foreground3}" />
+						-->
+						<TextCell Text="{Binding Topic}"
+								  TextColor="{StaticResource Foreground1}"
+								  DetailColor="{StaticResource Foreground3}" />
+					</DataTemplate>
+				</ListView.ItemTemplate>
+			</ListView>
+
+			<ActivityIndicator IsVisible="{Binding IsBusy}"
+							   IsRunning="{Binding IsBusy}" />
+
+		</StackLayout>
+	</ContentPage.Content>
+</ContentPage>

@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+			 xmlns:E="clr-namespace:Experiment.Maui"
+			 xmlns:vm="clr-namespace:Experiment.Maui.ViewModels.Devices"
+			 x:Class="Experiment.Maui.Views.Devices.ModbusDevicePage"
+			 Title="{Binding Path=Title}">
+
+	<!--
+    <ContentPage.BindingContext>
+        <vm:DeviceViewModel />
+    </ContentPage.BindingContext>
+	-->
+
+    <ContentPage.Content>
+		<StackLayout Margin="8,8,8,8">
+			<ScrollView VerticalOptions="FillAndExpand"
+					HorizontalScrollBarVisibility="Never"
+					VerticalScrollBarVisibility="Always">
+
+				<StackLayout Margin="0" Padding="0,0,0,10">
+					<Picker x:Name="CmbProtocol"
+						Title="{Binding LabelProtocol}"
+						ItemsSource="{x:Static E:Hardcoded.ProtocolTypesList}"
+						ItemDisplayBinding="{Binding Value}"
+						SelectedItem="{Binding Path=SelectedProtocol, Mode=TwoWay}"
+						VerticalOptions="FillAndExpand"
+						IsEnabled="False"/>
+
+					<Label x:Name="LblName"
+		               Text="{Binding LabelName}"/>
+					<Entry x:Name="TxtName"
+					    Placeholder="{Binding LabelName}"
+						Text="{Binding Path=Item.Name}"
+						MaxLength="128" />
+
+					<Label x:Name="LblDescription"
+						Text="{Binding LabelDescription}"/>
+					<Entry x:Name="TxtDescription" 
+						Placeholder="{Binding LabelDescription}"
+						Text="{Binding Path=Item.Description}"
+						MaxLength="4096" />
+
+					<Label x:Name="LblUrl"
+						Text="{Binding LabelUrl}"/>
+					<Entry x:Name="TxtUrl"
+						Placeholder="{Binding LabelUrl}"
+						Text="{Binding Path=Item.Url}"
+						MaxLength="128" />
+
+					<Label x:Name="LblUnitId"
+						Text="{Binding LabelUnitId}"/>
+					<Entry x:Name="TxtUnitId" 
+						Placeholder="{Binding LabelUnitId}"
+						Text="{Binding Path=Item.UnitId}"
+						MaxLength="3" />
+
+					<Label x:Name="LblInterval"
+						Text="{Binding LabelInterval}"/>
+					<Entry x:Name="TxtInterval" 
+						Placeholder="{Binding LabelInterval}"
+						Text="{Binding Path=Item.Interval}"
+						MaxLength="10" />
+
+					<Label x:Name="LblDepreciation"
+						HorizontalTextAlignment="Center"
+						Text="{Binding LabelDepreciation}"/>
+					
+					<Label x:Name="LblDeprGL"
+						Text="{Binding LabelDeprGL}"/>
+					<Entry x:Name="TxtDeprGL" 
+						Placeholder="{Binding LabelDeprGL}"
+						Text="{Binding Path=Item.DeprGL}"
+						MaxLength="10" />
+
+					<Label x:Name="LblDeprA"
+						Text="{Binding LabelDeprA}"/>
+					<Entry x:Name="TxtDeprA" 
+						Placeholder="{Binding LabelDeprA}"
+						Text="{Binding Path=Item.DeprA}"
+						MaxLength="10" />
+
+					<Label x:Name="LblDeprLIR"
+						Text="{Binding LabelDeprLIR}"/>
+					<Entry x:Name="TxtDeprLIR" 
+						Placeholder="{Binding LabelDeprLIR}"
+						Text="{Binding Path=Item.DeprLIR}"
+						MaxLength="10" />
+
+					<Label x:Name="LblDeprRL"
+						Text="{Binding LabelDeprRL}"/>
+					<Entry x:Name="TxtDeprRL" 
+						Placeholder="{Binding LabelDeprRL}"
+						Text="{Binding Path=Item.DeprRL}"
+						MaxLength="10" />
+
+					<Label x:Name="LblDeprC"
+						Text="{Binding LabelDeprC}"/>
+					<Entry x:Name="TxtDeprC" 
+						Placeholder="{Binding LabelDeprC}"
+						Text="{Binding Path=Item.DeprC}"
+						MaxLength="10" />
+
+					<Label x:Name="LblDeprSD"
+						Text="{Binding LabelDeprSD}"/>
+					<Entry x:Name="TxtDeprSD" 
+						Placeholder="{Binding LabelDeprSD}"
+						Text="{Binding Path=Item.DeprSD}"
+						MaxLength="10" />
+					
+					<ActivityIndicator 
+						IsVisible="{Binding IsBusy}"
+						IsRunning="{Binding IsBusy}" />
+				</StackLayout>
+			</ScrollView>
+
+			<Grid Margin="0,10,0,0" ColumnSpacing="10">
+				<Grid.ColumnDefinitions>
+					<ColumnDefinition Width="*" />
+					<ColumnDefinition Width="*" />
+				</Grid.ColumnDefinitions>
+				<Button x:Name="CmdOk"
+						Grid.Column="0"
+						Text="{Binding LabelSave}"
+						Command="{Binding PostDeviceCommand}"
+						HorizontalOptions="FillAndExpand" />
+				<Button x:Name="CmdCancel"
+						Grid.Column="1"
+						Text="{Binding LabelCancel}"
+						Command="{Binding CancelCommand}"
+						Style="{StaticResource actionButton}"
+						HorizontalOptions="FillAndExpand" />
+			</Grid>
+		</StackLayout>
+	</ContentPage.Content>
+</ContentPage>
+

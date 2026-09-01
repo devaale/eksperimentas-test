@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+			 xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+			 xmlns:VM="clr-namespace:Experiment.Maui.ViewModels.Settings"
+			 xmlns:data="clr-namespace:Experiment.Maui.Data"
+			 xmlns:UIC="clr-namespace:Experiment.Maui.UI.Controls"
+			 xmlns:xct="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+			 x:Class="Experiment.Maui.Views.Settings.FriendOrBlockedNewPage"
+			 Title="{Binding Title}">
+	<ContentPage.BindingContext>
+		<VM:FriendOrBlockedNewViewModel />
+	</ContentPage.BindingContext>
+	<ContentPage.Content>
+		<StackLayout>
+
+			<!-- ROW 0-->
+			<StackLayout Grid.Row="0"
+						 Orientation="Vertical"
+						 VerticalOptions="Center"
+						 Margin="16, 100, 16, 10">
+
+				<Entry x:Name="TxtSearch"
+					   HorizontalOptions="FillAndExpand"
+					   Placeholder="{Binding LabelPublicName}"
+					   Text="{Binding SearchText}" />
+
+				<Button x:Name="CmdSearch"
+						Text="{Binding LabelSearch}"
+						Command="{Binding SearchCommand}"
+						IsEnabled="{Binding IsSearchTextAvailable}"
+						Margin="70, 0" />
+
+			</StackLayout>
+
+			<!-- ROW 1-->
+			<ScrollView Grid.Row="1"
+						Margin="0, 16, 0, 32">
+
+				<ListView x:Name="LvwSearch"
+						  HorizontalOptions="FillAndExpand"
+						  VerticalOptions="FillAndExpand"
+						  SelectionMode="Single"
+						  ItemsSource="{Binding Items, Mode=OneWay}"
+						  SelectedItem="{Binding SelectedItem, Mode=TwoWay}">
+
+					<ListView.ItemTemplate>
+						<DataTemplate>
+							<TextCell Text="{Binding Name}"
+									  TextColor="{StaticResource Foreground1}" />
+						</DataTemplate>
+					</ListView.ItemTemplate>
+
+				</ListView>
+
+			</ScrollView>
+
+			<!-- ROW 2-->
+			<xct:DockLayout Grid.Row="2"
+				  VerticalOptions="End">
+
+				<UIC:PictureLeftButton x:Name="CmdAdd"
+									   xct:DockLayout.DockPosition="Left"
+									   Command="{Binding AddCommand}"
+									   Text="{Binding LabelAdd}"
+									   IsEnabled="{Binding IsAnythingSelected}"
+									   ImageSource="{x:Static data:Images.UrlPlusImg}" />
+
+				<UIC:PictureLeftButton x:Name="CmdCancel"
+									   xct:DockLayout.DockPosition="Right"
+									   HorizontalOptions="End"
+									   Text="{Binding LabelCancel}"
+									   Command="{Binding CancelCommand}"
+									   ImageSource="{x:Static data:Images.UrlCrossImg}" />
+
+			</xct:DockLayout>
+
+		</StackLayout>
+	</ContentPage.Content>
+</ContentPage>
+

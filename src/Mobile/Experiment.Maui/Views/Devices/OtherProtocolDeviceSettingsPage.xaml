@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+			 xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+			 x:Class="Experiment.Maui.Views.Devices.OtherProtocolDeviceSettingsPage"
+			 xmlns:E="clr-namespace:Experiment.Maui"
+			 xmlns:vm="clr-namespace:Experiment.Maui.ViewModels.Devices"
+			 Title="{Binding Path=Title}">
+
+	<!--
+	<ContentPage.BindingContext>
+		<vm:DeviceViewModel />
+	</ContentPage.BindingContext>
+	-->
+
+	<ContentPage.Content>
+
+		<ScrollView VerticalOptions="Start"
+					HorizontalScrollBarVisibility="Never"
+					VerticalScrollBarVisibility="Always">
+
+			<StackLayout Orientation="Vertical">
+
+				<ScrollView>
+
+					<StackLayout Orientation="Vertical">
+
+						<Picker x:Name="CmbProtocol"
+								Title="{Binding LabelProtocol}"
+								ItemsSource="{x:Static E:Hardcoded.ProtocolTypesList}"
+								ItemDisplayBinding="{Binding Value}"
+								SelectedItem="{Binding Path=SelectedProtocol, Mode=TwoWay}"
+								IsEnabled="False" />
+
+						<Label x:Name="LblName"
+							   Text="{Binding LabelName}" />
+						<Entry x:Name="TxtName"
+							   Placeholder="{Binding LabelName}"
+							   Text="{Binding Path=Item.Name}"
+							   MaxLength="128" />
+
+						<Label x:Name="LblDescription"
+							   Text="{Binding LabelDescription}" />
+						<Entry x:Name="TxtDescription"
+							   Placeholder="{Binding LabelDescription}"
+							   Text="{Binding Path=Item.Description}"
+							   MaxLength="4096" />
+
+						<Label x:Name="LblURL"
+							   Text="{Binding LabelUrl}" />
+						<Entry x:Name="TxtUrl"
+							   Placeholder="{Binding LabelUrl}"
+							   Text="{Binding Path=Item.Url}"
+							   MaxLength="128" />
+
+						<Label x:Name="LblUnitId"
+							   Text="{Binding LabelUnitId}" />
+						<Entry x:Name="TxtUnitId"
+							   Placeholder="{Binding LabelUnitId}"
+							   Text="{Binding Path=Item.UnitId}"
+							   MaxLength="3" />
+
+						<Label x:Name="LblInterval"
+							   Text="{Binding LabelInterval}" />
+						<Entry x:Name="TxtInterval"
+							   Placeholder="{Binding LabelInterval}"
+							   Text="{Binding Path=Item.Interval}"
+							   MaxLength="10" />
+
+						<!--
+						<Label x:Name="LblClientId"
+							   Text="{Binding LabelClientId}"
+							   IsVisible="{Binding IsMqtt}" />
+						<Entry x:Name="TxtClientId"
+							   Placeholder="{Binding LabelClientId}"
+							   Text="{Binding Path=Item.ClientId}"
+							   MaxLength="128"
+							   IsVisible="{Binding IsMqtt}" />
+
+						<Label x:Name="LblTopic"
+							   Text="{Binding LabelTopic}" />
+						<Entry x:Name="TxtTopic"
+							   Placeholder="{Binding LabelTopic}"
+							   Text="{Binding Path=Item.Topic}"
+							   MaxLength="128" />
+						-->
+						
+						<!-- MQTT ONLY -->
+						<Label x:Name="LblClientUsername"
+							   Text="{Binding LabelClientUsername}"
+							   IsVisible="{Binding IsMqtt}" />
+						<Entry x:Name="TxtClientUsername"
+							   Placeholder="{Binding LabelClientUsername}"
+							   Text="{Binding Path=Item.ClientUsername}"
+							   MaxLength="128"
+							   IsVisible="{Binding IsMqtt}" />
+
+						<Label x:Name="LblClientPassword"
+							   Text="{Binding LabelClientPassword}"
+							   IsVisible="{Binding IsMqtt}" />
+						<Entry x:Name="TxtClientPassword"
+							   Placeholder="{Binding LabelClientPassword}"
+							   Text="{Binding Path=Item.ClientPassword}"
+							   MaxLength="128"
+							   IsVisible="{Binding IsMqtt}" />
+
+						<!-- END of MQTT ONLY -->
+
+						<Label x:Name="LblDepreciation"
+							   HorizontalTextAlignment="Center"
+							   Text="{Binding LabelDepreciation}"
+							   FontSize="Medium"/>
+
+						<Label x:Name="LblDeprGL"
+							   Text="{Binding LabelDeprGL}" />
+						<Entry x:Name="TxtDeprGL"
+							   Placeholder="{Binding LabelDeprGL}"
+							   Text="{Binding Path=Item.DeprGL}"
+							   MaxLength="10" />
+
+						<Label x:Name="LblDeprA"
+							   Text="{Binding LabelDeprA}" />
+						<Entry x:Name="TxtDeprA"
+							   Placeholder="{Binding LabelDeprA}"
+							   Text="{Binding Path=Item.DeprA}"
+							   MaxLength="10" />
+
+						<Label x:Name="LblDeprLIR"
+							   Text="{Binding LabelDeprLIR}" />
+						<Entry x:Name="TxtDeprLIR"
+							   Placeholder="{Binding LabelDeprLIR}"
+							   Text="{Binding Path=Item.DeprLIR}"
+							   MaxLength="10" />
+
+						<Label x:Name="LblDeprRL"
+							   Text="{Binding LabelDeprRL}" />
+						<Entry x:Name="TxtDeprRL"
+							   Placeholder="{Binding LabelDeprRL}"
+							   Text="{Binding Path=Item.DeprRL}"
+							   MaxLength="10" />
+
+						<Label x:Name="LblDeprC"
+							   Text="{Binding LabelDeprC}" />
+						<Entry x:Name="TxtDeprC"
+							   Placeholder="{Binding LabelDeprC}"
+							   Text="{Binding Path=Item.DeprC}"
+							   MaxLength="10" />
+
+						<Label x:Name="LblDeprSD"
+							   Text="{Binding LabelDeprSD}" />
+						<Entry x:Name="TxtDeprSD"
+							   Placeholder="{Binding LabelDeprSD}"
+							   Text="{Binding Path=Item.DeprSD}"
+							   MaxLength="10" />
+
+					</StackLayout>
+				</ScrollView>
+
+				<ActivityIndicator IsVisible="{Binding IsBusy}"
+								   IsRunning="{Binding IsBusy}" />
+
+				<Grid ColumnSpacing="10">
+					<Grid.ColumnDefinitions>
+						<ColumnDefinition Width="*" />
+						<ColumnDefinition Width="*" />
+						<ColumnDefinition Width="*" />
+					</Grid.ColumnDefinitions>
+					<Button x:Name="CmdSave"
+							Grid.Column="0"
+							Text="{Binding LabelSave}"
+							Command="{Binding PostDeviceCommand}"
+							HorizontalOptions="FillAndExpand" />
+
+					<Button x:Name="CmdCancel"
+							Grid.Column="2"
+							Text="{Binding LabelBack}"
+							HorizontalOptions="FillAndExpand"
+							Command="{Binding CancelCommand}"
+							Style="{StaticResource actionButton}" />
+				</Grid>
+			</StackLayout>
+		</ScrollView>
+	</ContentPage.Content>
+</ContentPage>

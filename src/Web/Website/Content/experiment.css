@@ -1,0 +1,330 @@
+﻿:root {
+	--small-margin: 0.2em;
+	--big-margin: 0.5em;
+	/* Colors */
+	--color01: #FFFFFF; /* Light background */
+	--color02: #505F6A; /* Text */
+	--color03: #043543; /* VTAB Dark BG */
+	--color04: #6C8D95; /* VTAB Dark FG */
+	--color05: #FCFDFE; /* Top panel bg */
+	--color06: #F6F8FB; /* HTab BG */
+	--color07: #4C86B8; /* Buttons */
+	--color08: #D5DBE2; /* HTab inactive button bg */
+	--color09: #6C9F2D; /* Dark grass, used in datepicker */
+	--color10: #F0F5E9; /* Light gras, used in datepicker */
+	--color11: #9AA4B3; /* CE GROUPS header font color */
+	/* Unused yet colors */
+	/* Chart colors */
+	--chart-color01: #CB3C5E;
+	--chart-color02: #EBAB13;
+	--chart-color03: #5DBE8C;
+	--chart-color04: #47A0DB;
+	--chart-color05: #4B6AB9;
+	--chart-color06: #794C8A;
+	--chart-color07: #402A54;
+	--chart-color08: #B95CA0;
+	--chart-color09: #D6B536;
+	--chart-color10: #6F584A;
+	--chart-color11: #88B468;
+	--chart-color12: #CED416;
+	--chart-color13: #2BB1CA;
+	--chart-color14: #137C87;
+	--chart-color15: #713B48;
+	--chart-color16: #DE9FAF;
+	--chart-color17: #D1B2CF;
+	--chart-color18: #778FB6;
+	--chart-color19: #5C607D;
+	--chart-color20: #2D3D56;
+	--chart-color21: #D15C30;
+	--chart-color22: #FF8623;
+	--chart-color23: #F3B385;
+	--chart-color24: #FFE10F;
+	--chart-color25: #000000;
+	--licenseT0Color: #505F6A;
+	--licenseT0Back: #D5DBE2;
+	--licenseT1Color: #073c7c;
+	--licenseT1Back: #bbfff9;
+	--licenseT2Color: #6C9F2D;
+	--licenseT2Back: #cefbc9;
+	--licenseT3Color: #c91f1f;
+	--licenseT3Back: #ffe0ae;
+}
+
+#e-main-outer {
+	margin: 1em 0 0 0;
+	display: block;
+	flex-direction: column;
+	flex-wrap: wrap;
+	overflow: auto;
+	overflow: overlay;
+	/*width: 100%;*/
+}
+
+#e-main-inner {
+	display: flex;
+}
+
+#e-main-left {
+	display: inherit;
+	margin: 0.2em;
+	/*/float: left;*
+	width: 100px;
+	max-width: 50%;
+	/*display: block;*/
+}
+
+#e-main-right {
+	display: inherit;
+	margin: 0.2em;
+	/*float: right;*/
+	max-width: 70%;
+	/*display: block;*/
+}
+
+.flex-col-con {
+	display: flex !important;
+	flex-direction: column;
+	overflow: auto;
+	overflow: overlay;
+}
+
+.flex-row-con {
+	display: flex !important;
+	flex-direction: row;
+	/*flex-wrap: wrap; DON'T ENABLE! AS it will crap a lot of windows, use it locally and manually only with this style */
+	/*overflow: auto;
+	overflow: overlay;*/
+	/*
+	width: 100%;
+*/
+}
+
+.block {
+	display: block;
+}
+
+.iblock {
+	display: inline-block;
+}
+
+.left {
+	float: left;
+}
+
+.right {
+	float: right;
+}
+
+.small-margin {
+	margin: var(--small-margin);
+}
+
+.big-margin {
+	padding: var(--big-margin);
+}
+
+.ce-main {
+
+}
+
+input:invalid {
+	background-color: ivory;
+	border: none;
+	outline: 2px solid red;
+	border-radius: 5px;
+}
+
+.ce-messages {
+	display: block;
+	padding: 5px;
+	margin: 5px;
+}
+
+.ce-data {
+	display: block;
+	padding: 5px;
+	margin: 5px;
+}
+
+.ce-commands {
+	display: block;
+	padding: 5px;
+	margin: 5px;
+}
+
+/** Content Engine stuff **/
+.ce-group {
+	border: 2px dashed var(--color08);
+	border-radius: 4px;
+	padding: var(--big-margin);
+	margin: 10px 5px;
+}
+
+	.ce-group > label {
+		display: block;
+		/*color: var(--color07);*/
+	}
+
+.ce-unit {
+	display: inline-block;
+	vertical-align: top;
+	margin: 2px;
+	padding: 3px;
+	height: auto;
+	height: 100%;
+	font-size: small;
+}
+
+	.ce-unit label {
+		display: block;
+		font-weight: bold;
+		margin: 0px;
+		padding: 0px;
+		margin-bottom: 5px;
+		min-height: 0.95em;
+		color: var(--color07)
+	}
+
+	.ce-unit div {
+		display: block;
+	}
+
+.btn, .ce-cmd, .cmd {
+	background-color: var(--color07);
+	color: #fff;
+	border: none;
+	padding: 4px 20px;
+	transition-duration: 0.4s;
+	text-decoration: none;
+	font-size: 14px;
+	vertical-align: middle;
+}
+
+.btn:disabled, .ce-cmd:disabled, .cmd:disabled {
+	color: #AAA;
+}
+
+.ce-msg {
+	text-align: center;
+	border: solid 1px;
+	padding: 5px 10px;
+	height: var(--ese-element-height);
+}
+
+.ce-msg-lvl0 {
+	color: red;
+}
+
+.ce-msg-lvl1 {
+	color: orange;
+}
+
+.ce-msg-lvl2 {
+	color: green;
+}
+
+/** End Of Content Engine stuff **/
+
+
+.e-reports {
+	display: block;
+}
+
+.ad-users-main {
+	width: 100%;
+}
+
+.ad-users-list {
+	display: inline-block;
+	width: 17em;
+	border: 1px solid brown;
+}
+
+.ad-users-control {
+	display: inline-block;
+	border: 1px solid brown;
+	padding: 0.5em;
+}
+
+.ad-users-properties {
+	display: inline-block;
+	border: 1px solid brown;
+	padding: 0.5em;
+}
+
+h2 {
+	margin: 0.5em 0em;
+	padding: 0;
+	font-size: 2em;
+	font-weight: bold;
+}
+
+h3 {
+	margin: 0.4em 0em;
+	padding: 0;
+	font-size: 1.5em;
+	font-weight: bold;
+}
+
+h4 {
+	margin: 0.3em 0em;
+	padding: 0;
+	font-size: 1.4em;
+	font-weight: bold;
+}
+
+h5 {
+	margin: 0.2em 0em;
+	padding: 0;
+	font-size: 1.3em;
+	font-weight: bold;
+}
+
+.exp-license {
+	display: inline-block;
+	margin: 0.4em;
+	padding: 0.8em;
+	min-width: 25em;
+}
+
+	.exp-license input, .exp-license select {
+		margin-left: 1em;
+	}
+
+.exp-license-active {
+	float: right;
+}
+
+.exp-license_t0 {
+	border: 1px var(--licenseT0Color) dashed;
+	color: var(--licenseT0Color);
+	background-color: var(--licenseT0Back);
+}
+
+.exp-license_t1 {
+	border: 1px var(--licenseT1Color) dashed;
+	color: var(--licenseT1Color);
+	background-color: var(--licenseT1Back);
+}
+
+.exp-license_t2 {
+	border: 1px var(--licenseT2Color) dashed;
+	color: var(--licenseT2Color);
+	background-color: var(--licenseT2Back);
+}
+
+.exp-license_t3 {
+	border: 1px var(--licenseT3Color) dashed;
+	color: var(--licenseT3Color);
+	background-color: var(--licenseT3Back);
+}
+
+.exp-close {
+	display: block;
+}
+
+	.exp-close label {
+		float: right;
+		padding: 5px;
+		font-size: large;
+	}

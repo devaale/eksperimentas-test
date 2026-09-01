@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+			 xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+			 x:Class="Experiment.Maui.Views.Devices.VirtualDatapointPage">
+
+	<ContentPage.Content>
+		<StackLayout>
+			<ScrollView VerticalOptions="Start">
+				<StackLayout>
+					<Entry Placeholder="{Binding LabelName}" 
+						Text="{Binding Name}" />
+
+					<Label x:Name="LblAlias"
+						   Text="{Binding LabelAlias}" />
+					<Entry x:Name="TxtAlias"
+						   Placeholder="{Binding LabelAlias}"
+						   Text="{Binding Path=Alias}"
+						   IsEnabled="False"/>
+
+					<Picker Title="{Binding LabelFunction}"
+						ItemsSource="{Binding DatapointFormulas}"
+						ItemDisplayBinding="{Binding Name}"
+						SelectedItem="{Binding SelectedFormula}"
+                        Margin="0,0,0,10"/>
+
+					<Button Text="{Binding LabelFormulaParts}"
+						Command="{Binding DatapointChainsCommand}"
+						IsEnabled="{Binding FormulaSelected}"
+						Style="{Binding ChainsButtonStyle}"
+						Margin="0,0,0,10" />
+
+					<Grid VerticalOptions="Center" Margin="0,0,0,10">
+						<Grid.ColumnDefinitions>
+							<ColumnDefinition Width="Auto" />
+							<ColumnDefinition Width="*" />
+						</Grid.ColumnDefinitions>
+						<Label Grid.Column="0"
+							Text="{Binding LabelInterval}" />
+
+						<Picker Grid.Column="1"
+							Title="{Binding LabelInterval}"
+							ItemsSource="{Binding IntervalDateparts.List}"
+							ItemDisplayBinding="{Binding Name}"
+							SelectedItem="{Binding IntervalDateparts.Selected, Mode=TwoWay}" />
+					</Grid>
+
+					<StackLayout Orientation="Horizontal">
+
+						<Stepper x:Name="stepper"
+								 Minimum="0"
+								 Value="{Binding Order}" />
+
+						<Label Text="{Binding LabelOrder}" />
+
+						<Label Text="{Binding Source={x:Reference stepper}, Path=Value}" />
+
+					</StackLayout>
+
+					<Grid IsVisible="{Binding HasAggregationDatepart}">
+						<Grid.ColumnDefinitions>
+							<ColumnDefinition Width="Auto" />
+							<ColumnDefinition Width="*" />
+						</Grid.ColumnDefinitions>
+						<Label Grid.Column="0"
+							   Text="{Binding LabelAggregateBy}" />
+
+						<Picker Grid.Column="1"
+								Title="{Binding LabelAggregateBy}"
+								ItemsSource="{Binding AggregationDateparts.List}"
+								ItemDisplayBinding="{Binding Name}"
+								SelectedItem="{Binding AggregationDateparts.Selected, Mode=TwoWay}" />
+					</Grid>
+				</StackLayout>
+			</ScrollView>
+
+			<Grid VerticalOptions="End" ColumnSpacing="10" RowSpacing="8" Margin="0,10,0,0">
+				<Grid.RowDefinitions>
+					<RowDefinition Height="Auto" />
+					<RowDefinition Height="Auto" />
+				</Grid.RowDefinitions>
+				<Grid.ColumnDefinitions>
+					<ColumnDefinition Width="*" />
+					<ColumnDefinition Width="*" />
+					<ColumnDefinition Width="*" />
+					<ColumnDefinition Width="*" />
+					<ColumnDefinition Width="*" />
+					<ColumnDefinition Width="*" />
+				</Grid.ColumnDefinitions>
+
+				<!--
+					Columns trick is nededed to put in same grid in first row 2 buttons, in 2nd row 3 buttons, nicely aligned.
+					So we create 3+3 = 2+2+2 = 6 virtual columns, which we differently split to align everything.
+				-->
+
+				<Button x:Name="CmdCreateAlarm"
+					Grid.Row="0"
+					Grid.Column="0"
+					Grid.ColumnSpan="3"
+					Command="{Binding CreateAlarmCommand}"
+					Text="{Binding LabelCreateAlarm}"
+					IsVisible="{Binding HasValidId}" />
+
+				<Button x:Name="CmdEditAlarm"
+					Grid.Row="0"
+					Grid.Column="3"
+					Grid.ColumnSpan="3"
+					Command="{Binding EditAlarmCommand}"
+					Text="{Binding LabelEdit}"
+					IsVisible="{Binding HasValidId}"
+					Style="{StaticResource actionButton}" />
+
+				<Button Grid.Row="1"
+					Grid.Column="0"
+					Grid.ColumnSpan="2"
+					x:Name="CmdSave"
+					Command="{Binding PostDatapointCommand}"
+					Text="{Binding LabelSave}"
+					IsEnabled="{Binding IsValid}" />
+
+				<Button Grid.Row="1"
+					Grid.Column="2"
+					Grid.ColumnSpan="2"
+					x:Name="CmdDelete"
+					Command="{Binding DeleteDatapointCommand}"
+					Text="{Binding LabelDelete}"
+					IsEnabled="{Binding HasValidId}"
+					Style="{StaticResource negativeButton}"/>
+
+				<Button Grid.Row="1"
+					Grid.Column="4"
+					Grid.ColumnSpan="2"
+					x:Name="CmdCancel"
+					Command="{Binding CancelCommand}"
+					Text="{Binding LabelCancel}"
+					Style="{StaticResource actionButton}"/>
+			</Grid>
+		</StackLayout>
+
+	</ContentPage.Content>
+</ContentPage>
+

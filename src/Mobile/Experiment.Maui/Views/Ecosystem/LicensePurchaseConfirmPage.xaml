@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+			 x:Class="Experiment.Maui.Views.Ecosystem.LicensePurchaseConfirmPage">
+	<ContentPage.Resources>
+		<Style TargetType="Label">
+			<Setter Property="FontSize" Value="36" />
+			<Setter Property="HorizontalOptions" Value="Center" />
+		</Style>
+	</ContentPage.Resources>
+    <ContentPage.Content>
+		<Grid>
+			<Grid.RowDefinitions>
+				<RowDefinition Height="*" />
+				<RowDefinition Height="Auto" />
+			</Grid.RowDefinitions>
+			<StackLayout Orientation="Vertical"
+				Grid.Row="0"
+				VerticalOptions="Center"
+				Margin="10" >
+
+				<Label Text="{Binding LabelFinalPrice}"
+					   FontSize="Large"/>
+				<Label Text="{Binding FinalPrice, StringFormat='{0:F2}€'}"
+					   FontSize="Large"
+					   FontAttributes="Bold"
+					   TextColor="{StaticResource Foreground4}"/>
+
+			</StackLayout>
+
+			<StackLayout Grid.Row="1"
+						 Orientation="Horizontal"
+						 VerticalOptions="End">
+
+				<Button x:Name="CmdBack"
+						Command="{Binding BackCommand}"
+						Text="{Binding LabelBack}"
+						Style="{StaticResource actionButton}"
+						HorizontalOptions="FillAndExpand" />
+
+				<Button x:Name="CmdNext"
+						Command="{Binding ProceedToChoosePaymentMethodCommand}"
+						Text="{Binding LabelChoosePaymentMethod}"
+						HorizontalOptions="FillAndExpand" />
+
+			</StackLayout>
+		</Grid>
+	</ContentPage.Content>
+</ContentPage>

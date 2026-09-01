@@ -1,0 +1,21 @@
+USE [ExperimentDB]
+GO
+
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE PROCEDURE [dbo].[prcDatapointList] (
+	@ReadWrite int
+) AS BEGIN
+
+	SET NOCOUNT ON;	-- saves the day as elsewhere PHP MSSQL Driver failing to retrieve the result.
+
+	SELECT *
+	FROM  
+		tblDatapoint DTP
+	WHERE
+		DTP.[ReadWrite] = @ReadWrite
+
+END

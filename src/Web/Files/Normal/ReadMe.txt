@@ -1,0 +1,1 @@
+﻿Normal size processed pictures.

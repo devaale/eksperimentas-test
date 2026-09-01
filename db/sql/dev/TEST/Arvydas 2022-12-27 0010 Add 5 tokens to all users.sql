@@ -1,0 +1,1 @@
+﻿UPDATE AspNetUsers SET Tokens = 5 

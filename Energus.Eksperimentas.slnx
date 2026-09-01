@@ -1,0 +1,25 @@
+<Solution>
+  <Folder Name="/src/">
+  </Folder>
+  <Folder Name="/src/Libraries/">
+    <Project Path="src/Libraries/EVP.WebToPay.ClientAPI/EVP.WebToPay.ClientAPI.csproj" />
+    <Project Path="src/Libraries/Experiment.Core/Experiment.Core.csproj" />
+    <Project Path="src/Libraries/Experiment.Data/Experiment.Data.csproj" />
+    <Project Path="src/Libraries/Experiment.Modbus/Experiment.Modbus.csproj" />
+  </Folder>
+  <Folder Name="/src/Mobile/">
+    <Project Path="src/Mobile/Experiment.Maui/Experiment.Maui.csproj" />
+  </Folder>
+  <Folder Name="/src/Services/">
+    <Project Path="src/Services/Experiment.BlockchainSync.Service/Experiment.BlockchainSync.Service.csproj" />
+    <Project Path="src/Services/Experiment.Control.Service/Experiment.Control.Service.csproj" Id="f8913272-8570-4873-bf39-9ad79e75c211" />
+    <Project Path="src/Services/Experiment.DeviceProcessing.Service/Experiment.DeviceProcessing.Service.csproj" Id="83d87289-8cc9-4847-896f-b8544ccfa428" />
+    <Project Path="src/Services/Experiment.FormulaCalculation.Service/Experiment.FormulaCalculation.Service.csproj" Id="797bf44d-e558-4ab5-b87d-63820b9aecc5" />
+    <Project Path="src/Services/Experiment.ImageProcessing.Service/Experiment.ImageProcessing.Service.csproj" />
+    <Project Path="src/Services/Experiment.Mqtt.Service/Experiment.Mqtt.Service.csproj" Id="7a0fba32-0716-49fb-814a-7c2be63381b3" />
+    <Project Path="src/Services/Experiment.Service/Experiment.Service.csproj" Id="836083f4-c797-4aae-a7ea-fc0a3a887fed" />
+  </Folder>
+  <Folder Name="/src/Web/">
+    <Project Path="src/Web/Website/Website.csproj" Id="eacbe3e0-9cb7-422d-a07b-1e2dc0c9b100" />
+  </Folder>
+</Solution>

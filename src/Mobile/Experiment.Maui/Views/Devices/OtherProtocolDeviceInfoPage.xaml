@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+			 xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+			 x:Class="Experiment.Maui.Views.Devices.OtherProtocolDeviceInfoPage"
+			 xmlns:E="clr-namespace:Experiment.Maui"
+			 xmlns:vm="clr-namespace:Experiment.Maui.ViewModels.Devices"
+			 Title="{Binding Path=Title}">
+
+	<!--
+	<ContentPage.BindingContext>
+		<vm:DeviceViewModel />
+	</ContentPage.BindingContext>
+	-->
+
+	<ContentPage.Resources>
+		<ResourceDictionary>
+			<Style TargetType="Button">
+				<Setter Property="FontSize"
+						Value="Header" />
+				<Setter Property="HorizontalOptions"
+						Value="FillAndExpand" />
+				<Setter Property="BackgroundColor"
+						Value="{StaticResource Background1}" />
+				<Setter Property="TextColor"
+						Value="{StaticResource Foreground2}" />
+				<Setter Property="BorderColor"
+						Value="{StaticResource Foreground2}" />
+				<Setter Property="BorderWidth"
+						Value="2" />
+			</Style>
+		</ResourceDictionary>
+	</ContentPage.Resources>
+
+	<ContentPage.Content>
+		<StackLayout Orientation="Vertical">
+
+			<Grid VerticalOptions="Start"
+				  ColumnSpacing="10"
+				  Margin="0,0,0,10">
+				<Grid.RowDefinitions>
+					<RowDefinition Height="60" />
+				</Grid.RowDefinitions>
+				<Grid.ColumnDefinitions>
+					<ColumnDefinition Width="*" />
+					<ColumnDefinition Width="*" />
+					<ColumnDefinition Width="*" />
+				</Grid.ColumnDefinitions>
+
+				<Button x:Name="CmdSettings"
+						Grid.Column="0"
+						Text="{Binding LabelSettings}"
+						Command="{Binding SettingsCommand}"
+						Style="{StaticResource actionButton}"
+						IsEnabled="{Binding CanBeEdited}" />
+
+				<Button x:Name="CmdAddDatapoint"
+						Grid.Column="1"
+						Text="{Binding LabelAddDatapoint}"
+						Command="{Binding AddDatapointMenuCommand}"
+						IsEnabled="{Binding CanBeEdited}" />
+
+				<Button x:Name="CmdDatapoints"
+						Grid.Column="2"
+						Text="{Binding LabelDatapoints}"
+						Command="{Binding DatapointsListCommand}" />
+			</Grid>
+
+			<Picker x:Name="CmbProtocol"
+					Title="{Binding LabelProtocol}"
+					ItemsSource="{x:Static E:Hardcoded.ProtocolTypesList}"
+					ItemDisplayBinding="{Binding Value}"
+					SelectedItem="{Binding Path=SelectedProtocol, Mode=TwoWay}"
+					IsEnabled="False" />
+
+			<Label x:Name="LblName"
+				   Text="{Binding LabelName}" />
+			<Entry x:Name="TxtName"
+				   Placeholder="{Binding LabelName}"
+				   Text="{Binding Path=Item.Name}"
+				   IsReadOnly="True"
+				   MaxLength="128" />
+
+			<Label x:Name="LblDescription"
+				   Text="{Binding LabelDescription}" />
+			<Entry x:Name="TxtDescription"
+				   Placeholder="{Binding LabelDescription}"
+				   Text="{Binding Path=Item.Description}"
+				   IsReadOnly="True"
+				   MaxLength="4096" />
+
+			<!--
+			<Label x:Name="LblClientId"
+				   Text="{Binding LabelClientId}"
+				   IsVisible="{Binding IsMqtt}" />
+			<Entry x:Name="TxtClientId"
+				   Placeholder="{Binding LabelClientId}"
+				   Text="{Binding Path=Item.ClientId}"
+				   IsReadOnly="True"
+				   MaxLength="128"
+				   IsVisible="{Binding IsMqtt}" />
+			-->
+
+			<Label x:Name="LblTopic"
+				   Text="{Binding LabelTopic}"
+				   IsVisible="False" />
+			<Entry x:Name="TxtTopic"
+				   Placeholder="{Binding LabelTopic}"
+				   Text="{Binding Path=Item.Topic}"
+				   IsReadOnly="True"
+				   MaxLength="128"
+				   IsVisible="False" />
+
+			<ActivityIndicator IsVisible="{Binding IsBusy}"
+							   IsRunning="{Binding IsBusy}" />
+
+			<Grid ColumnSpacing="10"
+				  Margin="0,10,0,0">
+				<Grid.ColumnDefinitions>
+					<ColumnDefinition Width="*" />
+					<ColumnDefinition Width="*" />
+				</Grid.ColumnDefinitions>
+
+				<Button x:Name="CmdCancel"
+						Grid.Column="0"
+						Text="{Binding LabelBack}"
+						HorizontalOptions="FillAndExpand"
+						Command="{Binding CancelCommand}"
+						Style="{StaticResource actionButton}" />
+
+				<Button x:Name="CmdDelete"
+						Grid.Column="1"
+						Text="{Binding LabelDelete}"
+						HorizontalOptions="FillAndExpand"
+						Command="{Binding DeleteDeviceCommand}"
+						Style="{StaticResource negativeButton}"
+						IsEnabled="{Binding CanBeDeleted, FallbackValue=False}" />
+
+			</Grid>
+
+		</StackLayout>
+
+	</ContentPage.Content>
+</ContentPage>

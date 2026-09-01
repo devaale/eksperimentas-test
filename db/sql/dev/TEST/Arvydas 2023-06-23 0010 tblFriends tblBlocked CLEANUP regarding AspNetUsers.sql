@@ -1,0 +1,26 @@
+-- SELECT ALL FRIENDED, WHICH USERS WERE DELETED
+SELECT * FROM tblFriend 
+WHERE 
+	UserId NOT IN (SELECT Id FROM AspNetUsers)
+OR 
+	RelatedUserId NOT IN (SELECT Id FROM AspNetUsers)
+
+-- SELECT ALL BLOCKED, WHICH USERS WERE DELETED
+SELECT * FROM tblBlocked
+WHERE
+	UserId NOT IN (SELECT Id FROM AspNetUsers)
+OR 
+	RelatedUserId NOT IN (SELECT Id FROM AspNetUsers)
+
+
+DELETE FROM tblFriend 
+WHERE 
+	UserId NOT IN (SELECT Id FROM AspNetUsers)
+OR 
+	RelatedUserId NOT IN (SELECT Id FROM AspNetUsers)
+
+DELETE FROM tblBlocked
+WHERE 
+	UserId NOT IN (SELECT Id FROM AspNetUsers)
+OR 
+	RelatedUserId NOT IN (SELECT Id FROM AspNetUsers)

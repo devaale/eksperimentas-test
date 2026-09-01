@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+			 xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+			 x:Class="Experiment.Maui.UI.Controls.PictureUpButton">
+	<ContentView.Content>
+
+		<!-- If you use more heught inside, you need to increase this heigh request -->
+		<StackLayout Orientation="Vertical"
+					 WidthRequest="100"
+					 HeightRequest="105"
+					 Margin="2, 12"
+					 Padding="0"
+					 VerticalOptions="FillAndExpand">
+			<StackLayout.GestureRecognizers>
+				<TapGestureRecognizer Tapped="TapGestureRecognizer_Tapped" />
+			</StackLayout.GestureRecognizers>
+
+			<Frame x:Name="FrmMain"
+				   Padding="12"
+				   HasShadow="False"
+				   VerticalOptions="FillAndExpand"
+				   InputTransparent="True">
+				<Image x:Name="ImgIcon"
+					   InputTransparent="True" />
+			</Frame>
+
+			<Label x:Name="LblName"
+				   FontSize="Body"
+				   LineBreakMode="TailTruncation"
+				   VerticalOptions="FillAndExpand"
+				   HorizontalTextAlignment="Center"
+				   BackgroundColor="{StaticResource Background1}"
+				   Margin="2"
+				   InputTransparent="True" />
+
+		</StackLayout>
+
+	</ContentView.Content>
+</ContentView>

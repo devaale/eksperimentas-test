@@ -1,0 +1,12 @@
+DROP FUNCTION IF EXISTS fncUsernameById
+GO
+
+CREATE FUNCTION fncUsernameById (
+		@id NVARCHAR(128)
+	) RETURNS NVARCHAR(128) AS
+BEGIN
+	DECLARE @retVal NVARCHAR(128)
+	SELECT @retVal = [Name] FROM AspNetUsers WHERE Id = @id 
+	RETURN @retVal
+END
+GO

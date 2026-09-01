@@ -1,0 +1,139 @@
+[SQL]
+
+Paskutiniai paleisti Dmitrijaus SQL skriptai mano TERRA serveryje (paskutinis sąraše paskutiniausias):
+------------------------------------------------
+TEST/Dmitrijus 2023-07-27 0003 tblDatapointFormula.sql
+
+
+2023-03-14	
+
+* Sukurti duomenų bazės struktūrą pagal dokumentaciją ir modelius.
+* Viskas padaryta ne pagal MVVM!
+* Device - datapoint lists, click on datapoint lūžta greičiausiai per bindus ir viewmodel
+
+2023-04-21
+* Sukurti tblReportRequest (Id GUID, Type INT, DateFrom, DateTo, Ids)
+
+
+tblDashboardSettings
+
+
+GraphSelectionViewModel
+	_ApiServices.ChartDatapointValues(VisualChartParameters chartParams)
+	
+DashboardViewModel
+	_ApiServices.GetDatapointValues(DatapointValueFilter filter);
+	
+Toliau backend, SQL ir t.t.. Žiūrėti DatapointValueController::PostSearch
+
+
+Yra dar bjaurus niuansas dėl datapointų kelių metų parodymų palyginimo. 
+Esmė kad useris pasirenka diapazoną, kur yra ir galimybė pasirinkti bet kokią datą nuo iki, o po to renkamės lhginti kelis metus kai useris gal beleką parinko kur data nuo iki.
+Žinoma jeigu šios galimybės nebūtų, kad pasirinkti datą nuo iki, tai didžiausias diapazonas yra metai ir viskas būtų gerai.
+
+Liko problema kaip identifikuoti to pačio datapointo skirtingas, skirtingų metų instancijas 
+Datapoint values negrąžina kažko dar, pvz. DP NAME.
+
+
+
+Main chart - lūžta parinkus daugiau nei vieną datapointą BuildStructure
+
+5023-12-15 5dienis
+
+Pridėjom Martyno laukus, tačiau reikia make sure, kad jie veiks su naujai pridedamais MQTT ir kitais datapointais. Kadangi vis tik PorotocolType yra Computed collumn, einantis iš DB, kuris neatspindi tik sukuriamų objektų, datapointų, tenai reikėtų kažkur įrašyti tipą kai jis naujas kuriamas pagal jo device tipą, jeigu tai ne VDT ir panašiai. Žodžiu išsiaiškinti šią dalį. 
+
+Panašu  kad naują kuriant iš viso šių property neduoda. Greičiausiai dėl to kad tipas nenurodytas kaip rašiau.
+
+
+ControlService::static void Alarm(DataRow algorithm)
+
+https://github.com/xamarin/Xamarin.Forms/issues/15878
+I get this error when I try to use v5.0.0.2662
+
+Project1.csproj : error NU1605: Warning As Error: Detected package downgrade: Xamarin.AndroidX.RecyclerView from 1.2.1.5 to 1.2.1.1. Reference the package directly from the project to select a different version. 
+Project1.csproj : error NU1605:  Project1 -> Project3 -> Xamarin.Forms 5.0.0.2662 -> Xamarin.AndroidX.Preference 1.1.1.13 -> Xamarin.AndroidX.RecyclerView (>= 1.2.1.5) 
+Project1.csproj : error NU1605:  Project1 -> Project3 -> Xamarin.Forms 5.0.0.2662 -> Xamarin.AndroidX.RecyclerView (>= 1.2.1.1 && < 1.4.0)
+Project1.csproj : error NU1605: Warning As Error: Detected package downgrade: Xamarin.AndroidX.RecyclerView from 1.2.1.5 to 1.2.1.1. Reference the package directly from the project to select a different version. 
+Project1.csproj : error NU1605:  Project1 -> Project4 -> Xamarin.Forms 5.0.0.2662 -> Xamarin.AndroidX.Preference 1.1.1.13 -> Xamarin.AndroidX.RecyclerView (>= 1.2.1.5) 
+Project1.csproj : error NU1605:  Project1 -> Project4 -> Xamarin.Forms 5.0.0.2662 -> Xamarin.AndroidX.RecyclerView (>= 1.2.1.1 && < 1.4.0)
+...
+
+Steps to Reproduce
+	Add Xamarin.Forms v5.0.0.2662 to your project
+		Build
+	Expected Behavior
+		Builds normally
+
+Actual Behavior
+	Fails to build with above error
+
+Basic Information
+	Version with issue: v5.0.0.2662
+	Last known good version: v5.0.0.2622
+
+Platform Target Frameworks:
+	iOS:
+	Android:
+	UWP:
+
+	Android Support Library / AndroidX Version:
+	NuGet Packages:
+	Affected Devices:
+
+
+JAVAC : warning : unknown enum constant Scope.LIBRARY_GROUP in Xamarin.Android after adding Xamarin.Support.v4 and Xamarin.Support.v7.AppC
+Maybe can help:	https://stackoverflow.com/a/43441672
+
+
+The TargetFrameworkVersion (Android API level 33) is lower than the targetSdkVersion (34). Please increase the `$(TargetFrameworkVersion)` or decrease the `android:targetSdkVersion` in the `AndroidManifest.xml` so that the API levels match.
+Susiję: https://stackoverflow.com/a/77265876
+
+we need to switch to MAUI this is not the whole truth, luckily - xamarin forms apps must switch to MAUI, but xamarin android apps should switch to net-android – 
+Haukinger
+ CommentedDec 11, 2023 at 8:22 
+
+API level atitinka Android OS (TargetFrameworkVersion) kažkokią versiją,
+kur TargetFrameworkVersion=13 atitinka 33, jua dabar reikia 34 2024-07-19
+
+ROMAN HTTPS
+
+sena paliksiu  išorinis  42900 -> 42900 (http)
+ir naują padariau   išorinis  42901 -? 42901 (https)
+
+
+https://developercommunity.visualstudio.com/t/Feedback--Reason-for-VS-downgrade/10552544?sort=newest#:~:text=It's%20possible%20to%20disable%20NuGet,packages%23disabling%2Dsecurity%2Dauditing
+You can specify options at the solution level or folder level with Directory.Build.props. Documentation is available here: https://learn.microsoft.com/visualstudio/msbuild/customize-by-directory?view=vs-2022#directorybuildprops-and-directorybuildtargets
+
+For example, if this Directory.Build.props was at the root of your repository, it would disable NuGet Audit for all projects:
+
+<Project>
+ <PropertyGroup>
+   <NuGetAudit>false</NuGetAudit>
+ </PropertyGroup>
+</Project>
+
+https://learn.microsoft.com/en-us/visualstudio/msbuild/customize-by-directory?view=vs-2022#directorybuildprops-and-directorybuildtargets
+
+
+Problema! Neveikia normaliai Android Emuliatorius + IIS debugas, vienu metu.
+Nenori kažkaip visai pasijungt prie android emuliatoriaus jeigu startuoja ir emuliatorius ir IIS debug.
+
+FIX: Išinstaliuot rankiniu būdu Appsą iš emuliatoriaus, nuėjus į setttings->Apps->Experiment.Android ir UINSTALL
+REASON: Netyčia sudeployintas release app variantas po to gali užraukti vissą debug net po pakartotinų publishų, kol rankomis nebus išmestas.
+
+
+
+2024-08-30 įtarimai kad nustojo veikti superherojų getallinfo metodas.
+
+ANdroid SDK ir emuliatoriaus issue, kad lyg visual studio installer nesugeba suinstaliuoti android sdk ir panašiai. problemos pastoviai.
+https://stackoverflow.com/questions/74375285/visual-studio-2022-xamarin-android-sdk-installing-emulator-operation-failed-in
+Go to sdk folder C:\Program Files (x86)\Android\android-sdk\cmdline-tools\7.0\bin (check this folder in your visual studio)
+Install the emulator sdkmanager.exe --install emulator
+Verify sdkmanager.exe --list_installed
+
+Migravimas nuo Xamarin.Forms ir kiti:	https://stackoverflow.com/a/77853678
+
+
+Android Studio instaliavimas
+
+Intel® HAXM installation failed. To install Intel® HAXM follow the instructions found at: https://github.com/intel/haxm/wiki/Installation-Instructions-on-Windows

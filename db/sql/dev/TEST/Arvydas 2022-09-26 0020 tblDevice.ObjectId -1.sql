@@ -1,0 +1,1 @@
+UPDATE tblDevice SET ObjectId = -1 

@@ -1,0 +1,215 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Application xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://schemas.microsoft.com/dotnet/2021/maui/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             x:Class="Experiment.Maui.App">
+
+    <Application.Resources>
+        <ResourceDictionary>
+
+			<!-- Experiment.Maui Design-->
+			<Color x:Key="Background0">#0d4449</Color>
+			<Color x:Key="Background1">#035762</Color>
+			<Color x:Key="Background2">#067c7c</Color>
+			<Color x:Key="Background3">#1d6872</Color>
+			<Color x:Key="Background4">#1e6873</Color>	<!-- Introduced 2023-09-21 -->
+			<Color x:Key="Background5">#5b9197</Color>
+			<Color x:Key="Background6">#479f78</Color>
+			<Color x:Key="Background7">#1c716a</Color> <!-- Advanced licenses title background-->
+			<Color x:Key="Background8">#05535d</Color>	 <!-- Ecosystem -->
+			<Color x:Key="Background9">#084c55</Color> <!-- Ecosystem: chat conversation out -->
+			<Color x:Key="Background10">#106667</Color> <!-- Ecosystem: chat conversation in -->
+
+			<Color x:Key="Foreground1">#fff</Color>
+			<Color x:Key="Foreground2">#2bc20e</Color>
+			<Color x:Key="Foreground3">#b7ccd1</Color>
+			<Color x:Key="Foreground4">#39ff12</Color>
+			<Color x:Key="Foreground5">#b4b6b3</Color>	<!-- Ecosystem messages text-->
+
+			<Color x:Key="Orange0">#f17b0a</Color>
+			<Color x:Key="Orange1">#f55937</Color>
+
+			<!-- Pages -->
+			<Style TargetType="TabbedPage" ApplyToDerivedTypes="True">
+				<Setter Property="BackgroundColor" Value="{StaticResource Background1}" />
+				<Setter Property="BarBackgroundColor" Value="{StaticResource Background1}" />
+				<Setter Property="SelectedTabColor" Value="{StaticResource Background1}" />
+				<Setter Property="UnselectedTabColor" Value="{StaticResource Background1}" />
+				<Setter Property="BarTextColor" Value="{StaticResource Foreground1}" />
+			</Style>
+
+			<Style TargetType="ContentPage" ApplyToDerivedTypes="True">
+				<Setter Property="BackgroundColor" Value="{StaticResource Background1}" />
+			</Style>
+
+			<!-- Containers -->
+			<Style TargetType="Frame" ApplyToDerivedTypes="True">
+				<Setter Property="BackgroundColor" Value="{StaticResource Background1}" />
+				<Setter Property="BorderColor" Value="{StaticResource Foreground1}" />
+				<Setter Property="Padding" Value="0" />
+				<Setter Property="Margin" Value="0" />
+			</Style>
+
+			<!--
+				NOTHING OF IT IS NEEDED
+			<Style TargetType="Grid" ApplyToDerivedTypes="True">
+				<Setter Property="Margin" Value="0" />
+				<Setter Property="Padding" Value="1" />
+				<Setter Property="BackgroundColor" Value="{StaticResource Background1}" />
+			</Style>
+			-->
+
+			<Style TargetType="StackLayout" ApplyToDerivedTypes="True">
+				<Setter Property="BackgroundColor" Value="{StaticResource Background1}" />
+				<Setter Property="Margin" Value="8" />
+			</Style>
+
+			<!-- Lists -->
+			<Style TargetType="ListView" ApplyToDerivedTypes="True">
+				<Setter Property="BackgroundColor" Value="{StaticResource Background1}" />
+				<Setter Property="RefreshControlColor" Value="{StaticResource Foreground1}" />
+				<Setter Property="SeparatorColor" Value="{StaticResource Background1}" />
+				<Setter Property="HasUnevenRows" Value="True" />
+			</Style>
+
+			<Style TargetType="TextCell" ApplyToDerivedTypes="True">
+				<Setter Property="TextColor" Value="{StaticResource Foreground1}" />
+				<Setter Property="DetailColor" Value="{StaticResource Foreground1}" />
+			</Style>
+
+			<Style TargetType="SwitchCell" ApplyToDerivedTypes="True">
+				<Setter Property="OnColor" Value="{StaticResource Foreground1}" />
+			</Style>
+
+			<!-- UI elements -->
+			<Style TargetType="Label">
+				<Setter Property="BackgroundColor" Value="{StaticResource Background1}" />
+				<Setter Property="TextColor" Value="{StaticResource Foreground1}" />
+				<Setter Property="Padding" Value="4" />
+			</Style>
+
+			<Style TargetType="Entry">
+				<!--<Setter Property="BackgroundColor" Value="{StaticResource Foreground3}" />-->
+				<Setter Property="TextColor" Value="{StaticResource Foreground1}" />
+				<Setter Property="PlaceholderColor" Value="{StaticResource Foreground3}" />
+				<Setter Property="Margin" Value="2" />
+			</Style>
+
+			<Style TargetType="Editor">
+				<!--<Setter Property="BackgroundColor" Value="{StaticResource Foreground3}" />-->
+				<Setter Property="TextColor" Value="{StaticResource Foreground1}" />
+				<Setter Property="PlaceholderColor" Value="{StaticResource Foreground3}" />
+				<Setter Property="Margin" Value="2" />
+			</Style>
+
+			<Style TargetType="CheckBox">
+				<Setter Property="BackgroundColor" Value="{StaticResource Background2}" />
+				<Setter Property="Color" Value="{StaticResource Foreground1}" />
+			</Style>
+
+			<Style TargetType="Picker">
+				<Setter Property="BackgroundColor" Value="{StaticResource Background4}" />
+				<Setter Property="TextColor" Value="{StaticResource Foreground1}" />
+				<Setter Property="TitleColor" Value="{StaticResource Orange0}" />
+				<Setter Property="Margin" Value="0" />
+			</Style>
+
+			<Style TargetType="DatePicker">
+				<Setter Property="BackgroundColor" Value="{StaticResource Background4}" />
+				<Setter Property="TextColor" Value="{StaticResource Foreground1}" />
+			</Style>
+
+			<Style TargetType="NavigationPage">
+				<Setter Property="BarBackgroundColor" Value="{StaticResource Background0}" />
+				<Setter Property="BarTextColor" Value="{StaticResource Foreground1}" />
+			</Style>
+
+			<Style TargetType="Button" ApplyToDerivedTypes="True">
+				<Setter Property="BackgroundColor" Value="{StaticResource Background1}" />
+				<Setter Property="TextColor" Value="{StaticResource Foreground2}" />
+				<Setter Property="BorderColor" Value="{StaticResource Foreground2}" />
+				<Setter Property="BorderWidth" Value="2" />
+				<Setter Property="TextTransform" Value="None" />
+				<Setter Property="FontSize" Value="Body" />
+				<!--<Setter Property="Margin" Value="0, 4" />-->
+			</Style>
+
+			<Style TargetType="Button" x:Key="actionButton" ApplyToDerivedTypes="True">
+				<Setter Property="BackgroundColor" Value="{StaticResource Background1}" />
+				<Setter Property="TextColor" Value="{StaticResource Orange0}" />
+				<Setter Property="BorderColor" Value="{StaticResource Orange0}" />
+				<Setter Property="BorderWidth" Value="2" />
+				<Setter Property="TextTransform" Value="None" />
+			</Style>
+
+			<Style TargetType="Button" x:Key="negativeButton" ApplyToDerivedTypes="True">
+				<Setter Property="BackgroundColor" Value="{StaticResource Background1}" />
+				<Setter Property="TextColor" Value="{StaticResource Orange1}" />
+				<Setter Property="BorderColor" Value="{StaticResource Orange1}" />
+				<Setter Property="BorderWidth" Value="2" />
+				<Setter Property="TextTransform" Value="None" />
+			</Style>
+
+			<Style TargetType="Button" x:Key="whiteButton" ApplyToDerivedTypes="True">
+				<Setter Property="TextColor" Value="{StaticResource Foreground1}" />
+				<Setter Property="BorderColor" Value="{StaticResource Foreground1}" />
+			</Style>
+
+			<!-- Licensing -->
+			<Style TargetType="Label" x:Key="normalLicense" ApplyToDerivedTypes="True">
+				<Setter Property="BackgroundColor" Value="{StaticResource Background1}" />
+			</Style>
+
+			<Style TargetType="Label" x:Key="advancedLicense" ApplyToDerivedTypes="True">
+				<Setter Property="BackgroundColor" Value="{StaticResource Background7}" />
+			</Style>
+
+			<!-- Ecosystem:chat outMessage -->
+			<Style TargetType="StackLayout" x:Key="msgOutPanel">
+				<Setter Property="BackgroundColor" Value="{StaticResource Background9}" />
+				<Setter Property="Margin" Value="80, 0, 0, 5" />
+			</Style>
+
+			<Style TargetType="Label" x:Key="msgOutLabel">
+				<Setter Property="BackgroundColor" Value="{StaticResource Background9}" />
+			</Style>
+
+			<!-- Ecosystem:chat inMessage -->
+			<Style TargetType="StackLayout" x:Key="msgInPanel">
+				<Setter Property="BackgroundColor" Value="{StaticResource Background10}" />
+				<Setter Property="Margin" Value="0, 0, 80, 5" />
+			</Style>
+
+			<Style TargetType="Label" x:Key="msgInLabel">
+				<Setter Property="BackgroundColor" Value="{StaticResource Background10}" />
+			</Style>
+
+			<!-- Only for 'desc' labels -->
+			<Style TargetType="Label" x:Key="licenseDesc">
+				<Setter Property="BackgroundColor" Value="{StaticResource Background4}" />
+				<Setter Property="Padding" Value="6" />
+			</Style>
+
+			<Style TargetType="Label" x:Key="licensePrice">
+				<Setter Property="BackgroundColor" Value="{StaticResource Background4}" />
+				<Setter Property="TextColor" Value="{StaticResource Foreground4}" />
+				<Setter Property="FontAttributes" Value="Bold" />
+				<Setter Property="Padding" Value="6" />
+			</Style>
+
+			<Style TargetType="Frame" x:Key="alarmActive">
+				<Setter Property="BackgroundColor" Value="{StaticResource Foreground4}" />
+				<Setter Property="BorderColor" Value="{StaticResource Background0}" />
+			</Style>
+
+			<Style TargetType="Frame" x:Key="alarmInactive">
+				<Setter Property="BackgroundColor" Value="{StaticResource Background0}" />
+				<Setter Property="BorderColor" Value="{StaticResource Background0}" />
+			</Style>
+
+		</ResourceDictionary>
+    </Application.Resources>
+    
+</Application>

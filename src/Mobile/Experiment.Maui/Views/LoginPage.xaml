@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+			 xmlns:vm="clr-namespace:Experiment.Maui.ViewModels"
+			 xmlns:data="clr-namespace:Experiment.Maui.Data"
+             x:Class="Experiment.Maui.Views.LoginPage"
+			 Title="{Binding Title}"
+			 BackgroundColor="White">
+
+	<ContentPage.BindingContext>
+		<vm:LoginViewModel />
+	</ContentPage.BindingContext>
+
+    <ContentPage.Content>
+		<Grid>
+			<!-- Teal background fills the bottom half -->
+			<BoxView BackgroundColor="#035762"
+				VerticalOptions="End"
+				HeightRequest="1000" />
+
+			<!-- White background fills the top portion -->
+			<BoxView BackgroundColor="White"
+				VerticalOptions="Start"
+				HeightRequest="350" />
+
+			<!-- Image sits on top of both backgrounds -->
+			<Image Source="login_house_v2.png"
+				Aspect="AspectFit"
+				HorizontalOptions="FillAndExpand"
+				VerticalOptions="Start"
+				Margin="0,100,0,0" />
+
+			<!-- Form overlays from the bottom -->
+			<StackLayout Orientation="Vertical"
+				BackgroundColor="#035762"
+				VerticalOptions="End"
+				Padding="24,24,24,16"
+				Spacing="12">
+
+				<Label x:Name="CmdRegister"
+					HorizontalOptions="Center"
+					BackgroundColor="Transparent"
+					Padding="4"
+					FontSize="14">
+					<Label.FormattedText>
+						<FormattedString>
+							<Span Text="Don't have account? "
+								TextColor="White" />
+							<Span Text="Create Now"
+								TextColor="#2bc101"
+								TextDecorations="Underline"
+								FontAttributes="Bold" />
+						</FormattedString>
+					</Label.FormattedText>
+					<Label.GestureRecognizers>
+						<TapGestureRecognizer Command="{Binding RegisterCommand}" />
+					</Label.GestureRecognizers>
+				</Label>
+
+				<Grid ColumnSpacing="8">
+					<Grid.ColumnDefinitions>
+						<ColumnDefinition Width="Auto" />
+						<ColumnDefinition Width="*" />
+					</Grid.ColumnDefinitions>
+					<Image Grid.Column="0"
+						Source="{x:Static data:Images.UrlEcosystem}"
+						WidthRequest="20"
+						HeightRequest="20"
+						VerticalOptions="Center" />
+					<Entry x:Name="TxtUsername"
+						Grid.Column="1"
+						Placeholder="{Binding LabelUsername}"
+						Text="{Binding Username}"/>
+				</Grid>
+
+				<Grid ColumnSpacing="8">
+					<Grid.ColumnDefinitions>
+						<ColumnDefinition Width="Auto" />
+						<ColumnDefinition Width="*" />
+					</Grid.ColumnDefinitions>
+					<Image Grid.Column="0"
+						Source="{x:Static data:Images.UrlControl}"
+						WidthRequest="20"
+						HeightRequest="20"
+						VerticalOptions="Center" />
+					<Entry x:Name="TxtPassword"
+						Grid.Column="1"
+						Placeholder="{Binding LabelPassword}"
+						IsPassword="True"
+						Text="{Binding Password}"/>
+				</Grid>
+
+				<Button x:Name="CmdLogin"
+					Text="{Binding LabelLogin}"
+					HorizontalOptions="FillAndExpand"
+					TextTransform="None"
+					BorderColor="#2bc101"
+					BorderWidth="2"
+					Command="{Binding LoginCommand}" />
+
+				<Label x:Name="CmdForgotPassword"
+					Text="{Binding LabelForgotPassword}"
+					TextColor="White"
+					FontSize="14"
+					HorizontalOptions="Center"
+					BackgroundColor="Transparent"
+					Padding="4"
+					TextDecorations="Underline">
+					<Label.GestureRecognizers>
+						<TapGestureRecognizer Command="{Binding ForgotPasswordCommand}" />
+					</Label.GestureRecognizers>
+				</Label>
+
+				<Grid HorizontalOptions="FillAndExpand" ColumnSpacing="8">
+					<Grid.ColumnDefinitions>
+						<ColumnDefinition Width="*" />
+						<ColumnDefinition Width="*" />
+					</Grid.ColumnDefinitions>
+
+					<Grid Grid.Column="0" ColumnSpacing="6" HorizontalOptions="Center">
+						<Grid.ColumnDefinitions>
+							<ColumnDefinition Width="Auto" />
+							<ColumnDefinition Width="Auto" />
+						</Grid.ColumnDefinitions>
+						<Image Grid.Column="0"
+							Source="{x:Static data:Images.UrlAlarms}"
+							WidthRequest="20"
+							HeightRequest="20"
+							VerticalOptions="Center"
+                               Margin="0, 0, 6, 0"/>
+						<Label Grid.Column="1"
+							Text="{Binding LabelShare}"
+							TextColor="White"
+							FontSize="14"
+							VerticalOptions="Center"
+							BackgroundColor="Transparent"
+							Padding="0" />
+					</Grid>
+
+					<Grid Grid.Column="1" ColumnSpacing="6" HorizontalOptions="Center">
+						<Grid.ColumnDefinitions>
+							<ColumnDefinition Width="Auto" />
+							<ColumnDefinition Width="Auto" />
+						</Grid.ColumnDefinitions>
+						<Image Grid.Column="0"
+							Source="{x:Static data:Images.UrlChat}"
+							WidthRequest="20"
+							HeightRequest="20"
+							VerticalOptions="Center"
+                               Margin="0, 0, 6, 0"/>
+						<Label Grid.Column="1"
+							Text="{Binding LabelContactUs}"
+							TextColor="White"
+							FontSize="14"
+							VerticalOptions="Center"
+							BackgroundColor="Transparent"
+							Padding="0" />
+					</Grid>
+
+				</Grid>
+
+				<ActivityIndicator 
+					IsVisible="{Binding IsBusy}"
+					IsRunning="{Binding IsBusy}" />
+
+			</StackLayout>
+		</Grid>
+    </ContentPage.Content>
+</ContentPage>

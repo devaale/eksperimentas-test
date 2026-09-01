@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+			 xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+			 xmlns:xct="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+			 xmlns:UIC="clr-namespace:Experiment.Maui.UI.Controls"
+			 xmlns:data="clr-namespace:Experiment.Maui.Data"
+			 xmlns:VM="clr-namespace:Experiment.Maui.ViewModels.Ecosystem"
+			 x:Class="Experiment.Maui.Views.Ecosystem.ChatPage"
+			 Title="{Binding Receiver.Name}">
+
+	<ContentPage.BindingContext>
+		<VM:ChatViewModel />
+	</ContentPage.BindingContext>
+
+	<ContentPage.Resources>
+		<Style TargetType="Label">
+			<Setter Property="Margin" Value="0" />
+			<Setter Property="Padding" Value="1" />
+		</Style>
+	</ContentPage.Resources>
+
+	<ContentPage.Content>
+
+		<!-- Main container -->
+		<StackLayout Orientation="Vertical">
+
+			<StackLayout Orientation="Vertical"
+						 Margin="18,6"
+						 Spacing="8">
+				
+				<!-- Message input: Image + Editor -->
+				<Grid ColumnDefinitions="Auto,*">
+					<Image Grid.Column="0"
+						   Source="{x:Static data:Images.UrlZoomImg}"
+						   HeightRequest="32"
+						   Margin="6,2"
+						   VerticalOptions="Center" />
+
+					<Editor Grid.Column="1"
+							x:Name="TxtNewMessage"
+							Text="{Binding NewMessage}"
+							Placeholder="{Binding LabelMessageText}"
+							HorizontalOptions="FillAndExpand"
+							HeightRequest="60" />
+				</Grid>
+
+				<!-- Send button -->
+				<Button x:Name="CmdPostMessage"
+						Text="{Binding LabelSend}"
+						Command="{Binding PostMessageCommand}"
+						FontSize="Small"
+						HorizontalOptions="End" />
+
+			</StackLayout>
+
+			<ListView x:Name="LvwItems"
+					  ItemsSource="{Binding Messages, Mode=OneWay}"
+					  SelectedItem="{Binding SelectedItem}"
+					  HasUnevenRows="True"
+					  SelectionMode="None"
+					  IsPullToRefreshEnabled="True"
+					  RefreshCommand="{Binding RefreshCommand}"
+					  IsRefreshing="{Binding IsRefreshing}"
+					  ItemAppearing="LvwItems_ItemAppearing">
+
+				<ListView.ItemTemplate>
+
+					<DataTemplate>
+						<ViewCell>
+
+							<StackLayout Orientation="Vertical"
+										 Padding="2"
+										 Style="{Binding PanelStyle}">
+
+								<Label Text="{Binding Author}"
+									   FontSize="Medium"
+									   TextColor="White"
+									   Style="{Binding LabelStyle}"/>
+
+								<Label Text="{Binding Body}"
+									   FontAttributes="{Binding FontAttribute}"
+									   TextColor="White"
+									   Style="{Binding LabelStyle}" />
+
+								<Label Text="{Binding Date}"
+									   HorizontalTextAlignment="End"
+									   FontAttributes="{Binding FontAttribute}"
+									   TextColor="White"
+									   Style="{Binding LabelStyle}" />
+
+							</StackLayout>
+
+						</ViewCell>
+					</DataTemplate>
+				</ListView.ItemTemplate>
+			</ListView>
+
+			<ActivityIndicator IsVisible="{Binding IsBusy}"
+							   IsRunning="{Binding IsBusy}" />
+
+			<StackLayout Orientation="Horizontal"
+						 IsVisible="{Binding ShowReceiverPanel}"
+						 Margin="2"
+						 Padding="0">
+
+				<Button x:Name="CmdUserProfile"
+						Command="{Binding UserProfileCommand}"
+						Text="{Binding LabelUserProfile}" />
+
+			</StackLayout>
+
+		</StackLayout>
+	</ContentPage.Content>
+</ContentPage>
+

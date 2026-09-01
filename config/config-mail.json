@@ -1,0 +1,7 @@
+{
+    "settings": {
+        "host": "smtp.office365.com",
+		"username": "ese.alerts@energus.eu",
+		"pwd": "Energus2021"
+    }
+}

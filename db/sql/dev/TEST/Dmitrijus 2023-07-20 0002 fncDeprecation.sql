@@ -1,0 +1,21 @@
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE FUNCTION [dbo].[fncDeprecation] (
+	@GL DECIMAL(18,4),
+	@A DECIMAL(18,4),
+	@LIR DECIMAL(18,4),
+	@RL DECIMAL(18,4),
+	@C DECIMAL(18,4),
+	@SD DECIMAL(18,4))
+
+	RETURNS DECIMAL(18,4)
+	AS
+BEGIN
+	DECLARE @retVal DECIMAL(18,4)
+	SET @retVal = 1.0/(LOG((@GL*@RL+@C-((@C+@GL)/2.0-@LIR))/((@C+@GL)/2.0-@LIR))-LOG((@C-((@C+@GL)/2.0-@LIR))/(@GL*@RL+(@C+@GL)/2.0-@LIR)))*(LOG((@GL*@RL+@C-((@C+@GL)/2.0-@LIR))/((@C+@GL)/2.0-@LIR))-LOG((@GL*@RL+@C)/(@A+(@C+@GL)/2.0-@LIR)-1.0))
+
+	RETURN @retVal
+END

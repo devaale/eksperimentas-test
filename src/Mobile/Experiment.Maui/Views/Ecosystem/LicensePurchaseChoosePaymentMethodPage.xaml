@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+	xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+	x:Class="Experiment.Maui.Views.Ecosystem.LicensePurchaseChoosePaymentMethodPage"
+	xmlns:DATA="clr-namespace:Experiment.Maui.Data">
+
+    <ContentPage.Content>
+		<StackLayout>
+			<ScrollView VerticalOptions="FillAndExpand">
+				<ListView x:Name="LvwItems"
+					ItemsSource="{Binding PaymentMethods, Mode=OneWay}"
+					SelectedItem="{Binding SelectedPaymentMethod}"
+					SelectionMode="Single"
+					HasUnevenRows="True">
+
+					<ListView.ItemTemplate>
+						<DataTemplate>
+							<ViewCell>
+								<Frame BorderColor="Beige"
+									   Padding="1"
+									   Margin="3">
+
+									<Label Text="{Binding Name}" 
+										   FontSize="Title"
+										   BackgroundColor="{StaticResource Background4}"
+										   Padding="12, 6" />
+
+								</Frame>
+							</ViewCell>
+						</DataTemplate>
+					</ListView.ItemTemplate>
+				</ListView>
+			</ScrollView>
+
+			<StackLayout Grid.Row="1"
+				Orientation="Horizontal"
+				VerticalOptions="End">
+
+				<Button x:Name="CmdBack"
+					Command="{Binding BackCommand}"
+					Text="{Binding LabelBack}"
+					Style="{StaticResource actionButton}"
+					HorizontalOptions="FillAndExpand" />
+
+				<Button x:Name="CmdNext"
+					Command="{Binding PostOrderCommand}"
+					Text="{Binding LabelProceed}"
+					HorizontalOptions="FillAndExpand"
+					IsEnabled="{Binding IsPaymentMethodSelected, FallbackValue=false}" />
+
+			</StackLayout>
+
+		</StackLayout>
+	</ContentPage.Content>
+</ContentPage>

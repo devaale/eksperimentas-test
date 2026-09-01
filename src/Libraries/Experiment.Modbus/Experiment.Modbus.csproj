@@ -1,0 +1,16 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Experiment.Core\Experiment.Core.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="ModbusLibrary">
+      <HintPath>ModbusLibrary.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
+</Project>

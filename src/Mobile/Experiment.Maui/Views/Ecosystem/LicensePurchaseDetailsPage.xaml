@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+			 xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+			 x:Class="Experiment.Maui.Views.Ecosystem.LicensePurchaseDetailsPage"
+			 xmlns:VM="clr-namespace:Experiment.Maui.ViewModels"
+			 xmlns:DATA="clr-namespace:Experiment.Maui.Data">
+
+	<ContentPage.Content>
+
+		<Grid>
+			<Grid.RowDefinitions>
+				<RowDefinition Height="*" />
+				<RowDefinition Height="Auto" />
+			</Grid.RowDefinitions>
+			<StackLayout Orientation="Vertical"
+						 Spacing="0"
+						 BackgroundColor="{StaticResource Background2}"
+						 VerticalOptions="Start">
+
+				<Frame Padding="1"
+					   BorderColor="{StaticResource Background2}"
+					   HasShadow="False">
+
+					<Label Text="{Binding SelectedProduct.VisualName}"
+						   FontSize="Medium"
+						   HorizontalTextAlignment="Center"
+						   Style="{Binding SelectedProduct.Style}" />
+				</Frame>
+
+				<Label Text="{Binding SelectedProduct.VisualDescription}"
+					   Style="{StaticResource licenseDesc}"/>
+
+				<StackLayout Orientation="Horizontal"
+							 Margin="0"
+							 Padding="0"
+							 BackgroundColor="{StaticResource Background4}">
+
+					<Label Text="{Binding LabelPrice}"
+						   Style="{StaticResource licensePrice}" />
+
+					<Label Text="{Binding SelectedProduct.VisualPrice}"
+						   Style="{StaticResource licensePrice}" />
+
+				</StackLayout>
+			</StackLayout>
+
+			<StackLayout Grid.Row="1"
+						 Orientation="Horizontal"
+						 VerticalOptions="End">
+
+				<Button x:Name="CmdBack"
+						Command="{Binding BackCommand}"
+						Text="{Binding LabelBack}"
+						Style="{StaticResource actionButton}"
+						HorizontalOptions="FillAndExpand" />
+
+				<Button x:Name="CmdNext"
+						Command="{Binding ProceedToChooseTermCommand}"
+						Text="{Binding LabelChoosePeriod}"
+						HorizontalOptions="FillAndExpand" />
+
+			</StackLayout>
+
+		</Grid>
+	</ContentPage.Content>
+</ContentPage>
